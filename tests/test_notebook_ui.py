@@ -877,7 +877,9 @@ def test_long_outputs_are_bounded_and_secondary_panels_collapsed(tmp_path):
                 "summary_findings", "prompt_evolution"):
         h = bounded.get(id(s.w[key]))
         assert h and int(h.rstrip("px")) <= 420, key
-    assert isinstance(s.w["preview_acc"], widgets.Accordion) and s.w["preview_acc"].layout.display == "none"
+    assert s.w["preview_acc"].layout.display == "none"
+    # no widgets.Tab / widgets.Accordion anywhere: Colab (ipywidgets 7.7.1) does not render them
+    assert not [x for x in s.all_widgets() if isinstance(x, (widgets.Tab, widgets.Accordion))]
     assert s.w["context_acc"].selected_index is None and s.w["upload_acc"].selected_index is None
     sec4 = s.w["sections"][4].children
     assert sec4.index(s.w["msg_run"]) < sec4.index(s.w["run_tabs"])      # buttons → message → results

@@ -26,6 +26,7 @@ from datetime import datetime
 from pathlib import Path
 
 import ipywidgets as widgets
+import traitlets
 
 from . import agents, exports, importers, project_state as ps, providers, validation
 from . import ui_compat as compat
@@ -100,6 +101,7 @@ STUDIO_CSS = """<style>
 .studio-card .p-TabPanel-tabContents,.studio-card .lm-TabPanel-tabContents{background:#ffffff;color:#1f2933}
 .studio-scroll{border:1px solid #e4e7eb;border-radius:4px}
 .studio-scroll>*{flex-shrink:0 !important}
+.studio-card .studio-acc-head{justify-content:flex-start;text-align:left;font-weight:600}
 </style>"""
 
 
@@ -191,21 +193,64 @@ def _scroll(child, max_height="400px") -> widgets.Box:
     return b
 
 
-def _accordion(pairs, open_index=None) -> widgets.Accordion:
-    """``[(title, widget)]`` as an Accordion, collapsed unless ``open_index`` is given."""
-    acc = widgets.Accordion(children=[w for _, w in pairs])
-    for i, (title, _) in enumerate(pairs):
-        acc.set_title(i, title)
-    acc.selected_index = open_index
-    return acc
+# Colab's widget manager (ipywidgets 7.7.1, tested 2026-10-28) renders neither widgets.Tab nor
+# widgets.Accordion: the panels never appear. These two stand-ins use only buttons and boxes,
+# and keep the `selected_index` API the rest of this module uses.
+
+class _Accordion(widgets.VBox):
+    """``[(title, widget)]`` as click-to-open panels; at most one open (``selected_index``)."""
+    selected_index = traitlets.Int(None, allow_none=True)
+
+    def __init__(self, pairs, open_index=None):
+        self._titles = [t for t, _ in pairs]
+        self._bodies = [w for _, w in pairs]
+        self._heads = []
+        rows = []
+        for i, title in enumerate(self._titles):
+            head = widgets.Button(layout=_layout(width="100%"))
+            head.add_class("studio-acc-head")
+            head.on_click(lambda _b, i=i: setattr(self, "selected_index",
+                                                  None if self.selected_index == i else i))
+            self._heads.append(head)
+            rows += [head, self._bodies[i]]
+        super().__init__(rows, layout=_layout(width="100%"))
+        self.observe(lambda _c: self._sync(), names="selected_index")
+        self.selected_index = open_index
+        self._sync()
+
+    def _sync(self):
+        for i, (head, body) in enumerate(zip(self._heads, self._bodies)):
+            is_open = i == self.selected_index
+            head.description = ("▾ " if is_open else "▸ ") + self._titles[i]
+            _hidden(body, not is_open)
 
 
-def _tabs(pairs) -> widgets.Tab:
-    tab = widgets.Tab(children=[w for _, w in pairs])
-    for i, (title, _) in enumerate(pairs):
-        tab.set_title(i, title)
-    tab.selected_index = 0
-    return tab
+class _Tabs(widgets.VBox):
+    """``[(title, widget)]`` as a row of tab buttons above one visible panel."""
+    selected_index = traitlets.Int(0)
+
+    def __init__(self, pairs):
+        self._bodies = [w for _, w in pairs]
+        self._bar = widgets.ToggleButtons(options=[(t, i) for i, (t, _) in enumerate(pairs)], value=0,
+                                          style={"button_width": "auto"})
+        self._bar.add_class("studio-tabbar")
+        self._bar.observe(lambda c: setattr(self, "selected_index", c["new"]), names="value")
+        super().__init__([self._bar, *self._bodies], layout=_layout(width="100%"))
+        self.observe(lambda _c: self._sync(), names="selected_index")
+        self._sync()
+
+    def _sync(self):
+        self._bar.value = self.selected_index
+        for i, body in enumerate(self._bodies):
+            _hidden(body, i != self.selected_index)
+
+
+def _accordion(pairs, open_index=None) -> _Accordion:
+    return _Accordion(pairs, open_index)
+
+
+def _tabs(pairs) -> _Tabs:
+    return _Tabs(pairs)
 
 
 def _card(*children) -> widgets.VBox:
