@@ -639,7 +639,8 @@ def test_sections_render_without_project(tmp_path):
     assert "Start a mission first" in text_of(s.w["msg_run"])
     with pytest.raises(ps.StudioError):
         s.section(9)
-    assert studio_ui.GAME_URL.startswith("https://") and studio_ui.GAME_URL in s.w["game_help"].value
+    assert studio_ui.GAME_URL.startswith("https://")
+    assert "Approve in Section 5 first." in text_of(s.w["play_link"]) and "href" not in s.w["play_link"].value
 
 
 # =========================================================================== session request cap
@@ -904,3 +905,95 @@ def test_replay_button_and_role_selection_are_obvious(tmp_path):
     role.value = "Quality Evaluator"
     assert s.role == "Quality Evaluator" and role.value == "Quality Evaluator"
     assert [lab for lab, _ in role.options] == ["AI Director", "✓ Quality Evaluator"]
+
+
+# =========================================================================== v0.3 UX: play link, short text, tabs
+
+
+def play_payload(studio: Studio):
+    """The game file carried by the Section 6 play link (None when the link is hidden)."""
+    import base64
+    m = re.search(r'href="([^"]+)"', studio.w["play_link"].value)
+    if m is None:
+        return None
+    url = html.unescape(m.group(1))
+    assert url.startswith(studio_ui.GAME_URL + "#t=")
+    payload = url.split("#t=", 1)[1]
+    raw = base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4))
+    return json.loads(raw.decode("utf-8"))
+
+
+def test_play_link_only_for_the_approved_translation(synthetic_root, tmp_path):
+    fx = json.loads((FX / "replay_outputs.json").read_text(encoding="utf-8"))
+    s = make_studio(tmp_path, repo_root=synthetic_root, fixtures=fx)
+    w = s.w
+    w["btn_use_replay"].click()
+    w["btn_start"].click()
+    w["btn_translator"].click()
+    fix_critical_via_grid(s)
+    assert play_payload(s) is None and "Approve in Section 5 first." in text_of(w["play_link"])
+    sec6 = list(w["sections"][6].children)
+    assert sec6.index(w["play_link"]) < sec6.index(w["msg_export"])          # link above the exports
+    w["btn_approve"].click()
+    assert s.state.approval["approved"], w["msg_director"].value
+    link = w["play_link"].value
+    assert studio_ui.PLAY_TEXT in html.unescape(link)
+    assert 'target="_blank"' in link and 'rel="noopener"' in link
+    game = play_payload(s)
+    expected, report = studio_ui.exports.build_game_translation(s.state, s.challenge, s.manifest)
+    assert not report.critical and game["approved"] is True
+    assert {k: v for k, v in game.items() if k != "generated_at"} == \
+        {k: v for k, v in expected.items() if k != "generated_at"}
+    w["btn_export_game"].click()
+    exported = json.loads((tmp_path / "exports" / "demo" / "game_translation_en.json").read_text("utf-8"))
+    assert game["strings"] == exported["strings"] and game["mission"] == exported["mission"] == "demo"
+    # an edit revokes approval, and the link disappears with it
+    sid = s.state.string_ids()[0]
+    s._grid[sid].value = s._grid[sid].value + "!"
+    w["btn_save_edits"].click()
+    assert not s.state.approval["approved"]
+    assert play_payload(s) is None and "Approve in Section 5 first." in text_of(w["play_link"])
+
+
+def _notebook_markdown():
+    nb = json.loads((ROOT / "notebooks" / "Game_Localisation_Studio.ipynb").read_text(encoding="utf-8"))
+    return ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "markdown"]
+
+
+def test_notebook_text_stays_short():
+    cells = _notebook_markdown()
+    assert len(cells[0].split()) <= 110, "intro cell is too long"
+    sections = [c for c in cells if re.search(r"^## \d · ", c, re.M)]
+    assert len(sections) == 6
+    for c in sections:
+        assert len(c.split()) <= 60, c[:60]
+
+
+def test_section5_tabs_in_order_with_history_below(tmp_path):
+    s = make_studio(tmp_path)
+    tabs = s.w["director_tabs"]
+    assert [lab for lab, _ in tabs._bar.options] == [
+        "a · Decide", "b · Rules", "c · Revise", "d · Final edits", "e · Approve"]
+    revise = tabs._bodies[2]
+    assert s.w["btn_review2"] in list(studio_ui.iter_widgets(revise))
+    assert s.w["btn_approve"] in list(studio_ui.iter_widgets(tabs._bodies[4]))
+    hist = s.w["history_acc"]
+    assert isinstance(hist, studio_ui._Accordion) and hist._titles == ["History — versions and decision log"]
+    assert hist.selected_index is None                                   # collapsed by default
+    inside = list(studio_ui.iter_widgets(hist))
+    for key in ("hist_pick", "btn_hist_compare", "btn_restore", "history_table", "decision_log"):
+        assert s.w[key] in inside, key
+    sec5 = list(s.w["sections"][5].children)
+    assert sec5.index(tabs) < sec5.index(s.w["msg_director"]) < sec5.index(hist)
+
+
+def test_labelled_inputs_share_one_label_width(tmp_path):
+    s = make_studio(tmp_path)
+    kinds = (widgets.Dropdown, widgets.Text, widgets.Textarea, widgets.Password, widgets.ToggleButtons)
+    labelled = [x for x in s.all_widgets() if isinstance(x, kinds) and x.description
+                and not isinstance(getattr(x, "parent", None), studio_ui._Tabs)]
+    assert len(labelled) >= 15
+    for x in labelled:
+        if x is s.w["director_tabs"]._bar or x is s.w["run_tabs"]._bar:
+            continue
+        assert x.style.description_width == studio_ui.LABEL_W, x.description

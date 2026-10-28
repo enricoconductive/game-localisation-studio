@@ -42,6 +42,10 @@
     'newline_not_allowed', 'bad_encoding', 'file_too_large',
     'untranslated_cjk', 'whitespace', 'angle_brackets', 'near_limit'
   ];
+  /** Codes of the shared-link decoder (game only; not part of the Python/JS file parity). */
+  var LINK_CODES = ['invalid_link', 'file_too_large'];
+  /** URL-fragment key that carries a translation: <game url>#t=<base64url(UTF-8 JSON)> (CONTRACTS §12). */
+  var PLAY_PARAM = 't';
   /** Python-only code (documented): JSON.parse cannot see duplicate keys. */
   var PYTHON_ONLY_CODES = ['duplicate_id'];
 
@@ -61,6 +65,7 @@
     newline_not_allowed: '此處不可換行',
     bad_encoding: '含有損壞或隱藏字元',
     file_too_large: '檔案太大',
+    invalid_link: '連結損壞或不完整',
     untranslated_cjk: '仍有中文字',
     whitespace: '多餘的空格',
     angle_brackets: '含有 < 或 >',
@@ -72,6 +77,7 @@
     empty_text: 'Empty translation', placeholder_missing: 'Missing placeholder', placeholder_extra: 'Extra placeholder',
     placeholder_broken: 'Broken placeholder', too_long: 'Too long', newline_not_allowed: 'Line break not allowed',
     bad_encoding: 'Damaged or invisible character', file_too_large: 'File too large',
+    invalid_link: 'Broken or incomplete link',
     untranslated_cjk: 'Chinese characters left', whitespace: 'Extra spaces', angle_brackets: 'Contains < or >',
     near_limit: 'Close to the length limit'
   };
@@ -578,11 +584,96 @@
     return finish();
   }
 
+  /* ---------- shared links: <game url>#t=<base64url(UTF-8 JSON)> (CONTRACTS §5, §12) ---------- */
+
+  function linkError(code, en, enHint, zh, zhHint) {
+    var i = critical(code, null, en, enHint, zh, zhHint);
+    return { ok: false, code: code, message: i.message, message_zh: i.message_zh,
+             fix_hint: i.fix_hint, fix_hint_zh: i.fix_hint_zh, issue: i };
+  }
+  function brokenLink(en, zh) {
+    return linkError('invalid_link', en,
+      'Go back to Colab and click the game link again (or copy the whole link). You can also download the file and import it.',
+      zh, '請回到 Colab 再按一次遊戲連結（或複製完整連結）。你也可以下載檔案再匯入。');
+  }
+
+  /** The value of the `t` parameter in a URL fragment ("#t=…", "t=…", "#a=1&t=…"), or null. */
+  function sharedParam(fragment) {
+    var s = String(fragment == null ? '' : fragment);
+    if (s.charAt(0) === '#') s = s.slice(1);
+    var parts = s.split('&');
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].slice(0, PLAY_PARAM.length + 1) === PLAY_PARAM + '=') return parts[i].slice(PLAY_PARAM.length + 1);
+    }
+    return null;
+  }
+
+  /** base64url (padding optional) → Uint8Array, or null if it is not valid base64url. */
+  function base64UrlToBytes(b64) {
+    if (!/^[A-Za-z0-9_-]*$/.test(b64) || b64.length % 4 === 1) return null;
+    var std = b64.replace(/-/g, '+').replace(/_/g, '/');
+    while (std.length % 4) std += '=';
+    var bin;
+    try { bin = atob(std); } catch (e) { return null; }
+    var out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  /**
+   * Decode a translation shared in a URL fragment.
+   * Returns {ok: true, text, bytes} or {ok: false, code, message, message_zh, fix_hint, fix_hint_zh, issue}.
+   * `text` still has to go through validateTranslationFile (the normal import path).
+   */
+  function decodeSharedTranslation(fragment) {
+    var raw = sharedParam(fragment);
+    if (raw === null) {
+      return brokenLink('This link does not contain a translation.',
+        '這個連結沒有包含任何譯文。');
+    }
+    var value = raw;
+    if (value.indexOf('%') !== -1) {
+      try { value = decodeURIComponent(value); } catch (e) { /* left as is: rejected below */ }
+    }
+    value = value.replace(/=+$/, '');
+    if (!value) {
+      return brokenLink('The translation in this link is empty — the link may have been cut short.',
+        '連結中的譯文是空的——連結可能被截短了。');
+    }
+    // Cheap size check before decoding anything (4 base64 chars = 3 bytes).
+    var estimate = Math.floor(value.length * 3 / 4);
+    if (estimate > MAX_FILE_BYTES) {
+      var tooBig = fileTooLargeIssue(estimate);
+      return { ok: false, code: tooBig.code, message: tooBig.message, message_zh: tooBig.message_zh,
+               fix_hint: tooBig.fix_hint, fix_hint_zh: tooBig.fix_hint_zh, issue: tooBig };
+    }
+    var bytes = base64UrlToBytes(value);
+    if (!bytes) {
+      return brokenLink('This link is damaged: the translation in it could not be read (it may have been cut short or changed).',
+        '這個連結已損壞，無法讀取其中的譯文（可能被截短或改動過）。');
+    }
+    if (bytes.length > MAX_FILE_BYTES) {
+      var big = fileTooLargeIssue(bytes.length);
+      return { ok: false, code: big.code, message: big.message, message_zh: big.message_zh,
+               fix_hint: big.fix_hint, fix_hint_zh: big.fix_hint_zh, issue: big };
+    }
+    var text;
+    try {
+      text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    } catch (e) {
+      return brokenLink('This link is damaged: the translation in it is not valid text (UTF-8).',
+        '這個連結已損壞：其中的譯文不是有效的文字（UTF-8）。');
+    }
+    return { ok: true, text: text, bytes: bytes.length };
+  }
+
   return {
     FORMAT: FORMAT,
     MAX_FILE_BYTES: MAX_FILE_BYTES,
     ISSUE_CODES: ISSUE_CODES.slice(),
     PYTHON_ONLY_CODES: PYTHON_ONLY_CODES.slice(),
+    LINK_CODES: LINK_CODES.slice(),
+    PLAY_PARAM: PLAY_PARAM,
     CODE_TITLES_EN: CODE_TITLES_EN,
     CODE_TITLES_ZH: CODE_TITLES_ZH,
     PLACEHOLDER_RE_SOURCE: PLACEHOLDER_RE.source,
@@ -597,6 +688,7 @@
     validateTranslationFile: validateTranslationFile,
     fileTooLargeIssue: fileTooLargeIssue,
     getMissionIds: getMissionIds,
+    decodeSharedTranslation: decodeSharedTranslation,
     hasOwn: hasOwn
   };
 });

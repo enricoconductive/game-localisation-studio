@@ -14,6 +14,11 @@
  * dialogue-language choice. Imported student files are deliberately NOT stored:
  * after a reload, "student" falls back to Original Chinese and the file must be
  * imported again (simplest and most predictable; nothing student-written lingers).
+ *
+ * Shared links (CONTRACTS §12): <game url>#t=<base64url(UTF-8 JSON)>. The fragment is
+ * never sent to a server. It is decoded once, fed through the normal import path
+ * (same validation and report panel), then removed from the address bar so a reload
+ * does not import it again.
  */
 (function () {
   'use strict';
@@ -103,6 +108,7 @@
     sev_WARNING: { en: 'Note', zh: '提示' },
     general: { en: 'whole file', zh: '整個檔案' },
     pasted: { en: 'pasted text', zh: '貼上的文字' },
+    from_link: { en: 'link from Colab', zh: '來自 Colab 的連結' },
     read_error: { en: 'The browser could not read this file.', zh: '瀏覽器未能讀取這個檔案。' },
     read_error_fix: { en: 'Download the file again and retry.', zh: '請重新下載檔案再試。' },
     broken_node: { en: 'The story data is broken: the next scene could not be found.', zh: '故事資料有誤，找不到下一個場景。' }
@@ -680,6 +686,19 @@
     reader.readAsText(file, 'utf-8');
   }
 
+  var SHARED_RE = /^#(?:[^&]*&)*t=/;
+
+  /** Import a translation carried in the URL fragment (#t=…), then remove the fragment. */
+  function importFromLink() {
+    var hash = location.hash || '';
+    if (!SHARED_RE.test(hash)) return false;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+    var label = chrome('from_link');
+    var res = V.decodeSharedTranslation(hash);
+    if (!res.ok) { showReport('rejected', singleIssueReport(res.issue), label); return false; }
+    return importText(res.text, label);
+  }
+
   function resetToChinese() {
     state.overrides.clear();
     state.characters.clear();
@@ -725,6 +744,7 @@
     $('player-name').addEventListener('input', function () {
       if (state.view === 'scene') renderScene({ focus: false });
     });
+    window.addEventListener('hashchange', function () { if (state.manifest) importFromLink(); });
   }
 
   function exposeDebugHook() {
@@ -817,6 +837,7 @@
       store(STORE_DIALOGUE, state.dialogue);
       applyChrome();
       renderMissions(false);
+      importFromLink();
     }).catch(function (err) {
       showLoadError('Problem: ' + (err && err.message ? err.message : String(err)) + '.');
     });

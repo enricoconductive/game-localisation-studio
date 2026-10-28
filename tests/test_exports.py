@@ -145,3 +145,54 @@ def test_custom_challenge_export(tmp_path):
     assert r.ok and r.path.endswith("custom_translation_en.json")
     obj = json.loads((tmp_path / "custom_translation_en.json").read_text(encoding="utf-8"))
     assert obj["mission"] == "custom" and obj["format"] == "lantern-mystery-translation"
+
+
+# --------------------------------------------------------------------------- game link
+
+
+def _decode_play_url(url: str) -> dict:
+    import base64
+    payload = url.split("#" + ex.PLAY_PARAM + "=", 1)[1]
+    assert "=" not in payload and re.fullmatch(r"[A-Za-z0-9_-]*", payload)
+    raw = base64.urlsafe_b64decode(payload + "=" * (-len(payload) % 4))
+    return json.loads(raw.decode("utf-8"))
+
+
+GAME_URL = "https://example.github.io/game-localisation-studio/game/"
+
+
+def test_game_play_url_round_trip_unicode(approved, challenge, manifest):
+    obj, report = ex.build_game_translation(approved, challenge, manifest)
+    assert report.ok
+    obj["strings"]["demo.ui.start"] = "Go 🏮 — 中秋 “quotes” é"
+    for base in (GAME_URL, GAME_URL + "#"):
+        url = ex.game_play_url(obj, base)
+        assert url.startswith(GAME_URL + "#t=") and url.count("#") == 1
+        assert _decode_play_url(url) == obj
+    assert ex.PLAY_PARAM == "t"
+
+
+def test_game_play_url_example_file_round_trip():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    for path in (root / "game/translations/example_student_export_intro.json",
+                 root / "tests/game/fixtures/translations/example_student_export_intro.json"):
+        obj = json.loads(path.read_text(encoding="utf-8"))
+        assert _decode_play_url(ex.game_play_url(obj, GAME_URL)) == obj
+
+
+def test_game_play_url_size_cap():
+    base = {"format": v.FORMAT_NAME, "schema_version": "1.0", "strings": {}}
+    ok = dict(base, strings={"x": "a" * (90 * 1024)})
+    assert _decode_play_url(ex.game_play_url(ok, GAME_URL)) == ok
+    # multi-byte characters count as UTF-8 bytes: 40 000 × 3 bytes > 100 KB
+    for big in (dict(base, strings={"x": "a" * (101 * 1024)}), dict(base, strings={"x": "中" * 40000})):
+        with pytest.raises(ValueError, match="100 KB"):
+            ex.game_play_url(big, GAME_URL)
+
+
+def test_game_play_url_refuses_secrets():
+    obj = {"format": v.FORMAT_NAME, "schema_version": "1.0", "strings": {"x": FAKE_ANTHROPIC_KEY}}
+    with pytest.raises(ValueError, match="API key") as exc:
+        ex.game_play_url(obj, GAME_URL)
+    assert FAKE_ANTHROPIC_KEY not in str(exc.value)

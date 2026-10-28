@@ -6,6 +6,7 @@ project is not approved, has CRITICAL issues, or contains something that looks l
 """
 from __future__ import annotations
 
+import base64
 import difflib
 import html
 import json
@@ -24,6 +25,8 @@ GENERATED_BY = "Game Localisation Studio v0.3"
 CSP = "default-src 'none'; style-src 'unsafe-inline'; img-src data:"
 WORKFLOW_STEPS = ["INPUT", "BASELINE", "TRANSLATOR", "REVIEWER", "HUMAN DECISION", "REVISION",
                   "VALIDATION", "HUMAN APPROVAL", "EXPORT"]
+PLAY_PARAM = "t"          # URL fragment key: <game url>#t=<base64url(UTF-8 JSON)>
+MAX_PLAY_BYTES = 100 * 1024   # same cap as the game's import (CONTRACTS §5)
 ACTION_LABELS = {"accept": "Accepted", "reject": "Rejected — not applied",
                  "accept_edited": "Accepted with edits", "override": "Overridden by human text"}
 
@@ -150,6 +153,24 @@ def export_game_translation(state: ProjectState, challenge: dict, manifest: dict
     state.log("exported", f"{name} written")
     return ExportResult(True, str(path), f"Saved {name}. Import it into the game to play your "
                         "translation.", [w.to_dict() for w in report.warnings])
+
+
+def game_play_url(game_obj: dict, base: str) -> str:
+    """Link that opens the game with ``game_obj`` already loaded (CONTRACTS §12).
+
+    The translation travels in the URL *fragment* (``#t=…``), which browsers never send
+    to a server. Payload = base64url (no ``=`` padding) of the compact UTF-8 JSON.
+    Raises ``ValueError`` if the JSON is over 100 KB or looks like it contains a key."""
+    text = json.dumps(game_obj, ensure_ascii=False, separators=(",", ":"))
+    raw = text.encode("utf-8")
+    if len(raw) > MAX_PLAY_BYTES:
+        raise ValueError(f"This translation is {-(-len(raw) // 1024)} KB, but a game link can carry "
+                         "at most 100 KB. Download the file and import it into the game instead.")
+    if scan_for_secrets(text):
+        raise ValueError("The translation contains something that looks like an API key, so no "
+                         "game link was made. Remove it and approve again.")
+    payload = base64.urlsafe_b64encode(raw).decode("ascii").rstrip("=")
+    return base.rstrip("#") + "#" + PLAY_PARAM + "=" + payload
 
 
 # --------------------------------------------------------------------------- settings

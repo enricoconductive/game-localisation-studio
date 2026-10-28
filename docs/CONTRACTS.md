@@ -142,6 +142,16 @@ Exported English file, `game_translation_en.json`:
 - `characters` is optional. Each value is a non-empty string of at most 20 code points with no newline.
 - `mission` is optional, informational only.
 - File size is at most 100 KB.
+- **Game import via URL fragment.** Besides file/paste import, the game accepts the same file in the
+  link `<game url>#t=<base64url(UTF-8 compact JSON)>` (§12 `game_play_url`). `validator.js`
+  `decodeSharedTranslation(fragment)` accepts `#t=…` or `t=…` (padding optional) and returns
+  `{ok: true, text}` or `{ok: false, code, message, message_zh, fix_hint, fix_hint_zh, issue}` with
+  `code` ∈ `invalid_link` (no `t` parameter, empty, not base64url, not UTF-8) | `file_too_large`
+  (decoded payload over 100 KB). On success the text goes through the normal import (same validation,
+  CRITICAL panel, Student option and badges; source label "link from Colab" / 「來自 Colab 的連結」);
+  on failure the error panel is shown and the dialogue stays Chinese. Either way the game removes the
+  fragment (`history.replaceState`), so a reload does not import it again and nothing is stored.
+  `invalid_link` is a game-only code (not in the Python/JS file-validation parity set).
 
 ### Validation rules (Python `validation.py` and JS `validator.js` MUST agree)
 
@@ -434,7 +444,15 @@ render_workflow_report(state, challenge, manifest) -> str   # self-contained HTM
 export_all(state, challenge, manifest, out_dir) -> dict[str, ExportResult]
 scan_for_secrets(text, extra_secrets=()) -> list[str]   # patterns: sk-ant-…, hf_…, Bearer …, api-key values, long hex/base64 tokens next to "key"
 prompt_diff_html(old, new) -> str       # escaped side-by-side diff
+game_play_url(game_obj: dict, base: str) -> str   # "<base>#t=<payload>"; ValueError if > 100 KB or a key is found
+PLAY_PARAM = "t"
 ```
+`game_play_url`: payload = `base64.urlsafe_b64encode(json.dumps(game_obj, ensure_ascii=False,
+separators=(",", ":")).encode("utf-8"))` with the `=` padding stripped; result is
+`base.rstrip("#") + "#t=" + payload`. The translation travels in the URL **fragment**, which browsers
+never send to a server (GitHub Pages never sees it). It raises `ValueError` with a plain-English message
+if the compact JSON is over 100 KB (the game's cap) or if `scan_for_secrets` finds anything. Pass the
+object from `build_game_translation` (only after approval, like Export A). The game side is in §5.
 `ExportResult = {ok: bool, path: str|None, message: str, issues: [Issue]}`
 The studio writes each mission's files into their own folder, `<export_dir>/<mission>/` (in Colab `/content/exports/intro/` …; custom uploads use `custom/`), keeping the file names above. Progress files and backups stay in `<export_dir>/`.
 (a dataclass with `.to_dict()`; `result["ok"]` also works). `export_all` returns keys `game_translation`, `agent_settings`, `workflow_report`; if the game export is blocked, all three are blocked and nothing is written. `output_source(state)` gives the file's `source`.

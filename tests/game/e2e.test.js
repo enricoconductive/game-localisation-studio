@@ -110,7 +110,7 @@ function hudMission() {
   return Object.keys(story.missions).find((m) => Object.values(story.missions[m].nodes).some((n) => n.kind === 'hud'));
 }
 
-async function openGame(opts, initScript) {
+async function openGame(opts, initScript, suffix) {
   const context = await browser.newContext(opts || {});
   if (initScript) await context.addInitScript(initScript);
   const page = await context.newPage();
@@ -124,7 +124,7 @@ async function openGame(opts, initScript) {
     errors.push(m.text());
   });
   page.on('dialog', (d) => { dialogs.push(d.message()); d.dismiss().catch(() => {}); });
-  await page.goto(baseUrl);
+  await page.goto(baseUrl + (suffix || ''));
   await ready(page);
   return { page, context, errors, dialogs };
 }
@@ -487,6 +487,85 @@ test('HTML/script in a translation is shown as literal text and never executed',
   await importFile(page, englishFile('intro', { '<img src=x onerror=alert(4)>': 'x' }));
   assert.equal(await page.evaluate(() => document.querySelectorAll('img[src="x"]').length), 0);
   assert.deepEqual(dialogs, []);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+/** "#t=<base64url(UTF-8 compact JSON)>", built like src/exports.py game_play_url. */
+const playHash = (obj) => '#t=' + Buffer.from(JSON.stringify(obj), 'utf8').toString('base64url').replace(/=+$/, '');
+const hashNow = (page) => page.evaluate(() => location.hash);
+
+test('a Colab game link (#t=…) loads the student translation; the hash is removed and a reload does not re-apply it', async () => {
+  const file = student || englishFile('intro');
+  const { page, context, errors } = await openGame(null, null, playHash(file));
+  let s = await L(page);
+  assert.equal(s.report.kind, 'applied', JSON.stringify(s.report));
+  assert.equal(s.dialogue, 'student');
+  assert.equal(await page.$eval('#dialogue-select', (e) => e.value), 'student');
+  assert.equal(await optionDisabled(page, 'student'), false);
+  assert.match(await page.$eval('#dialogue-select', (e) => e.selectedOptions[0].textContent), /^Student's imported English/);
+  const replay = file.source === 'replay' || file.source === 'mixed';
+  assert.equal(s.showing, "Showing: Student's imported English" + (replay ? ' · simulated (Replay Mode)' : ''));
+  assert.deepEqual((await page.evaluate(() => __lantern.imports)).map((i) => i.label), ['link from Colab']);
+  assert.match(await page.textContent('#report-summary'), /link from Colab/);
+  assert.equal(await hashNow(page), '');
+  assert.equal(page.url(), baseUrl);
+  await play(page, 'intro', endingPaths('intro').A, async (kind, node) => { await checkScreen(page, kind, node, file); });
+  // reload: no fragment any more, imports are not stored → Student disabled, Original Chinese
+  await page.reload();
+  await ready(page);
+  s = await L(page);
+  assert.equal(s.dialogue, 'original');
+  assert.equal(s.studentAvailable, false);
+  assert.equal(s.overrides, 0);
+  assert.equal(s.report, null);
+  assert.equal(await optionDisabled(page, 'student'), true);
+  assert.equal(await hashNow(page), '');
+  // the ordinary skip link (#stage) is not mistaken for a game link
+  await page.evaluate(() => { location.hash = '#stage'; });
+  await page.waitForTimeout(100);
+  assert.equal((await L(page)).report, null);
+  assert.equal(await hashNow(page), '#stage');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('broken or invalid game links show the error panel (English and 繁體中文); Chinese unchanged', async () => {
+  const good = playHash(student || englishFile('intro'));
+  const { page, context, errors } = await openGame(null, null, '#t=not$base64');
+  const check = async (code, uiLang) => {
+    const s = await L(page);
+    assert.equal(s.report.kind, 'rejected', code);
+    assert.ok(s.report.critical.some((i) => i.code === code), code + ' ' + JSON.stringify(s.report.critical));
+    assert.equal(s.dialogue, 'original');
+    assert.equal(s.overrides, 0);
+    assert.equal(await optionDisabled(page, 'student'), true);
+    assert.equal(await page.isVisible(`#report-critical li[data-code="${code}"]`), true, code);
+    assert.equal(await page.textContent('#report-title'), uiLang === 'en' ? 'This file was not applied' : '未能使用這個檔案');
+    const msg = await page.textContent(`#report-critical li[data-code="${code}"] .issue-msg`);
+    assert.equal(CJK.test(msg), uiLang === 'zh', msg);
+    assert.equal(await hashNow(page), '');
+  };
+  await check('invalid_link', 'en');
+  // the same page receiving a new link (hashchange) is handled too
+  await page.click('#ui-zh');
+  const nav = async (hash) => {
+    await page.evaluate(() => { document.getElementById('report').hidden = true; });
+    await page.evaluate((h) => { location.hash = h; }, hash);
+    await page.waitForSelector('#report:not([hidden])');
+  };
+  await nav('#t=' + Buffer.from([0xff, 0xfe, 0x7b]).toString('base64url'));
+  await check('invalid_link', 'zh');
+  await nav(good.slice(0, Math.floor(good.length / 2)));          // cut short → not valid JSON (or not UTF-8)
+  const cut = (await L(page)).report.critical.map((i) => i.code);
+  assert.ok(cut.includes('invalid_json') || cut.includes('invalid_link'), JSON.stringify(cut));
+  await check(cut[0], 'zh');
+  await nav(playHash(englishFile('intro', { 'intro.line.not_real': 'Hello' })));   // decodes, fails validation
+  await check('unknown_id', 'zh');
+  await nav('#t=' + 'A'.repeat(140 * 1024));
+  await check('file_too_large', 'zh');
+  await page.click('#ui-en');
+  await play(page, 'intro', endingPaths('intro').A, async (kind, node) => { await checkScreen(page, kind, node, null); });
   assert.deepEqual(errors, []);
   await context.close();
 });

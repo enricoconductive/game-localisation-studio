@@ -78,7 +78,7 @@ def test_notebook_structure_and_wording():
     for phrase in ("AI Director", "Quality Evaluator", "≈3 min", "≈5 min", "≈15 min", "≈20 min",
                    "≈25 min", "≈10 min", "35–40 min", "skip Section 1",
                    "Replay Mode", "Colab Secrets", "Import student JSON",
-                   "Student's imported English", "collaborators, not authorities"):
+                   "Play my translation in the game", "collaborators, not authorities"):
         assert phrase in md, phrase
 
 

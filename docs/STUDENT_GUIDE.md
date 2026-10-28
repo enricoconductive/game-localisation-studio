@@ -35,7 +35,7 @@ You start in **Replay Mode**, which needs no key (see section 9). If your instru
 3. **Value:** paste the key. Switch on **Notebook access**.
 4. In Section 1 choose the **Provider** and **Model**, click **Load my key**, then **Test connection**.
 
-**Never** paste a key into a code cell, a text box, the instructions, a comment, a chat or an email. The studio refuses to save or export anything that looks like a key, with the message "This text contains your API key — remove it from the …". (If Colab Secrets is not available, a hidden password box appears under the buttons. Use that box only.)
+**Never** paste a key into a code cell, a text box, the instructions, a comment, a chat or an email. The studio refuses to save or export anything that looks like a key, with the message "This text contains your API key — remove it from the …". (If Colab Secrets is not available, a hidden **Key:** box appears above the buttons. Use that box only.)
 
 The status bar shows **Live requests this session: n / 40**. This counts every live request in this notebook session, across all missions; it is not reset by **Load my key**, by changing provider or by starting a new mission. Replay requests are free and never counted.
 
@@ -48,7 +48,7 @@ The status bar shows **Live requests this session: n / 40**. This counts every l
 | **3 · Configure your agents** | Set up the translator (preset, sliders, instructions) and the reviewer (what it checks, how strict it is). | **Show the full prompt that will be sent** |
 | **4 · Run the agents** | Run the baseline, the translator and the reviewer. Change the prompt, run again and compare. | **2 · Run translator agent** |
 | **5 · Human Director** | Decide on every reviewer suggestion, add project rules, send feedback, edit, approve. | **Approve final translation** |
-| **6 · Test and export** | Write your reflection, export the three files, play the game. | **Export all three files** |
+| **6 · Test and export** | Write your reflection, play your translation, export the three files to hand in. | **▶ Play my translation in the game**, **Export all three files** |
 
 ## 4. Two roles, and when to swap
 
@@ -125,13 +125,13 @@ The **Technical checks** tab (automatic checks) is separate from the reviewer: *
 
 ## 8. Rules, revision, approval and export
 
-Section 5 is organised in tabs, **a · Decide** to **g · Approve**; the result of every button appears just below the tabs. In Sections 4–6, long tables scroll inside their own box, so the buttons stay where they are.
+Section 5 has five tabs, worked from left to right: **a · Decide** → **b · Rules** → **c · Revise** → **d · Final edits** → **e · Approve**. The result of every button appears just below the tabs. Under them, the collapsible **History — versions and decision log** panel holds the version history and the decision log. In Sections 4–6, long tables scroll inside their own box, so the buttons stay where they are.
 
 - **Add a project rule** for anything the agents should always follow, for example "Kit always calls Granny Wong 'Granny'." This is **project memory**: the rule is added to your agents' future prompts. The AI model itself is not retrained.
 - **Send accepted feedback to the translator.** Only strings with **accepted** findings are re-sent. Your own wording (edits and overrides) is applied directly, with no AI request, and rejected suggestions are never applied. You can then click **Review the revised strings (round 2, optional)**.
-- **Edit the final translation yourself** in the grid, then click **Save my edits as a new version**. Save your edits before running other steps.
-- **Version history:** use **Compare with current** or **Restore this version** if a change made things worse.
-- **Approve final translation** when you are satisfied. Any later change revokes the approval, so approve again. Then click **Download progress** (the studio reminds you): your autosave lives only in this Colab runtime.
+- **Edit the final translation yourself** in **d · Final edits**, then click **Save my edits as a new version**. Save your edits before running other steps.
+- **Version history** (in **History — versions and decision log**): use **Compare with current** or **Restore this version** if a change made things worse.
+- **Approve final translation** (in **e · Approve**) when you are satisfied. Any later change revokes the approval, so approve again. Then click **Download progress** (the studio reminds you): your autosave lives only in this Colab runtime.
 - **Export** in Section 6: **Export all three files** gives you:
   - `game_translation_en.json`, the file you play in the game;
   - `agent_settings.json`, your models, prompts, settings and rules (no keys);
@@ -143,8 +143,8 @@ Section 5 is organised in tabs, **a · Decide** to **g · Approve**; the result 
 
 ## 9. Test your translation in the game
 
-1. Open the game: <https://enricoconductive.github.io/game-localisation-studio/game/>
-2. Click **Import student JSON** and choose your `game_translation_en.json`. (Or click **Paste JSON**, paste the file's contents and click **Check and apply**.)
+1. After **Approve final translation**, click **▶ Play my translation in the game** in Section 6. The game opens in a new tab with your approved translation already loaded. (Before approval, Section 6 says "Approve in Section 5 first.")
+2. Link not working? Open the game (<https://enricoconductive.github.io/game-localisation-studio/game/>), click **Import student JSON** and choose your exported `game_translation_en.json`. (Or click **Paste JSON**, paste the file's contents and click **Check and apply**.)
 3. The game switches **Dialogue language** to **Student's imported English** by itself. Choose your mission and play both endings.
 4. To compare, switch **Dialogue language** to **Original Chinese** or **Reference English**. The reference is *one possible solution*, not the answer key.
 5. **Interface** switches the menus between **English** and **繁體中文**. **Reset to 中文** clears your imported file.

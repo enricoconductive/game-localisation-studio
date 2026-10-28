@@ -386,3 +386,69 @@ test('real content: example_student_export_intro.json is a valid intro file', { 
   const r = V.validateTranslationFile(fs.readFileSync(realFile('example_student_export_intro.json'), 'utf8'), real, { requireAllForMission: 'intro' });
   assert.equal(r.ok, true, JSON.stringify(r.critical));
 });
+
+/* ---------- shared links: #t=<base64url(UTF-8 JSON)> (CONTRACTS §5, §12) ---------- */
+
+const b64url = (buf) => Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const linkFor = (obj) => '#t=' + b64url(Buffer.from(JSON.stringify(obj), 'utf8'));
+function assertLinkError(r, code) {
+  assert.equal(r.ok, false);
+  assert.equal(r.code, code);
+  assert.ok(r.message.length > 10 && !CJK_RE_LINK.test(r.message), r.message);
+  assert.ok(CJK_RE_LINK.test(r.message_zh), r.message_zh);
+  assert.ok(r.fix_hint.length > 5 && CJK_RE_LINK.test(r.fix_hint_zh));
+  assert.equal(r.issue.severity, 'CRITICAL');
+  assert.equal(r.issue.code, code);
+  assert.ok(V.CODE_TITLES_EN[code] && CJK_RE_LINK.test(V.CODE_TITLES_ZH[code]));
+}
+const CJK_RE_LINK = /[㐀-鿿]/;
+
+test('decodeSharedTranslation: a valid link round-trips (Unicode, CJK, emoji) and validates', () => {
+  const obj = file(Object.assign({}, INTRO_EN, { 'intro.ui.start': 'Go 🏮 中秋' }));
+  const text = JSON.stringify(obj);
+  for (const frag of [linkFor(obj), linkFor(obj).slice(1), '#a=1&' + linkFor(obj).slice(1)]) {
+    const r = V.decodeSharedTranslation(frag);
+    assert.equal(r.ok, true, JSON.stringify(r));
+    assert.equal(r.text, text);
+    assert.equal(r.bytes, Buffer.byteLength(text, 'utf8'));
+  }
+  assert.equal(V.PLAY_PARAM, 't');
+  assert.ok(V.validateTranslationFile(V.decodeSharedTranslation(linkFor(obj)).text, manifest).ok);
+});
+
+test('decodeSharedTranslation: padding is optional (none, one or two "=")', () => {
+  for (const s of ['a', 'ab', 'abc', 'abcd', '中', '🏮x']) {
+    const std = Buffer.from(s, 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_');
+    for (const enc of [std, std.replace(/=+$/, ''), std.replace(/=/g, '%3D')]) {
+      const r = V.decodeSharedTranslation('#t=' + enc);
+      assert.equal(r.ok, true, enc);
+      assert.equal(r.text, s);
+    }
+  }
+});
+
+test('decodeSharedTranslation: bad base64 is invalid_link', () => {
+  for (const bad of ['#t=abc$def', '#t=ab+c', '#t=ab/c', '#t=a', '#t=abcde', '#t=ab cd', '#t=%E0%A4%A']) {
+    assertLinkError(V.decodeSharedTranslation(bad), 'invalid_link');
+  }
+});
+
+test('decodeSharedTranslation: bytes that are not UTF-8 are invalid_link', () => {
+  for (const bytes of [[0xff, 0xfe, 0x7b], [0x7b, 0xc3], [0xed, 0xa0, 0x80], [0xc0, 0xaf]]) {
+    assertLinkError(V.decodeSharedTranslation('#t=' + b64url(Buffer.from(bytes))), 'invalid_link');
+  }
+});
+
+test('decodeSharedTranslation: missing or empty parameter is invalid_link', () => {
+  for (const frag of ['', '#', '#stage', '#x=abc', 'tt=abc', '#t=', '#t==', null, undefined]) {
+    assertLinkError(V.decodeSharedTranslation(frag), 'invalid_link');
+  }
+});
+
+test('decodeSharedTranslation: decoded payload over 100 KB is file_too_large; exactly 100 KB is fine', () => {
+  const exact = Buffer.alloc(V.MAX_FILE_BYTES, 0x61);
+  assert.equal(V.decodeSharedTranslation('#t=' + b64url(exact)).ok, true);
+  assertLinkError(V.decodeSharedTranslation('#t=' + b64url(Buffer.alloc(V.MAX_FILE_BYTES + 1, 0x61))), 'file_too_large');
+  assertLinkError(V.decodeSharedTranslation('#t=' + 'A'.repeat(2 * 1024 * 1024)), 'file_too_large');
+  assert.ok(V.LINK_CODES.includes('invalid_link') && !V.ISSUE_CODES.includes('invalid_link'));
+});
