@@ -216,7 +216,9 @@ def _card(*children) -> widgets.VBox:
 
 
 def _hidden(w, hidden=True):
-    w.layout.display = "none" if hidden else None
+    # "" (not None): Colab's widget manager leaves an already-rendered display:none in place
+    # when the trait becomes None, so a panel shown after rendering stayed invisible.
+    w.layout.display = "none" if hidden else ""
     return w
 
 
