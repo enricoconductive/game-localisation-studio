@@ -142,7 +142,7 @@ def test_setup_cell_rejects_non_zip_and_oversize(tmp_path, monkeypatch):
 
 
 def test_setup_rerun_updates_the_copy_or_keeps_it(tmp_path, monkeypatch, capsys):
-    """Rerunning Step 0 in Colab tries a short `git pull --ff-only`; a failure is harmless."""
+    """Rerunning Step 0 in Colab fetches the latest code and resets to it; a failure is harmless."""
     ns = _setup_namespace(monkeypatch)
     calls = []
 
@@ -153,7 +153,7 @@ def test_setup_rerun_updates_the_copy_or_keeps_it(tmp_path, monkeypatch, capsys)
     monkeypatch.setattr(ns["subprocess"], "run", fake_run)
     ns["_update_copy"](tmp_path)
     (cmd, kw), = calls
-    assert cmd[:4] == ["git", "-C", str(tmp_path), "pull"] and "--ff-only" in cmd
+    assert cmd[:4] == ["git", "-C", str(tmp_path), "fetch"] and "main" in cmd
     assert kw["timeout"] <= 30 and kw["env"]["GIT_TERMINAL_PROMPT"] == "0"
     assert "Using the copy already downloaded" in capsys.readouterr().out
     monkeypatch.setattr(ns["subprocess"], "run", lambda cmd, **kw: None)
