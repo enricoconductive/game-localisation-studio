@@ -1,0 +1,24 @@
+{
+  "format": "lantern-mystery-translation",
+  "schema_version": "1.0",
+  "locale": "en-GB",
+  "mission": "intro",
+  "source": "replay",
+  "approved": true,
+  "generated_by": "Game Localisation Studio v0.3",
+  "generated_at": "2026-10-28T12:00:00Z",
+  "characters": {
+    "granny_wong": "Grandma Wong",
+    "kit": "Kit"
+  },
+  "strings": {
+    "intro.ui.start": "Start case",
+    "intro.narration.arrival": "It's the Moon Festival. {player_name} reaches the market, where the giant rabbit lantern has gone missing.",
+    "intro.line.granny_greeting": "Finally, a detective! My rabbit lantern has been stolen!",
+    "intro.line.kit_joke": "Relax, Grandma. A rabbit that big? It must have bounced off to the moon!",
+    "intro.choice.follow": "Tail the tall hat",
+    "intro.choice.ask": "Ask around",
+    "intro.ending.a": "The trail ends with the Riddle King, who was only borrowing the lantern for his riddles.",
+    "intro.ending.b": "Everyone has an opinion. When you finally turn round, the lantern is home again."
+  }
+}

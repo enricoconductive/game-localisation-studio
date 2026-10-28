@@ -1,0 +1,237 @@
+{
+  "schema_version": "1.0",
+  "id": "voice",
+  "mission": "voice",
+  "title": "Mission 2 — An Evening at the Lantern Shop (Challenge A: Character Voice)",
+  "title_zh": "紮作舖的晚上",
+  "estimated_minutes": 40,
+  "brief": "Granny Wong and Kit bicker in her lantern workshop: she scolds in proverbs, he answers in street slang. Underneath the teasing they love each other. Your job is to make an English player hear two completely different people, and to show their relationship, not just their words.",
+  "teaching_objectives": [
+    "Recognise how register, terms of address and code-mixing build a character.",
+    "Write instructions that make the translator agent keep two distinct voices.",
+    "Use the reviewer agent to spot 'flattened' lines where both characters sound the same.",
+    "Decide when to replace a 成語 with an English idiom and when to paraphrase."
+  ],
+  "scene_context": "7:30 p.m. on the eve of the lantern fair, in Granny Wong's cramped paper-craft (紮作) shop on Kwai Heung Street. Kit, the teenage delivery rider, is half an hour late with the mooncakes he promised her. She scolds; he exaggerates; she complains about young people; he teases her and then sincerely asks her to teach him. The player decides whether to keep Kit in the shop or send him back to work.",
+  "characters": [
+    {
+      "id": "granny_wong",
+      "name_zh": "黃婆婆",
+      "name_en_suggestion": "Granny Wong",
+      "profile": "Seventy-eight years old. A retired 紮作 (paper-craft) master who has made lanterns on Kwai Heung Street for over fifty years. The giant rabbit lantern is her masterpiece and has hung at the street's lantern fair for forty Mid-Autumn Festivals.",
+      "voice": "Measured, slightly old-fashioned written-style Chinese. Fond of 成語 (four-character idioms), 歇後語 (two-part allegorical sayings) and proverbs. Scolds as a way of showing love. Never uses slang or English words. In English she should sound like a proud, sharp-tongued grandmother: complete sentences, a little formal, proverb-flavoured, never 'cool'.",
+      "relationships": "Treats Kit like a grandson who needs constant correcting, and is secretly very fond of him. Polite but testing towards the detective."
+    },
+    {
+      "id": "kit",
+      "name_zh": "阿杰",
+      "name_en_suggestion": "Kit",
+      "profile": "Seventeen years old. A food-delivery rider who zips round the neighbourhood on an electric motorbike. Grew up on Kwai Heung Street and runs errands for Granny Wong.",
+      "voice": "Light Hong Kong colloquial colouring on mostly standard written Chinese: the occasional particle (啦, 㗎, 囉), a few slang words (走佬 'do a runner', 飆車 'speed', 爆滿 'swamped') and English code-mixing ('old school', 'feel'). Exaggerates for comic effect. In English he should sound young, casual and quick: contractions, slang, short bursts. He must never sound like Granny or like the Riddle King.",
+      "relationships": "Calls her 婆婆 (Granny). Teases her about being old-fashioned, but quietly looks after her."
+    }
+  ],
+  "glossary": [
+    {
+      "source": "婆婆",
+      "target": "Granny",
+      "strictness": "required",
+      "note": "How Kit addresses Granny Wong. Not 'Grandma' (she is not his grandmother) and not 'old lady'."
+    },
+    {
+      "source": "阿杰 / 阿杰仔",
+      "target": "Kit",
+      "strictness": "required",
+      "note": "Do not write 'Ah Kit' or 'Kit Boy'. Show the affectionate 仔 through tone if needed."
+    },
+    {
+      "source": "紮作 / 紮燈",
+      "target": "paper-craft / make lanterns",
+      "strictness": "preferred",
+      "note": "Traditional craft of bamboo-frame paper lanterns and figures."
+    },
+    {
+      "source": "雙黃蓮蓉",
+      "target": "double-yolk lotus-paste (mooncake)",
+      "strictness": "preferred",
+      "note": "Can be shortened to 'double-yolk mooncake' in dialogue."
+    },
+    {
+      "source": "外賣",
+      "target": "delivery / deliveries",
+      "strictness": "preferred",
+      "note": "Kit is a food-delivery rider."
+    },
+    {
+      "source": "桂香街",
+      "target": "Kwai Heung Street",
+      "strictness": "required",
+      "note": "Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'."
+    }
+  ],
+  "strings": [
+    {
+      "id": "voice.line.granny_scold",
+      "source": "阿杰仔，又遲到了！說好七點送月餅來，現在都七點半了。做人要「一諾千金」，懂不懂？",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "context": "Evening in Granny Wong's paper-craft shop, which is crammed to the ceiling with bamboo strips and coloured paper. Kit bursts in, late, carrying a box of mooncakes he promised to deliver.",
+      "intended_meaning": "Affectionate scolding. 阿杰仔 adds the diminutive 仔 ('little', 'boy') to his name: fond, and a reminder that she is the elder. He agreed to bring the mooncakes at seven and it is half past. 一諾千金 is an idiom, literally 'one promise, a thousand gold', meaning a promise must be kept. 懂不懂 ('understand or not?') is a teacher-like demand.",
+      "constraints": [
+        "Granny's voice: formal-ish, proverb-flavoured, scolding but loving",
+        "The term of address 阿杰仔 should signal both affection and seniority",
+        "Do not make her sound harsh or cold"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "cultural"
+      ]
+    },
+    {
+      "id": "voice.line.kit_excuse",
+      "source": "婆婆，冤枉呀！今晚單單爆滿，我飆車飆到差點飛上月球。雙黃蓮蓉一個都沒壓爛，你應該讚我才對㗎！",
+      "type": "dialogue",
+      "speaker": "kit",
+      "context": "Kit defends himself, out of breath, with comic exaggeration.",
+      "intended_meaning": "冤枉呀 = 'I've been wronged!', a mock-dramatic protest. 單單爆滿 = every order (單) maxed out, i.e. the night was crazy busy. 飆車 = riding very fast. The moon line is comic exaggeration on Mid-Autumn night. He then claims credit: not one double-yolk lotus-paste mooncake got squashed, so she should praise him. The final 㗎 adds a cheeky, insistent Hong Kong tone.",
+      "constraints": [
+        "Kit's voice: fast, slangy, exaggerated",
+        "Keep the moon joke",
+        "雙黃蓮蓉 should still be recognisably a mooncake"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "humour",
+        "cultural"
+      ]
+    },
+    {
+      "id": "voice.line.granny_tease",
+      "source": "哼，嘴巴倒比你那輛車還快。你們這一代，整天低頭「打卡」，連一盞燈籠都不會紮，真是一代不如一代。",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "context": "Granny is not impressed and turns the scolding into a generational complaint.",
+      "intended_meaning": "哼 is a disapproving 'hmph'. She jabs that his mouth is quicker than his bike. Then a complaint about his generation: heads always bowed over their phones, 打卡-ing (in quotation marks because she is quoting a word she finds silly: 'checking in' at places on social media), yet none of them can make a single lantern. 一代不如一代 = 'each generation is worse than the last', a stock saying.",
+      "constraints": [
+        "Granny's voice",
+        "Keep the generational contrast (phones vs. craft)",
+        "打卡 here means checking in / posting on social media, said with old-lady disapproval"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "ambiguity",
+        "cultural"
+      ]
+    },
+    {
+      "id": "voice.line.kit_soft",
+      "source": "不會就學囉。婆婆你教我啦——你的燈雖然很 old school，但真的很有 feel，我說真的。",
+      "type": "dialogue",
+      "speaker": "kit",
+      "context": "Kit's tone changes: still cheeky, but sincere. This is the line that shows he is secretly kind.",
+      "intended_meaning": "Turning point. 不會就學囉 = 'if I can't, I'll learn, simple as that' (囉 makes it shrug-like). He asks her to teach him. Then a compliment wrapped in teasing, code-mixing English as Hong Kong teenagers do: her lanterns are 'old school', but they have real 'feel' (soul, character). 我說真的 = 'I mean it': the sincerity is the point.",
+      "constraints": [
+        "Kit's voice, but with a sincere turn at the end",
+        "The source already mixes English words ('old school', 'feel'): decide how to show that code-mixing in English"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "ambiguity"
+      ]
+    },
+    {
+      "id": "voice.choice.teach",
+      "source": "請婆婆教阿杰紮燈",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice button 1 of 2: the player intervenes.",
+      "intended_meaning": "The player asks Granny to teach Kit lantern-making (紮燈 = to build a paper lantern on a bamboo frame).",
+      "constraints": [
+        "Maximum 40 characters",
+        "Button label: starts with a verb",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint",
+        "terminology"
+      ]
+    },
+    {
+      "id": "voice.choice.deliver",
+      "source": "讓阿杰先去送完外賣",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice button 2 of 2: the player sends Kit back to work.",
+      "intended_meaning": "The player lets Kit go and finish his food deliveries (外賣) first.",
+      "constraints": [
+        "Maximum 40 characters",
+        "Button label: starts with a verb",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "voice.ending.a",
+      "source": "婆婆嘴上罵阿杰「笨手笨腳」，手卻沒停過，一篾一篾地教他紮兔耳。午夜時分，桌上多了一隻歪頭的小兔燈。",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending A: Granny teaches Kit.",
+      "intended_meaning": "Contrast between words and actions: aloud she calls him 笨手笨腳 ('clumsy hands, clumsy feet'), but her hands never stop as she teaches him, strip by strip, to shape a rabbit ear. At midnight there is a new small rabbit lantern with a crooked (歪頭, 'tilted head') look: imperfect and lovable.",
+      "constraints": [
+        "Warm tone",
+        "Narration that still shows Granny's scolding love",
+        "Single paragraph"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "cultural"
+      ]
+    },
+    {
+      "id": "voice.ending.b",
+      "source": "阿杰跳上電單車，回頭大喊：「婆婆，明天我幫你搬燈，免費㗎！」婆婆揮揮手：「去吧去吧，路上慢點，別學那隻兔子亂跑。」",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending B: Kit rides off. Both characters speak inside the narration, so both voices must stay distinct in one string.",
+      "intended_meaning": "Kit jumps on his motorbike and shouts back that he will carry her lantern tomorrow, free (免費), with a cheeky 㗎. Granny waves him off with a grandmotherly warning: ride slowly, and don't run around like that rabbit (a callback to the missing lantern).",
+      "constraints": [
+        "Two voices in one string: Kit (casual) and Granny (written style)",
+        "Convert 「」 to English quotation marks",
+        "Single paragraph"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "formatting",
+        "humour"
+      ]
+    }
+  ]
+}

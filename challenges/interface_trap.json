@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0",
+  "id": "ui",
+  "mission": "ui",
+  "title": "Mission 4 — The Detective's Toolbar (Challenge C: The Interface Trap)",
+  "title_zh": "偵探工具欄",
+  "estimated_minutes": 40,
+  "brief": "Game interface text is short, but it breaks easily. These strings contain variables in curly brackets, tight character limits and a line break, and the Chinese word order differs from English. Translate them so the game still works, and use the validator to catch every technical error before you import the file.",
+  "teaching_objectives": [
+    "Keep placeholders such as {lantern_count} exactly as written, even when English word order changes.",
+    "Respect character limits, remembering that placeholder tokens count literally.",
+    "Know when a line break is allowed and when it breaks the layout.",
+    "Read the validator's report and fix CRITICAL issues before export."
+  ],
+  "scene_context": "The detective's HUD (heads-up display) during the lantern hunt on Kwai Heung Street: a status bar with lanterns found and coins, an inventory line showing the item just picked up, and a pop-up clue notification. The player can use the item now or later. The game fills in the values in curly brackets at runtime; they must not be translated or removed.",
+  "characters": [
+    {
+      "id": "kit",
+      "name_zh": "阿杰",
+      "name_en_suggestion": "Kit",
+      "profile": "Seventeen years old. A food-delivery rider who zips round the neighbourhood on an electric motorbike. Grew up on Kwai Heung Street and runs errands for Granny Wong.",
+      "voice": "Light Hong Kong colloquial colouring on mostly standard written Chinese: the occasional particle (啦, 㗎, 囉), a few slang words (走佬 'do a runner', 飆車 'speed', 爆滿 'swamped') and English code-mixing ('old school', 'feel'). Exaggerates for comic effect. In English he should sound young, casual and quick: contractions, slang, short bursts. He must never sound like Granny or like the Riddle King.",
+      "relationships": "Calls her 婆婆 (Granny). Teases her about being old-fashioned, but quietly looks after her."
+    }
+  ],
+  "glossary": [
+    {
+      "source": "燈籠",
+      "target": "lantern(s)",
+      "strictness": "required",
+      "note": "Consistent HUD term."
+    },
+    {
+      "source": "金幣",
+      "target": "coins",
+      "strictness": "required",
+      "note": "Not 'gold coins' (longer, and inconsistent with the HUD)."
+    },
+    {
+      "source": "背包",
+      "target": "bag",
+      "strictness": "preferred",
+      "note": "'Inventory' is acceptable but long."
+    },
+    {
+      "source": "線索",
+      "target": "clue",
+      "strictness": "required",
+      "note": ""
+    },
+    {
+      "source": "牌坊",
+      "target": "archway",
+      "strictness": "required",
+      "note": "Same term as in the Riddle King mission."
+    },
+    {
+      "source": "桂香街",
+      "target": "Kwai Heung Street",
+      "strictness": "required",
+      "note": "Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'."
+    }
+  ],
+  "strings": [
+    {
+      "id": "ui.hud.status",
+      "source": "燈籠：{lantern_total}盞中找到{lantern_count}盞｜金幣：{coins}",
+      "type": "ui",
+      "speaker": null,
+      "context": "Status bar at the top of the screen, always visible. Shows lanterns found and coins.",
+      "intended_meaning": "Two pieces of information: how many lanterns have been found out of the total, and the coin balance. The Chinese reads 'Lanterns: out of {total}, found {count}', so the total comes first. 盞 is the measure word for lamps; ｜ and ： are full-width punctuation. At runtime it shows numbers, e.g. 5 total, 2 found, 30 coins.",
+      "constraints": [
+        "Maximum 66 characters, counting each placeholder token as written (e.g. {lantern_count} = 15 characters)",
+        "Keep all three placeholders exactly as written",
+        "In Chinese the total comes before the count; in English the count usually comes first",
+        "Single line; no full-width punctuation (：｜) in English"
+      ],
+      "placeholders": [
+        "{lantern_total}",
+        "{lantern_count}",
+        "{coins}"
+      ],
+      "max_len": 66,
+      "allow_newlines": false,
+      "focus": [
+        "ui_constraint",
+        "variable",
+        "formatting"
+      ]
+    },
+    {
+      "id": "ui.hud.inventory",
+      "source": "已放進背包：{item_name}",
+      "type": "ui",
+      "speaker": null,
+      "context": "Inventory line shown when the player picks up an item. {item_name} is filled in by the game (for example a torch).",
+      "intended_meaning": "A notice that an item has been put into the player's bag (背包). Chinese puts the action first and the item last; English usually puts the item first.",
+      "constraints": [
+        "Maximum 28 characters, counting {item_name} as 11 characters",
+        "Keep {item_name} exactly as written; never translate the word inside the braces",
+        "Single line"
+      ],
+      "placeholders": [
+        "{item_name}"
+      ],
+      "max_len": 28,
+      "allow_newlines": false,
+      "focus": [
+        "ui_constraint",
+        "variable"
+      ]
+    },
+    {
+      "id": "ui.hud.toast",
+      "source": "新線索！\n{player_name}在牌坊下撿到一撮兔毛。",
+      "type": "ui",
+      "speaker": null,
+      "context": "Pop-up notification (toast) that appears for three seconds. It has two lines: a headline, then a detail.",
+      "intended_meaning": "Line 1: a headline announcing a new clue (線索). Line 2: the player picked up a tuft (一撮) of rabbit fur under the archway (牌坊). It is really white paper fluff from the lantern, which the player does not know yet.",
+      "constraints": [
+        "Maximum 64 characters including the line break",
+        "Exactly two lines: headline, line break, detail",
+        "Keep {player_name}"
+      ],
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": 64,
+      "allow_newlines": true,
+      "focus": [
+        "ui_constraint",
+        "variable",
+        "formatting"
+      ]
+    },
+    {
+      "id": "ui.choice.use",
+      "source": "使用道具",
+      "type": "choice",
+      "speaker": null,
+      "context": "Small button under the inventory: use the item now.",
+      "intended_meaning": "'Use (the) item': a game-interface verb. 道具 = item / prop.",
+      "constraints": [
+        "Maximum 10 characters",
+        "Button label: a verb",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 10,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "ui.choice.later",
+      "source": "稍後再說",
+      "type": "choice",
+      "speaker": null,
+      "context": "Small button under the inventory: decide later and close the panel.",
+      "intended_meaning": "'Deal with it later': a polite dismiss / postpone button.",
+      "constraints": [
+        "Maximum 10 characters",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 10,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "ui.ending.a",
+      "source": "你舉起{item_name}照向牌坊，牆上竟映出一隻大兔子的影子——兔燈就在附近！",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending A: the player uses the item.",
+      "intended_meaning": "The player raises the item and shines it at the archway; unexpectedly (竟) the shadow of a big rabbit appears on the wall, which means the lantern is close by. The game fills {item_name} with a bare noun (no article).",
+      "constraints": [
+        "Keep {item_name}; the game supplies the item name without an article, so write 'the {item_name}'",
+        "Single paragraph"
+      ],
+      "placeholders": [
+        "{item_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "variable",
+        "formatting"
+      ]
+    },
+    {
+      "id": "ui.ending.b",
+      "source": "你把背包一關，坐下來啃月餅。遠處傳來阿杰的聲音：「喂，{player_name}！兔子在這裡啦！」",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending B: the player closes the inventory and takes a break. Kit's voice is heard from down the street.",
+      "intended_meaning": "The player shuts the bag and sits down to nibble (啃) a mooncake. From far away Kit calls out, using the player's name: the rabbit is over here! 喂 is a casual 'hey'; 啦 keeps his relaxed tone.",
+      "constraints": [
+        "Keep {player_name}",
+        "Kit's line keeps his casual voice",
+        "Convert 「」 to English quotation marks",
+        "Single paragraph"
+      ],
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "variable",
+        "character_voice",
+        "formatting"
+      ]
+    }
+  ]
+}

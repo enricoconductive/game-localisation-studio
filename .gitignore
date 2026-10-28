@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+.env
+*.key
+studio_state*.json
+!fixtures/checkpoints/*.json
+.DS_Store
+test-results/
+playwright-report/
+.claude/
+dist/
+exports/
+.ipynb_checkpoints/
+.tmp_*
+# the private instructor pack (answer key) must never be committed here
+instructor-pack/
+ANSWER_KEY.md
+teaching_notes.json

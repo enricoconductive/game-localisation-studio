@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "limits": {
+    "request_cap": 40,
+    "max_tokens": 4000,
+    "timeout_seconds": 45,
+    "max_retries": 2,
+    "backoff_seconds": [
+      1,
+      3
+    ]
+  },
+  "anthropic": {
+    "display_name": "Claude (Anthropic)",
+    "base_url": "https://api.anthropic.com",
+    "anthropic_version": "2026-10-21",
+    "secret_name": "ANTHROPIC_API_KEY",
+    "send_temperature": false,
+    "timeout_seconds": 90,
+    "model_params": {},
+    "verified": true,
+    "notes": "POST /v1/messages with x-api-key and anthropic-version headers. On API version 2026-10-21 temperature/top_p/top_k are rejected, so the temperature mapping is shown to students but not sent. Thinking and effort are set per model in config/models.json (request_options); agent replies use structured outputs (output_config.format json_schema). max_tokens comes from limits.max_tokens (4000; thinking tokens would count toward it). timeout_seconds 90 overrides the shared 45 s limit for Claude. model_params can still add extra body fields per model."
+  },
+  "huggingface": {
+    "display_name": "Hugging Face",
+    "base_url": "https://router.huggingface.co/v1",
+    "secret_name": "HF_TOKEN",
+    "send_temperature": true,
+    "model_params": {},
+    "verified": false,
+    "docs_checked_on": "2026-10-28",
+    "notes": "OpenAI-compatible POST {base_url}/chat/completions with 'Authorization: Bearer <HF token>' (fine-grained token with 'Make calls to Inference Providers'). Shape taken from the Inference Providers docs; not tested live."
+  },
+  "hkbu": {
+    "display_name": "HKBU GenAI",
+    "base_url": "",
+    "path_template": "{base_url}/chat/completions",
+    "api_version": "",
+    "auth_header_name": "Authorization",
+    "auth_prefix": "Bearer ",
+    "extra_headers": {},
+    "query_params": {},
+    "request_style": "openai_chat",
+    "model_in_body": true,
+    "response_text_path": "",
+    "usage_input_path": "",
+    "usage_output_path": "",
+    "send_temperature": true,
+    "model_params": {},
+    "supports_json_schema": false,
+    "secret_name": "HKBU_API_KEY",
+    "models": [],
+    "verified": false,
+    "notes": "PLACEHOLDERS ONLY — no public specification was available. The instructor's colleague fills in base_url and the other fields. path_template may use {base_url}, {model} and {api_version}; query_params values may use the same. request_style is 'openai_chat' (choices.0.message.content) or 'anthropic_messages' (content.0.text); response_text_path overrides the default dot path. While base_url is empty students see: 'not set up for this course yet'. supports_json_schema: set true only if the gateway accepts strict JSON Schema replies (openai_chat → response_format json_schema; anthropic_messages → output_config.format)."
+  },
+  "replay": {
+    "display_name": "Replay Mode",
+    "fixtures_path": "fixtures/replay_outputs.json",
+    "verified": true,
+    "notes": "Serves prepared outputs; never uses the network or a key."
+  }
+}

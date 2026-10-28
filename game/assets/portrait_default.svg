@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Character">
+  <circle cx="60" cy="60" r="60" fill="#e8dcc4"/>
+  <path d="M18 120c4-26 22-36 42-36s38 10 42 36z" fill="#7f6f5a"/>
+  <circle cx="60" cy="54" r="24" fill="#a8977d"/>
+  <text x="60" y="64" font-size="28" text-anchor="middle" fill="#e8dcc4" font-family="sans-serif">?</text>
+</svg>

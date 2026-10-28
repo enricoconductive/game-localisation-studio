@@ -1,0 +1,17 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Enrico Bertelli
+
+The following content in this repository is licensed under CC BY 4.0:
+  - the story, characters and dialogue of "The Lantern Mystery"
+    (game/strings_manifest.json, game/story.json, game/translations/)
+  - the challenge materials (challenges/)
+  - the replay fixtures and catch-up states (fixtures/)
+  - the artwork (game/assets/)
+  - the student and instructor guides (docs/)
+
+You are free to share and adapt this material for any purpose, provided you
+give appropriate credit, provide a link to the licence, and indicate if
+changes were made.
+
+Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode

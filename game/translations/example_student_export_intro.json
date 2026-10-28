@@ -1,0 +1,24 @@
+{
+  "format": "lantern-mystery-translation",
+  "schema_version": "1.0",
+  "locale": "en-GB",
+  "mission": "intro",
+  "source": "replay",
+  "approved": true,
+  "generated_by": "Game Localisation Studio v0.3 (example student export, simulated)",
+  "generated_at": "2026-10-28T12:00:00Z",
+  "characters": {
+    "granny_wong": "Granny Wong",
+    "kit": "Kit"
+  },
+  "strings": {
+    "intro.ui.start": "Start Case",
+    "intro.narration.arrival": "On the eve of the Mid-Autumn Festival, Kwai Heung Street is decorated with lanterns. {player_name} has just arrived at the street corner and heard that the treasure of the street, the giant rabbit lantern, has disappeared without a trace.",
+    "intro.line.granny_greeting": "Are you the detective who came to investigate the case? Good, good. I made that rabbit lantern by hand with bamboo and paper, and it has accompanied the neighbours for forty Mid-Autumn Festivals. The thief is like a rabbit's tail — he will not last long!",
+    "intro.line.kit_joke": "Granny, calm down! The rabbit is bigger than my bike, so who could steal it? Unless it ran away by itself, back to the moon to celebrate Mid-Autumn with Sister Chang'e.",
+    "intro.choice.follow": "Follow the paper scraps on the ground",
+    "intro.choice.ask": "Ask the tea restaurant owner",
+    "intro.ending.a": "The coloured paper scraps led all the way to the rooftop, where the rabbit lantern was sitting safely, and its broken ear had been repaired with new paper. It turned out that Kit had secretly moved it there to fix it, wanting to give Granny a surprise.",
+    "intro.ending.b": "The tea restaurant owner said while wiping a cup: \"Rabbit? It just left on Kit's motorbike, and it was even wearing a helmet.\" You rushed out of the door, only to see a rabbit head floating further and further away in the traffic..."
+  }
+}

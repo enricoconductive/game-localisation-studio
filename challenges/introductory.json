@@ -1,0 +1,237 @@
+{
+  "schema_version": "1.0",
+  "id": "intro",
+  "mission": "intro",
+  "title": "Mission 1 — The Lantern Mystery (Introductory)",
+  "title_zh": "燈籠失蹤案",
+  "estimated_minutes": 80,
+  "brief": "The giant rabbit lantern of Kwai Heung Street has vanished the night before the Mid-Autumn lantern fair. Localise this short opening scene (8 strings) into English so that an international player can enjoy it. Every type of problem in this course appears here once: a tight button, a name variable, a proverb, slang, a cultural reference and a branching choice.",
+  "teaching_objectives": [
+    "Set up a translator agent and a reviewer agent, and compare their output with a context-free baseline.",
+    "Keep placeholders such as {player_name} intact and respect character limits on buttons.",
+    "Give two characters distinct English voices (proud, proverb-loving grandmother vs. slangy teenager).",
+    "Make culture-bound expressions (歇後語, 茶餐廳, the moon rabbit) work for international players.",
+    "Act as the human director: accept, edit or reject AI suggestions and justify the decision."
+  ],
+  "scene_context": "Kwai Heung Street (桂香街), an invented old street in Kowloon with a Sham Shui Po / Yau Ma Tei feel, on the evening before the Mid-Autumn Festival. The neighbours are hanging lanterns for tomorrow's street lantern fair, but its centrepiece, a giant paper rabbit lantern made forty years ago by Granny Wong, has disappeared. The player, an amateur detective, arrives, meets Granny and the delivery rider Kit, and chooses between two leads.",
+  "characters": [
+    {
+      "id": "granny_wong",
+      "name_zh": "黃婆婆",
+      "name_en_suggestion": "Granny Wong",
+      "profile": "Seventy-eight years old. A retired 紮作 (paper-craft) master who has made lanterns on Kwai Heung Street for over fifty years. The giant rabbit lantern is her masterpiece and has hung at the street's lantern fair for forty Mid-Autumn Festivals.",
+      "voice": "Measured, slightly old-fashioned written-style Chinese. Fond of 成語 (four-character idioms), 歇後語 (two-part allegorical sayings) and proverbs. Scolds as a way of showing love. Never uses slang or English words. In English she should sound like a proud, sharp-tongued grandmother: complete sentences, a little formal, proverb-flavoured, never 'cool'.",
+      "relationships": "Treats Kit like a grandson who needs constant correcting, and is secretly very fond of him. Polite but testing towards the detective."
+    },
+    {
+      "id": "kit",
+      "name_zh": "阿杰",
+      "name_en_suggestion": "Kit",
+      "profile": "Seventeen years old. A food-delivery rider who zips round the neighbourhood on an electric motorbike. Grew up on Kwai Heung Street and runs errands for Granny Wong.",
+      "voice": "Light Hong Kong colloquial colouring on mostly standard written Chinese: the occasional particle (啦, 㗎, 囉), a few slang words (走佬 'do a runner', 飆車 'speed', 爆滿 'swamped') and English code-mixing ('old school', 'feel'). Exaggerates for comic effect. In English he should sound young, casual and quick: contractions, slang, short bursts. He must never sound like Granny or like the Riddle King.",
+      "relationships": "Calls her 婆婆 (Granny). Teases her about being old-fashioned, but quietly looks after her."
+    }
+  ],
+  "glossary": [
+    {
+      "source": "兔仔燈 / 兔燈",
+      "target": "rabbit lantern",
+      "strictness": "required",
+      "note": "The missing lantern. Keep the same term in every string."
+    },
+    {
+      "source": "桂香街",
+      "target": "Kwai Heung Street",
+      "strictness": "required",
+      "note": "Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'."
+    },
+    {
+      "source": "中秋 / 中秋節",
+      "target": "Mid-Autumn Festival",
+      "strictness": "required",
+      "note": "Do not alternate with 'Moon Festival'. 'Mid-Autumn' alone is fine in dialogue."
+    },
+    {
+      "source": "茶餐廳",
+      "target": "cha chaan teng",
+      "strictness": "preferred",
+      "note": "Hong Kong-style diner. You may gloss or adapt it where space is tight; avoid the calque 'tea restaurant'."
+    },
+    {
+      "source": "嫦娥",
+      "target": "Chang'e",
+      "strictness": "preferred",
+      "note": "The moon goddess; the Jade Rabbit lives with her on the moon. A short gloss such as 'the Moon Goddess' is acceptable."
+    },
+    {
+      "source": "街坊",
+      "target": "the neighbours / the neighbourhood",
+      "strictness": "preferred",
+      "note": "Warm, community word; avoid 'residents'."
+    }
+  ],
+  "strings": [
+    {
+      "id": "intro.ui.start",
+      "source": "開始調查",
+      "type": "ui",
+      "speaker": null,
+      "context": "Start button on the title screen. It is the very first thing the player clicks.",
+      "intended_meaning": "Literally 'begin investigation'. Its job is a short, inviting call to action that starts the game.",
+      "constraints": [
+        "Maximum 12 characters",
+        "Button label: an imperative verb or short verb phrase",
+        "No full stop"
+      ],
+      "placeholders": [],
+      "max_len": 12,
+      "allow_newlines": false,
+      "focus": [
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "intro.narration.arrival",
+      "source": "中秋前夕，桂香街掛滿了燈籠。{player_name}剛到街口，就聽說燈會的鎮街之寶——巨型兔仔燈不翼而飛了。",
+      "type": "narration",
+      "speaker": null,
+      "context": "Opening narration after the player presses Start. Sets the place (an old Hong Kong street), the time (the night before the Mid-Autumn lantern fair) and the problem.",
+      "intended_meaning": "Sets time (eve of Mid-Autumn), place (the street, decorated with lanterns) and the inciting incident (the fair's centrepiece, a giant rabbit lantern, is gone). 鎮街之寶 = 'the treasure that guards the street', a twist on the set phrase 鎮店之寶 (a shop's prize piece). 不翼而飛 = 'flew off without wings', an idiom for 'vanished'; mildly funny because rabbits cannot fly.",
+      "constraints": [
+        "Keep {player_name} exactly as written",
+        "The player's name may be 'Detective' by default: avoid 'Detective {player_name}'",
+        "Narrative tense must be consistent"
+      ],
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "variable",
+        "cultural"
+      ]
+    },
+    {
+      "id": "intro.line.granny_greeting",
+      "source": "你就是來查案的偵探？好，好。那隻兔燈是我一篾一紙親手紮的，陪了街坊四十個中秋。偷燈的賊，我看是兔子尾巴——長不了！",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "context": "Granny Wong, the lantern's maker, meets the detective outside her paper-craft shop. She is upset but proud and in control.",
+      "intended_meaning": "She sizes up the detective ('so you're the one?'), then boasts: she built the lantern by hand, one bamboo strip (篾) and one sheet of paper at a time, and it has kept the neighbours company for forty festivals. She ends with a 歇後語 (two-part saying): 'a rabbit's tail — can't be long', i.e. the thief's luck will not last. The rabbit image fits the stolen rabbit lantern.",
+      "constraints": [
+        "Granny's voice: measured, proud, proverb-flavoured, no slang",
+        "Keep the rabbit image if you can; the joke is that the lost lantern is a rabbit"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "cultural",
+        "wordplay"
+      ]
+    },
+    {
+      "id": "intro.line.kit_joke",
+      "source": "婆婆，冷靜點啦！那隻兔比我的車還大，誰偷得走？除非牠自己走佬，跑回月球找嫦娥姐姐過中秋囉。",
+      "type": "dialogue",
+      "speaker": "kit",
+      "context": "Kit, the teenage delivery rider, pulls up on his motorbike and teases Granny about the missing lantern.",
+      "intended_meaning": "Kit tells Granny to calm down and argues nobody could carry off something bigger than his motorbike. Then the joke: unless the rabbit ran off by itself (走佬, Hong Kong slang for skipping town) and went home to the moon for a Mid-Autumn get-together with Chang'e. 姐姐 ('big sister') makes the goddess sound like a mate. 啦 and 囉 are casual particles. His breezy tone is also a little suspicious.",
+      "constraints": [
+        "Kit's voice: young, slangy, quick",
+        "Keep the moon-rabbit joke understandable for an international player",
+        "The colloquial words (走佬, the particles 啦 / 囉) should become casual English, not standard English"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "humour",
+        "ambiguity",
+        "cultural"
+      ]
+    },
+    {
+      "id": "intro.choice.follow",
+      "source": "跟著地上的彩紙碎走",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice button 1 of 2. The player notices scraps of coloured paper on the ground.",
+      "intended_meaning": "An action: follow the scraps of coloured paper (彩紙碎) on the ground, i.e. follow a trail.",
+      "constraints": [
+        "Maximum 40 characters",
+        "Button label: starts with a verb",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "intro.choice.ask",
+      "source": "去茶餐廳問問老闆",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice button 2 of 2. The cha chaan teng on the corner is open late.",
+      "intended_meaning": "An action: go and ask the owner of the local cha chaan teng (茶餐廳). 問問 ('ask a bit') makes it casual.",
+      "constraints": [
+        "Maximum 40 characters",
+        "Button label: starts with a verb",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint",
+        "cultural"
+      ]
+    },
+    {
+      "id": "intro.ending.a",
+      "source": "彩紙碎一路引到天台：兔燈好端端地坐在那裡，破了的耳朵補上了新紙。原來是阿杰偷偷搬來修補，想給婆婆一個驚喜。",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending A, reached by following the paper scraps.",
+      "intended_meaning": "Resolution: the trail leads to the rooftop (天台, the flat roof of a Hong Kong tenement). The lantern is unharmed (好端端) and its torn ear has a new paper patch. Reveal: Kit took it there in secret to repair it as a surprise for Granny.",
+      "constraints": [
+        "Warm, satisfying tone",
+        "Narration; keep the reveal at the end"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "cultural"
+      ]
+    },
+    {
+      "id": "intro.ending.b",
+      "source": "茶餐廳老闆邊抹杯邊說：「兔子？剛坐上阿杰的電單車走了，還戴著頭盔呢。」你衝出門，只見一個兔頭在車流中越飄越遠……",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending B, reached by asking at the cha chaan teng. A comic cliffhanger.",
+      "intended_meaning": "The owner, wiping a glass, reports deadpan that 'the rabbit' just left riding pillion on Kit's motorbike, even wearing a helmet. The player runs out and sees a rabbit's head drifting away into the traffic. Comic image plus open ending.",
+      "constraints": [
+        "Comic tone",
+        "Chinese corner quotes 「」 should become English quotation marks",
+        "Single paragraph (no line breaks)"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "humour",
+        "formatting"
+      ]
+    }
+  ]
+}

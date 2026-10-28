@@ -1,0 +1,317 @@
+{
+  "schema_version": "1.0",
+  "game": "lantern-mystery",
+  "source_locale": "zh-Hant-HK",
+  "characters": {
+    "granny_wong": {
+      "name_zh": "黃婆婆",
+      "name_en_default": "Granny Wong",
+      "colour": "#c0392b"
+    },
+    "kit": {
+      "name_zh": "阿杰",
+      "name_en_default": "Kit",
+      "colour": "#2471a3"
+    },
+    "riddle_king": {
+      "name_zh": "燈謎大王",
+      "name_en_default": "The Riddle King",
+      "colour": "#7d3c98"
+    }
+  },
+  "missions": [
+    {
+      "id": "intro",
+      "title_zh": "燈籠之謎",
+      "title_en": "The Lantern Mystery (fixture)",
+      "challenge_file": "challenges/introductory.json",
+      "string_ids": [
+        "intro.ui.start",
+        "intro.narration.arrival",
+        "intro.line.granny_greeting",
+        "intro.line.kit_joke",
+        "intro.choice.follow",
+        "intro.choice.ask",
+        "intro.ending.a",
+        "intro.ending.b"
+      ]
+    },
+    {
+      "id": "voice",
+      "title_zh": "婆婆與阿杰",
+      "title_en": "Granny and Kit (fixture)",
+      "challenge_file": "challenges/character_voice.json",
+      "string_ids": [
+        "voice.line.granny_scold",
+        "voice.line.kit_cheeky",
+        "voice.choice.apologise",
+        "voice.choice.joke",
+        "voice.ending.a",
+        "voice.ending.b"
+      ]
+    },
+    {
+      "id": "pun",
+      "title_zh": "燈謎大王",
+      "title_en": "The Riddle King (fixture)",
+      "challenge_file": "challenges/pun_boss.json",
+      "string_ids": [
+        "pun.line.riddle_intro",
+        "pun.choice.guess_a",
+        "pun.choice.guess_b",
+        "pun.ending.a",
+        "pun.ending.b"
+      ]
+    },
+    {
+      "id": "ui",
+      "title_zh": "夜市背包",
+      "title_en": "Night-Market Bag (fixture)",
+      "challenge_file": "challenges/interface_trap.json",
+      "string_ids": [
+        "ui.hud.status",
+        "ui.hud.inventory",
+        "ui.hud.btn_use",
+        "ui.hud.toast",
+        "ui.choice.use",
+        "ui.choice.later",
+        "ui.ending.a",
+        "ui.ending.b"
+      ]
+    }
+  ],
+  "strings": {
+    "intro.ui.start": {
+      "mission": "intro",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 12,
+      "allow_newlines": false
+    },
+    "intro.narration.arrival": {
+      "mission": "intro",
+      "type": "narration",
+      "speaker": null,
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "intro.line.granny_greeting": {
+      "mission": "intro",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "intro.line.kit_joke": {
+      "mission": "intro",
+      "type": "dialogue",
+      "speaker": "kit",
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "intro.choice.follow": {
+      "mission": "intro",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false
+    },
+    "intro.choice.ask": {
+      "mission": "intro",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false
+    },
+    "intro.ending.a": {
+      "mission": "intro",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "intro.ending.b": {
+      "mission": "intro",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "voice.line.granny_scold": {
+      "mission": "voice",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "voice.line.kit_cheeky": {
+      "mission": "voice",
+      "type": "dialogue",
+      "speaker": "kit",
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "voice.choice.apologise": {
+      "mission": "voice",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false
+    },
+    "voice.choice.joke": {
+      "mission": "voice",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 40,
+      "allow_newlines": false
+    },
+    "voice.ending.a": {
+      "mission": "voice",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "voice.ending.b": {
+      "mission": "voice",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "pun.line.riddle_intro": {
+      "mission": "pun",
+      "type": "dialogue",
+      "speaker": "riddle_king",
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "pun.choice.guess_a": {
+      "mission": "pun",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 50,
+      "allow_newlines": false
+    },
+    "pun.choice.guess_b": {
+      "mission": "pun",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 50,
+      "allow_newlines": false
+    },
+    "pun.ending.a": {
+      "mission": "pun",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "pun.ending.b": {
+      "mission": "pun",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "ui.hud.status": {
+      "mission": "ui",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [
+        "{lantern_count}",
+        "{lantern_total}",
+        "{coins}"
+      ],
+      "max_len": 60,
+      "allow_newlines": false
+    },
+    "ui.hud.inventory": {
+      "mission": "ui",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [
+        "{item_name}"
+      ],
+      "max_len": 28,
+      "allow_newlines": false
+    },
+    "ui.hud.btn_use": {
+      "mission": "ui",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 8,
+      "allow_newlines": false
+    },
+    "ui.hud.toast": {
+      "mission": "ui",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": 64,
+      "allow_newlines": true
+    },
+    "ui.choice.use": {
+      "mission": "ui",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 10,
+      "allow_newlines": false
+    },
+    "ui.choice.later": {
+      "mission": "ui",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 10,
+      "allow_newlines": false
+    },
+    "ui.ending.a": {
+      "mission": "ui",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [
+        "{item_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false
+    },
+    "ui.ending.b": {
+      "mission": "ui",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false
+    }
+  }
+}

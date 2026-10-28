@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0",
+  "id": "pun",
+  "mission": "pun",
+  "title": "Mission 3 — The Riddle King (Challenge B: The Pun Boss)",
+  "title_zh": "燈謎大王",
+  "estimated_minutes": 40,
+  "brief": "The Riddle King guards the next clue, and he only speaks in riddles and puns. A word-for-word translation would make him boring, or his riddle impossible to solve. Recreate his wordplay in English so that the riddle can still be solved and the jokes still land.",
+  "teaching_objectives": [
+    "Tell a pun that can be translated from one that has to be recreated.",
+    "Handle linked strings: a riddle, its answer and the reaction must change together.",
+    "Brief an AI translator to prioritise effect (solvable, funny) over literal meaning, and compare several creative solutions.",
+    "Handle a culture-specific genre (猜燈謎, lantern riddles) for international players."
+  ],
+  "scene_context": "Kwai Heung Street lantern fair. 猜燈謎 (guessing lantern riddles) is a real Mid-Autumn and Lantern Festival tradition: riddles hang from lanterns and whoever guesses right wins a small prize. The Riddle King, a retired teacher, runs the riddle stall and knows where the rabbit lantern is. He challenges the player with a character riddle; the right answer earns a clue, the wrong one earns a roasting.",
+  "characters": [
+    {
+      "id": "riddle_king",
+      "name_zh": "燈謎大王",
+      "name_en_suggestion": "The Riddle King",
+      "profile": "A retired schoolteacher in a tall hat and a long beard who runs the riddle stall at every lantern fair. Nobody on the street remembers his real name.",
+      "voice": "Theatrical, pompous and very pleased with himself. Speaks in rhymes, homophone puns and character riddles, with mock-classical phrasing. Roasts wrong answers mercilessly but good-naturedly.",
+      "relationships": "Knows everyone on the street and knows where the lantern is, but only hands out clues as prizes."
+    }
+  ],
+  "glossary": [
+    {
+      "source": "燈謎 / 猜燈謎",
+      "target": "lantern riddle / guessing lantern riddles",
+      "strictness": "required",
+      "note": "A festival tradition. Keep the word 'riddle'."
+    },
+    {
+      "source": "燈謎大王",
+      "target": "The Riddle King",
+      "strictness": "required",
+      "note": "Character name shown in the speaker tag."
+    },
+    {
+      "source": "兔燈 / 兔仔燈",
+      "target": "rabbit lantern",
+      "strictness": "required",
+      "note": "The missing lantern."
+    },
+    {
+      "source": "牌坊",
+      "target": "archway",
+      "strictness": "preferred",
+      "note": "Traditional Chinese decorative archway at the entrance to the street."
+    },
+    {
+      "source": "雙黃蓮蓉",
+      "target": "double-yolk lotus paste",
+      "strictness": "preferred",
+      "note": "Classic Hong Kong mooncake filling with two salted egg yolks."
+    },
+    {
+      "source": "桂香街",
+      "target": "Kwai Heung Street",
+      "strictness": "required",
+      "note": "Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'."
+    }
+  ],
+  "strings": [
+    {
+      "id": "pun.line.king_intro",
+      "source": "{player_name}，想知道兔燈的下落？先過我這關！猜中有賞；猜錯嘛……我就「月」笑「月」大聲！",
+      "type": "dialogue",
+      "speaker": "riddle_king",
+      "context": "At the lantern-riddle (猜燈謎) stall of the fair, a man in a tall hat and a long beard blocks the player's way: the Riddle King. He addresses the player by name.",
+      "intended_meaning": "He addresses the player by name, says he knows about the rabbit lantern, and sets the terms: get past his challenge first; a right guess wins a prize. The threat is a pun: the set pattern 越笑越大聲 ('the more..., the louder I laugh') is written with 月 (moon) in place of its exact homophone 越 (Cantonese jyut6, Mandarin yuè), and the quotation marks flag the swap. Tone: theatrical, gloating.",
+      "constraints": [
+        "Keep {player_name}",
+        "Recreate a moon pun (or another festival pun) in English",
+        "Theatrical, boastful tone"
+      ],
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "wordplay",
+        "humour",
+        "variable",
+        "character_voice"
+      ]
+    },
+    {
+      "id": "pun.line.king_riddle",
+      "source": "聽好了：「小白兔，愛玩耍，丟了尾巴也不怕。」——打一字！",
+      "type": "dialogue",
+      "speaker": "riddle_king",
+      "context": "The Riddle King poses a character riddle (字謎). 打一字 is the formula that tells the player the answer is a single written character.",
+      "intended_meaning": "A short rhyming verse (耍 / 怕 rhyme in both Cantonese and Mandarin): 'a little white rabbit loves to play; it loses its tail and isn't bothered'. 打一字 = 'the answer is one character'. The answer is 免: the character 兔 (rabbit) minus its final dot 丶 (the 'tail') is 免. Double clue: 免 also means 'spared / no need', echoing 也不怕 ('no need to worry'). The pun is visual, so it works whatever dialect the reader speaks.",
+      "constraints": [
+        "The riddle must be solvable in English, so the English answer will be a different word",
+        "Keep the idea of a rabbit losing its tail",
+        "Keep a riddle formula at the end (the English equivalent of 打一字)",
+        "The riddle, the correct answer button and Ending A must be translated together"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "wordplay",
+        "cultural"
+      ]
+    },
+    {
+      "id": "pun.choice.answer",
+      "source": "是「免」字！兔子沒了尾巴嘛！",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice button 1 of 2: the correct answer to the character riddle, with the player's reasoning.",
+      "intended_meaning": "The correct answer: 'It's the character 免! The rabbit (兔) lost its tail (the final dot).' 嘛 adds 'obviously!'. In English the button must name whatever word the English riddle points to.",
+      "constraints": [
+        "Maximum 50 characters",
+        "Must give the answer to the English riddle",
+        "Should show the 'rabbit without its tail' logic",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 50,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "wordplay",
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "pun.choice.mooncake",
+      "source": "月餅！一定是月餅！",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice button 2 of 2: the wrong answer from a hungry detective who was not listening.",
+      "intended_meaning": "A blurted wrong answer: 'Mooncake! It must be mooncake!' It is not even a character, which is the joke. It sets up the roast in Ending B.",
+      "constraints": [
+        "Maximum 50 characters",
+        "Single line"
+      ],
+      "placeholders": [],
+      "max_len": 50,
+      "allow_newlines": false,
+      "focus": [
+        "choice",
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "pun.ending.a",
+      "source": "燈謎大王撫鬚大笑：「妙！兔子沒了尾巴，就是『免』——這條線索就免費送你：要找燈，就得『等』。月亮爬上牌坊頂，兔子自然現身。」",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending A: the player solves the riddle and is rewarded with a clue, which is itself a pun.",
+      "intended_meaning": "He strokes his beard, laughs, and praises the answer (妙 'brilliant'). Two jokes: (1) the answer 免 leads into 免費 'free of charge', so the clue is given 'for free'; (2) the clue: to find the lantern (燈), you must wait (等). 燈 (lantern) and 等 (wait) are a NEAR-homophone, not an exact one: Cantonese dang1 / dang2, Mandarin dēng / děng (same syllable, different tone). Literal content of the clue: once the moon has risen as high as the top of the archway (牌坊), the rabbit shows up of its own accord.",
+      "constraints": [
+        "The first joke must follow from the English answer chosen for the riddle",
+        "Recreate a lantern / light / waiting pun",
+        "Nested quotation marks 『』 inside 「」 must become English double and single quotation marks (plain text only, no italics)",
+        "Single paragraph"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "wordplay",
+        "cultural",
+        "formatting"
+      ]
+    },
+    {
+      "id": "pun.ending.b",
+      "source": "燈謎大王笑彎了腰：「月餅？你餓到腦袋都變蓮蓉了！雙黃蓮蓉，兩隻蛋——正好是你的分數！」",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending B: wrong answer; the player gets comically roasted.",
+      "intended_meaning": "He doubles over laughing: the player is so hungry their brain has turned into lotus paste (蓮蓉, mooncake filling). Punchline: a double-yolk mooncake has two eggs, and 'getting an egg' (零蛋 / 鴨蛋) means scoring zero, so two eggs is exactly the player's score. Good-natured mockery.",
+      "constraints": [
+        "Recreate the 'egg = zero' joke or find an equivalent roast",
+        "Good-natured, not insulting",
+        "Single paragraph"
+      ],
+      "placeholders": [],
+      "max_len": null,
+      "allow_newlines": false,
+      "focus": [
+        "humour",
+        "wordplay",
+        "cultural"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "format": "lantern-mystery-translation",
+  "schema_version": "1.0",
+  "locale": "en-GB",
+  "source": "reference",
+  "approved": true,
+  "generated_by": "Course team (fixture)",
+  "note": "Reference translation prepared by the course team: one possible solution, not the only correct answer.",
+  "characters": {
+    "granny_wong": "Granny Wong",
+    "kit": "Kit",
+    "riddle_king": "The Riddle King"
+  },
+  "strings": {
+    "intro.ui.start": "Investigate",
+    "intro.narration.arrival": "Mid-Autumn night. {player_name} arrives at the night market and hears that Granny Wong's biggest rabbit lantern has vanished.",
+    "intro.line.granny_greeting": "You're here at last! Someone has stolen my rabbit lantern!",
+    "intro.line.kit_joke": "Granny, that rabbit's enormous. Unless it hopped back to the moon by itself!",
+    "intro.choice.follow": "Follow the man in the tall hat",
+    "intro.choice.ask": "Ask the neighbours first",
+    "intro.ending.a": "At the end of the street you find the Riddle King: he only borrowed the lantern for a riddle contest!",
+    "intro.ending.b": "The neighbours all talk at once. By the time you finish asking, the lantern is back on its stall.",
+    "voice.line.granny_scold": "Late again, you rascal! Hurry up and help me find that lantern.",
+    "voice.line.kit_cheeky": "Granny, your lantern's so pretty, whoever nicked it must have great taste!",
+    "voice.choice.apologise": "Tell Kit to apologise",
+    "voice.choice.joke": "Join in the joke",
+    "voice.ending.a": "Kit mumbles a sorry, and Granny Wong smiles and gives him a mooncake.",
+    "voice.ending.b": "Granny Wong chases you both three times round the night market.",
+    "pun.line.riddle_intro": "Ha! {player_name}, solve my riddle and the lantern is yours: 'With a heart it cannot hurry.' Which character?",
+    "pun.choice.guess_a": "The character 曼",
+    "pun.choice.guess_b": "The character 慢",
+    "pun.ending.a": "'Wrong!' The Riddle King roars with laughter and hangs the lantern one level higher.",
+    "pun.ending.b": "'Correct!' The Riddle King hands the lantern back with both hands.",
+    "ui.hud.status": "Lanterns {lantern_count}/{lantern_total} · Coins {coins}",
+    "ui.hud.inventory": "In your bag: {item_name}",
+    "ui.hud.btn_use": "Use",
+    "ui.hud.toast": "New clue!\n{player_name} found some rabbit fur.",
+    "ui.choice.use": "Use item",
+    "ui.choice.later": "Not now",
+    "ui.ending.a": "You hold up the {item_name}, and a giant rabbit's shadow appears on the wall.",
+    "ui.ending.b": "You sit down with a mooncake. Someone shouts: '{player_name}, the rabbit's over here!'"
+  }
+}

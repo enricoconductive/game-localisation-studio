@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "game": "lantern-mystery",
+  "source_locale": "zh-Hant-HK",
+  "characters": {
+    "granny_wong": {
+      "name_zh": "黃婆婆",
+      "name_en_default": "Granny Wong",
+      "colour": "#c0392b"
+    },
+    "kit": {
+      "name_zh": "阿杰",
+      "name_en_default": "Kit",
+      "colour": "#2471a3"
+    }
+  },
+  "missions": [
+    {
+      "id": "demo",
+      "title_zh": "示範",
+      "title_en": "Demo",
+      "challenge_file": "challenges/demo.json",
+      "string_ids": [
+        "demo.ui.start",
+        "demo.narration.arrival",
+        "demo.line.granny_greeting",
+        "demo.line.kit_reply",
+        "demo.line.granny_hint",
+        "demo.choice.follow",
+        "demo.choice.ask",
+        "demo.ending.a",
+        "demo.ui.coins"
+      ]
+    }
+  ],
+  "strings": {
+    "demo.ui.start": {
+      "mission": "demo",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 12,
+      "allow_newlines": false
+    },
+    "demo.narration.arrival": {
+      "mission": "demo",
+      "type": "narration",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 120,
+      "allow_newlines": true
+    },
+    "demo.line.granny_greeting": {
+      "mission": "demo",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": 80,
+      "allow_newlines": false
+    },
+    "demo.line.kit_reply": {
+      "mission": "demo",
+      "type": "dialogue",
+      "speaker": "kit",
+      "placeholders": [],
+      "max_len": 80,
+      "allow_newlines": false
+    },
+    "demo.line.granny_hint": {
+      "mission": "demo",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "placeholders": [],
+      "max_len": 80,
+      "allow_newlines": false
+    },
+    "demo.choice.follow": {
+      "mission": "demo",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 24,
+      "allow_newlines": false
+    },
+    "demo.choice.ask": {
+      "mission": "demo",
+      "type": "choice",
+      "speaker": null,
+      "placeholders": [],
+      "max_len": 24,
+      "allow_newlines": false
+    },
+    "demo.ending.a": {
+      "mission": "demo",
+      "type": "ending",
+      "speaker": null,
+      "placeholders": [
+        "{lantern_count}",
+        "{lantern_total}"
+      ],
+      "max_len": 100,
+      "allow_newlines": false
+    },
+    "demo.ui.coins": {
+      "mission": "demo",
+      "type": "ui",
+      "speaker": null,
+      "placeholders": [
+        "{coins}"
+      ],
+      "max_len": 16,
+      "allow_newlines": false
+    }
+  }
+}

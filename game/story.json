@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "missions": {
+    "intro": {
+      "start": "n1",
+      "nodes": {
+        "n1": {
+          "kind": "title",
+          "text": "intro.ui.start",
+          "next": "n2"
+        },
+        "n2": {
+          "kind": "line",
+          "text": "intro.narration.arrival",
+          "next": "n3"
+        },
+        "n3": {
+          "kind": "line",
+          "text": "intro.line.granny_greeting",
+          "next": "n4"
+        },
+        "n4": {
+          "kind": "line",
+          "text": "intro.line.kit_joke",
+          "next": "n5"
+        },
+        "n5": {
+          "kind": "choice",
+          "options": [
+            {
+              "text": "intro.choice.follow",
+              "next": "endA"
+            },
+            {
+              "text": "intro.choice.ask",
+              "next": "endB"
+            }
+          ]
+        },
+        "endA": {
+          "kind": "ending",
+          "text": "intro.ending.a",
+          "ending": "A"
+        },
+        "endB": {
+          "kind": "ending",
+          "text": "intro.ending.b",
+          "ending": "B"
+        }
+      }
+    },
+    "voice": {
+      "start": "n1",
+      "nodes": {
+        "n1": {
+          "kind": "line",
+          "text": "voice.line.granny_scold",
+          "next": "n2"
+        },
+        "n2": {
+          "kind": "line",
+          "text": "voice.line.kit_excuse",
+          "next": "n3"
+        },
+        "n3": {
+          "kind": "line",
+          "text": "voice.line.granny_tease",
+          "next": "n4"
+        },
+        "n4": {
+          "kind": "line",
+          "text": "voice.line.kit_soft",
+          "next": "n5"
+        },
+        "n5": {
+          "kind": "choice",
+          "options": [
+            {
+              "text": "voice.choice.teach",
+              "next": "endA"
+            },
+            {
+              "text": "voice.choice.deliver",
+              "next": "endB"
+            }
+          ]
+        },
+        "endA": {
+          "kind": "ending",
+          "text": "voice.ending.a",
+          "ending": "A"
+        },
+        "endB": {
+          "kind": "ending",
+          "text": "voice.ending.b",
+          "ending": "B"
+        }
+      }
+    },
+    "pun": {
+      "start": "n1",
+      "nodes": {
+        "n1": {
+          "kind": "line",
+          "text": "pun.line.king_intro",
+          "next": "n2"
+        },
+        "n2": {
+          "kind": "line",
+          "text": "pun.line.king_riddle",
+          "next": "n3"
+        },
+        "n3": {
+          "kind": "choice",
+          "options": [
+            {
+              "text": "pun.choice.answer",
+              "next": "endA"
+            },
+            {
+              "text": "pun.choice.mooncake",
+              "next": "endB"
+            }
+          ]
+        },
+        "endA": {
+          "kind": "ending",
+          "text": "pun.ending.a",
+          "ending": "A"
+        },
+        "endB": {
+          "kind": "ending",
+          "text": "pun.ending.b",
+          "ending": "B"
+        }
+      }
+    },
+    "ui": {
+      "start": "n1",
+      "nodes": {
+        "n1": {
+          "kind": "hud",
+          "texts": [
+            "ui.hud.status",
+            "ui.hud.inventory",
+            "ui.hud.toast"
+          ],
+          "next": "n2"
+        },
+        "n2": {
+          "kind": "choice",
+          "options": [
+            {
+              "text": "ui.choice.use",
+              "next": "endA"
+            },
+            {
+              "text": "ui.choice.later",
+              "next": "endB"
+            }
+          ]
+        },
+        "endA": {
+          "kind": "ending",
+          "text": "ui.ending.a",
+          "ending": "A"
+        },
+        "endB": {
+          "kind": "ending",
+          "text": "ui.ending.b",
+          "ending": "B"
+        }
+      }
+    }
+  }
+}

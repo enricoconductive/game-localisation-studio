@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0",
+  "id": "demo",
+  "mission": "demo",
+  "title": "Synthetic demo mission",
+  "title_zh": "示範",
+  "estimated_minutes": 10,
+  "brief": "Synthetic test challenge.",
+  "teaching_objectives": [
+    "testing"
+  ],
+  "scene_context": "Night on Cheung Chau island; the festival lanterns have gone missing.",
+  "characters": [
+    {
+      "id": "granny_wong",
+      "name_zh": "黃婆婆",
+      "name_en_suggestion": "Granny Wong",
+      "profile": "Warm elderly shop owner",
+      "voice": "Affectionate, teasing",
+      "relationships": "Treats the player like a grandchild"
+    },
+    {
+      "id": "kit",
+      "name_zh": "阿杰",
+      "name_en_suggestion": "Kit",
+      "profile": "Excitable teenager",
+      "voice": "Fast, slangy",
+      "relationships": "Granny's grandson"
+    }
+  ],
+  "glossary": [
+    {
+      "source": "紮作",
+      "target": "paper-craft",
+      "strictness": "preferred",
+      "note": "Traditional lantern craft"
+    }
+  ],
+  "strings": [
+    {
+      "id": "demo.ui.start",
+      "source": "開始調查",
+      "type": "ui",
+      "speaker": null,
+      "context": "Start button on the title screen",
+      "constraints": [
+        "Maximum 12 characters",
+        "Imperative verb"
+      ],
+      "placeholders": [],
+      "max_len": 12,
+      "allow_newlines": false,
+      "focus": [
+        "ui_constraint"
+      ]
+    },
+    {
+      "id": "demo.narration.arrival",
+      "source": "夜晚的長洲，\n燈籠在風中搖晃。",
+      "type": "narration",
+      "speaker": null,
+      "context": "Opening narration",
+      "constraints": [],
+      "placeholders": [],
+      "max_len": 120,
+      "allow_newlines": true,
+      "focus": [
+        "cultural"
+      ]
+    },
+    {
+      "id": "demo.line.granny_greeting",
+      "source": "{player_name}，你終於嚟啦！",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "context": "Granny greets the player warmly",
+      "constraints": [
+        "Keep {player_name}"
+      ],
+      "placeholders": [
+        "{player_name}"
+      ],
+      "max_len": 80,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice",
+        "variable"
+      ]
+    },
+    {
+      "id": "demo.line.kit_reply",
+      "source": "婆婆，燈籠唔見咗！",
+      "type": "dialogue",
+      "speaker": "kit",
+      "context": "Kit panics",
+      "constraints": [],
+      "placeholders": [],
+      "max_len": 80,
+      "allow_newlines": false,
+      "focus": [
+        "character_voice"
+      ]
+    },
+    {
+      "id": "demo.line.granny_hint",
+      "source": "紮作師傅一定知道。",
+      "type": "dialogue",
+      "speaker": "granny_wong",
+      "context": "Granny suggests asking the craftsman",
+      "constraints": [],
+      "placeholders": [],
+      "max_len": 80,
+      "allow_newlines": false,
+      "focus": [
+        "terminology"
+      ]
+    },
+    {
+      "id": "demo.choice.follow",
+      "source": "跟住婆婆",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice: follow Granny",
+      "constraints": [
+        "Maximum 24 characters"
+      ],
+      "placeholders": [],
+      "max_len": 24,
+      "allow_newlines": false,
+      "focus": [
+        "choice"
+      ]
+    },
+    {
+      "id": "demo.choice.ask",
+      "source": "問阿杰",
+      "type": "choice",
+      "speaker": null,
+      "context": "Choice: ask Kit",
+      "constraints": [
+        "Maximum 24 characters"
+      ],
+      "placeholders": [],
+      "max_len": 24,
+      "allow_newlines": false,
+      "focus": [
+        "choice"
+      ]
+    },
+    {
+      "id": "demo.ending.a",
+      "source": "你搵到{lantern_count}/{lantern_total}個燈籠。",
+      "type": "ending",
+      "speaker": null,
+      "context": "Ending A",
+      "constraints": [],
+      "placeholders": [
+        "{lantern_count}",
+        "{lantern_total}"
+      ],
+      "max_len": 100,
+      "allow_newlines": false,
+      "focus": [
+        "variable"
+      ]
+    },
+    {
+      "id": "demo.ui.coins",
+      "source": "金幣：{coins}",
+      "type": "ui",
+      "speaker": null,
+      "context": "HUD coin counter",
+      "constraints": [
+        "Maximum 16 characters"
+      ],
+      "placeholders": [
+        "{coins}"
+      ],
+      "max_len": 16,
+      "allow_newlines": false,
+      "focus": [
+        "ui_constraint",
+        "variable"
+      ]
+    }
+  ],
+  "instructor_notes": {
+    "discussion_points": [
+      "SECRET_INSTRUCTOR_NOTE"
+    ],
+    "defensible_solutions": {},
+    "deliberate_traps": [],
+    "common_ai_errors": []
+  }
+}

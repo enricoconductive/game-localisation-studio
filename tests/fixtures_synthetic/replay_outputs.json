@@ -1,0 +1,158 @@
+{
+  "label": "SIMULATED OUTPUT — prepared in advance by the course team. Not generated live.",
+  "schema_version": "1.0",
+  "challenges": {
+    "demo": {
+      "baseline": {
+        "translations": [
+          {
+            "id": "demo.ui.start",
+            "text": "Start the investigation"
+          },
+          {
+            "id": "demo.narration.arrival",
+            "text": "Night on Cheung Chau.\nLanterns sway in the wind."
+          },
+          {
+            "id": "demo.line.granny_greeting",
+            "text": "{玩家名字}, you finally came!"
+          },
+          {
+            "id": "demo.line.kit_reply",
+            "text": "Granny, the lanterns are gone!"
+          },
+          {
+            "id": "demo.line.granny_hint",
+            "text": "The tie-making master must know."
+          },
+          {
+            "id": "demo.choice.follow",
+            "text": "Follow Granny"
+          },
+          {
+            "id": "demo.choice.ask",
+            "text": "Ask Kit"
+          },
+          {
+            "id": "demo.ending.a",
+            "text": "You found {lantern_count}/{lantern_total} lanterns."
+          },
+          {
+            "id": "demo.ui.coins",
+            "text": "Coins: {coins}"
+          }
+        ]
+      },
+      "translator": {
+        "translations": [
+          {
+            "id": "demo.ui.start",
+            "text": "Investigate",
+            "note": ""
+          },
+          {
+            "id": "demo.narration.arrival",
+            "text": "Night on Cheung Chau.\nLanterns sway in the wind.",
+            "note": ""
+          },
+          {
+            "id": "demo.line.granny_greeting",
+            "text": "{player_name}, you're finally here!",
+            "note": ""
+          },
+          {
+            "id": "demo.line.kit_reply",
+            "text": "Granny, the lanterns are gone!",
+            "note": ""
+          },
+          {
+            "id": "demo.line.granny_hint",
+            "text": "The paper-craft master will know.",
+            "note": ""
+          },
+          {
+            "id": "demo.choice.follow",
+            "text": "Follow Granny",
+            "note": ""
+          },
+          {
+            "id": "demo.choice.ask",
+            "text": "Ask Kit",
+            "note": ""
+          },
+          {
+            "id": "demo.ending.a",
+            "text": "You found {lantern_count}/{lantern_total} lanterns.",
+            "note": ""
+          },
+          {
+            "id": "demo.ui.coins",
+            "text": "Coins: {coins}",
+            "note": ""
+          }
+        ]
+      },
+      "reviewer": {
+        "findings": [
+          {
+            "string_id": "demo.line.granny_greeting",
+            "category": "character_voice",
+            "severity": "major",
+            "issue": "Too flat for Granny",
+            "reasoning": "She is affectionate",
+            "suggestion": "{player_name}, dear, there you are at last!"
+          },
+          {
+            "string_id": "demo.line.kit_reply",
+            "category": "character_voice",
+            "severity": "minor",
+            "issue": "Kit sounds too calm",
+            "reasoning": "He panics",
+            "suggestion": "Granny! The lanterns — they're gone!"
+          },
+          {
+            "string_id": "demo.line.granny_hint",
+            "category": "terminology",
+            "severity": "minor",
+            "issue": "Glossary term could be clearer",
+            "reasoning": "Players may not know paper-craft",
+            "suggestion": "The lantern-maker will know."
+          },
+          {
+            "string_id": "demo.unknown.thing",
+            "category": "accuracy",
+            "severity": "minor",
+            "issue": "Unknown id",
+            "reasoning": "x",
+            "suggestion": "x"
+          }
+        ],
+        "overall_comment": "Solid draft; voices need work."
+      },
+      "reviewer_round2": {
+        "findings": [
+          {
+            "string_id": "demo.line.granny_greeting",
+            "category": "fluency",
+            "severity": "minor",
+            "issue": "Slightly long",
+            "reasoning": "Pacing",
+            "suggestion": "{player_name}, dear! At last!"
+          },
+          {
+            "string_id": "demo.ui.start",
+            "category": "fluency",
+            "severity": "minor",
+            "issue": "Not revised; must be filtered",
+            "reasoning": "x",
+            "suggestion": "Begin"
+          }
+        ],
+        "overall_comment": "Better."
+      },
+      "revision_notes": {
+        "demo.line.granny_greeting": "Warmer, more affectionate greeting (simulated)."
+      }
+    }
+  }
+}

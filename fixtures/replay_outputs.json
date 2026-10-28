@@ -1,0 +1,1507 @@
+{
+  "label": "SIMULATED OUTPUT — prepared in advance by the course team. Not generated live.",
+  "schema_version": "1.0",
+  "locale_note": "All prepared English is British English (en-GB). Replay serves the same text whichever English variant the project uses.",
+  "challenges": {
+    "intro": {
+      "baseline": {
+        "translations": [
+          {
+            "id": "intro.ui.start",
+            "text": "Start Investigation"
+          },
+          {
+            "id": "intro.narration.arrival",
+            "text": "Before Mid-Autumn, Osmanthus Street is hung full of lanterns. {player_name} just arrived at the street entrance and heard that the treasure of the lantern fair — the giant rabbit lantern — has flown away without wings."
+          },
+          {
+            "id": "intro.line.granny_greeting",
+            "text": "You are the detective who came to investigate the case? Good, good. That rabbit lantern was tied by my own hands, one bamboo one paper, and it accompanied the neighbours for forty Mid-Autumns. The thief who stole the lantern, I think, is a rabbit's tail — cannot be long!"
+          },
+          {
+            "id": "intro.line.kit_joke",
+            "text": "Grandma, calm down! That rabbit is bigger than my car, who can steal it? Unless it escaped by itself and ran back to the moon to find Sister Chang'e to celebrate Mid-Autumn."
+          },
+          {
+            "id": "intro.choice.follow",
+            "text": "Follow the colourful paper pieces on the ground"
+          },
+          {
+            "id": "intro.choice.ask",
+            "text": "Go to the tea restaurant to ask the boss"
+          },
+          {
+            "id": "intro.ending.a",
+            "text": "The colourful paper pieces led all the way to the rooftop: the rabbit lantern sat there well, and the broken ear was patched with new paper. It turned out Ah Kit secretly moved it to repair, wanting to give Grandma a surprise."
+          },
+          {
+            "id": "intro.ending.b",
+            "text": "The tea restaurant boss said while wiping the cup: 「Rabbit? Just sat on Ah Kit's motorcycle and left, still wearing a helmet.」 You rushed out the door, only saw a rabbit head floating farther and farther in the traffic……"
+          }
+        ]
+      },
+      "translator_variants": {
+        "faithful": {
+          "translations": [
+            {
+              "id": "intro.ui.start",
+              "text": "Begin investigation",
+              "note": "Literal rendering of 開始調查."
+            },
+            {
+              "id": "intro.narration.arrival",
+              "text": "On the eve of the Mid-Autumn Festival, Kwai Heung Street is hung full of lanterns. {player_name} has just reached the end of the street when they hear that the treasure that guards the street at the lantern fair, the giant rabbit lantern, has flown away without wings.",
+              "note": "Kept the source images 鎮街之寶 and 不翼而飛 close to the original."
+            },
+            {
+              "id": "intro.line.granny_greeting",
+              "text": "Are you the detective who has come to investigate the case? Good, good. I made that rabbit lantern with my own hands, one bamboo strip and one sheet of paper at a time, and it has kept the neighbours company for forty Mid-Autumn Festivals. As for the thief who stole the lantern, I think he is a rabbit's tail: he cannot last long!",
+              "note": "The two-part saying is translated closely; English players may not recognise it."
+            },
+            {
+              "id": "intro.line.kit_joke",
+              "text": "Granny, calm down a little! That rabbit is bigger than my motorbike. Who could steal it? Unless it ran away by itself and went back to the moon to spend the Mid-Autumn Festival with Sister Chang'e.",
+              "note": "姐姐 kept as 'Sister'."
+            },
+            {
+              "id": "intro.choice.follow",
+              "text": "Follow the coloured paper scraps",
+              "note": ""
+            },
+            {
+              "id": "intro.choice.ask",
+              "text": "Go and ask the cha chaan teng owner",
+              "note": "Glossary term kept."
+            },
+            {
+              "id": "intro.ending.a",
+              "text": "The scraps of coloured paper led all the way to the rooftop: the rabbit lantern was sitting there perfectly well, and its torn ear had been patched with new paper. It turned out that Kit had secretly moved it there to repair it, wanting to give Granny a surprise.",
+              "note": ""
+            },
+            {
+              "id": "intro.ending.b",
+              "text": "The owner of the cha chaan teng said while wiping a cup: \"Rabbit? It just left on Kit's motorbike, and it was even wearing a helmet.\" You rush out of the door and see only a rabbit's head floating further and further away in the traffic...",
+              "note": "Corner quotes converted to English quotation marks."
+            }
+          ]
+        },
+        "balanced": {
+          "translations": [
+            {
+              "id": "intro.ui.start",
+              "text": "Investigate",
+              "note": "Single verb to fit the 12-character button."
+            },
+            {
+              "id": "intro.narration.arrival",
+              "text": "It is the eve of the Mid-Autumn Festival and Kwai Heung Street is strung with lanterns. {player_name} has only just reached the corner when the news arrives: the fair's prize treasure, the giant rabbit lantern, has vanished without a trace.",
+              "note": ""
+            },
+            {
+              "id": "intro.line.granny_greeting",
+              "text": "So you're the detective? Good, good. I made that rabbit lantern with my own hands, every bamboo strip and every scrap of paper, and it has kept the neighbours company for forty Mid-Autumns. The thief? A rabbit's tail, that one: it won't be long.",
+              "note": "Kept the rabbit image from the saying."
+            },
+            {
+              "id": "intro.line.kit_joke",
+              "text": "Calm down, Granny! That rabbit's bigger than my bike, who could even nick it? Unless it ran off by itself, back to the moon to spend the festival with Chang'e.",
+              "note": "'Nick' gives Kit a casual British voice."
+            },
+            {
+              "id": "intro.choice.follow",
+              "text": "Follow the scraps of coloured paper",
+              "note": ""
+            },
+            {
+              "id": "intro.choice.ask",
+              "text": "Ask the tea restaurant owner",
+              "note": ""
+            },
+            {
+              "id": "intro.ending.a",
+              "text": "The paper scraps lead all the way up to the rooftop, where the rabbit lantern sits safe and sound, a new patch of paper over its torn ear. It was Kit all along: he had carried it up here in secret to repair it as a surprise for Granny.",
+              "note": ""
+            },
+            {
+              "id": "intro.ending.b",
+              "text": "The cha chaan teng owner keeps wiping a glass. 'The rabbit? It's just gone off on the back of Kit's motorbike, helmet and all.' You run out of the door and see a rabbit's head drifting away through the traffic……",
+              "note": "Single quotation marks, British style."
+            }
+          ]
+        },
+        "creative": {
+          "translations": [
+            {
+              "id": "intro.ui.start",
+              "text": "Hop to it!",
+              "note": "A rabbit pun for the start button."
+            },
+            {
+              "id": "intro.narration.arrival",
+              "text": "Mid-Autumn Eve, and Kwai Heung Street is ablaze with lanterns. But Detective {player_name} has barely set foot on the street before the gossip hits: the fair's crown jewel, the giant rabbit lantern, has hopped it. No wings required.",
+              "note": "'Hopped it' recreates the joke of 不翼而飛 with a rabbit image."
+            },
+            {
+              "id": "intro.line.granny_greeting",
+              "text": "Ah. So you're the detective. Good. Good. I built that rabbit with these two hands, strip of bamboo by strip of bamboo, sheet of paper by sheet of paper, and it has watched over this street for forty Mid-Autumns. The thief? Thieves and rabbits' tails, young one: neither lasts long.",
+              "note": "The saying is recast as an English-style proverb that keeps the rabbit."
+            },
+            {
+              "id": "intro.line.kit_joke",
+              "text": "Whoa, chill, Granny! That bunny's bigger than my bike, mate, who's nicking that? Unless it did a runner, bounced back up to the moon for a Mid-Autumn sleepover with the Man in the Moon, innit.",
+              "note": "Swapped Chang'e for a figure English players know."
+            },
+            {
+              "id": "intro.choice.follow",
+              "text": "Follow the confetti trail",
+              "note": ""
+            },
+            {
+              "id": "intro.choice.ask",
+              "text": "Grill the diner owner",
+              "note": "'Diner' is instantly clear to international players."
+            },
+            {
+              "id": "intro.ending.a",
+              "text": "The trail of paper scraps leads you up to the rooftop, and there sits the rabbit lantern, right as rain, a fresh patch on its torn ear. The culprit? Kit, who'd sneaked it up here to fix it for Granny, and had even tucked a little paper carrot under its paw for luck.",
+              "note": "Added a small touch of warmth for the ending."
+            },
+            {
+              "id": "intro.ending.b",
+              "text": "The diner owner doesn't even look up from the glass he's polishing. \"Rabbit? Just zoomed off on the back of Kit's motorbike. Helmet on and everything.\" You burst out of the door just in time to see a giant bunny head bobbing off into the traffic...",
+              "note": ""
+            }
+          ]
+        }
+      },
+      "reviewer": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "intro.ui.start",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Begin investigation' is 19 characters; the button allows at most 12.",
+              "reasoning": "The validator will block the export, and on screen the label would overflow the start button.",
+              "suggestion": "Investigate"
+            },
+            {
+              "string_id": "intro.line.granny_greeting",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "The two-part saying 兔子尾巴——長不了 is translated word for word ('he is a rabbit's tail: he cannot last long').",
+              "reasoning": "English players do not know this saying, so the line reads as nonsense instead of a sharp threat. The rabbit image is worth keeping because the missing lantern is a rabbit.",
+              "suggestion": "So you are the detective? Good, good. I made that rabbit lantern with my own hands, one bamboo strip and one sheet of paper at a time, and it has kept the neighbours company for forty Mid-Autumn Festivals. Whoever took it, mark me: a rabbit's tail is short, and so is a thief's run of luck."
+            },
+            {
+              "string_id": "intro.line.kit_joke",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Kit speaks in complete, polite sentences exactly like Granny, and 'Sister Chang'e' is a literal rendering of 嫦娥姐姐.",
+              "reasoning": "Kit is a cheeky seventeen-year-old; the slang (走佬) and the particles are his identity. 'Sister Chang'e' suggests a nun or a relative rather than the friendly 'big sis' tone.",
+              "suggestion": "Chill out, Granny! That bunny's bigger than my bike, who's even gonna lift it? Unless it legged it back to the moon to do Mid-Autumn with Chang'e, yeah?"
+            },
+            {
+              "string_id": "intro.ending.b",
+              "category": "fluency",
+              "severity": "major",
+              "issue": "The tense switches from past ('said') to present ('You rush ... see').",
+              "reasoning": "Mixed tenses inside one paragraph read as a mistake and slow down the comic pay-off.",
+              "suggestion": "Wiping a cup, the owner of the cha chaan teng says, \"Rabbit? It just left on the back of Kit's motorbike. Wearing a helmet, too.\" You rush outside and see only a rabbit's head floating further and further away into the traffic..."
+            },
+            {
+              "string_id": "intro.narration.arrival",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "'Kwai Heung Street' is a meaningless romanisation for English players. 桂香 means 'osmanthus fragrance'.",
+              "reasoning": "Translating the name would let players understand it and add atmosphere.",
+              "suggestion": "On the eve of the Mid-Autumn Festival, Osmanthus Street is hung full of lanterns. {player_name} has just reached the end of the street when they hear that the treasure that guards the street at the lantern fair, the giant rabbit lantern, has flown away without wings."
+            },
+            {
+              "string_id": "intro.choice.ask",
+              "category": "cultural",
+              "severity": "minor",
+              "issue": "'cha chaan teng' may mean nothing to international players.",
+              "reasoning": "A domestic equivalent makes the choice instantly understandable.",
+              "suggestion": "Go and ask the café owner"
+            }
+          ],
+          "overall_comment": "Accurate and complete, but stiff: the idioms are translated word for word and Kit sounds like Granny. The start button is over its limit and must be fixed before export."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "intro.line.granny_greeting",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "'A rabbit's tail, that one: it won't be long' is still a half-literal 歇後語; 'it won't be long' even suggests the opposite (that something will happen soon).",
+              "reasoning": "The point of the saying is that the thief's luck will not last. English readers need the meaning, ideally with the rabbit image.",
+              "suggestion": "So you're the detective? Good, good. I made that rabbit lantern with my own hands, every bamboo strip and every scrap of paper, and it has kept the neighbours company for forty Mid-Autumns. As for the thief, he won't get far. A rabbit's tail is short, and so is a thief's luck."
+            },
+            {
+              "string_id": "intro.choice.ask",
+              "category": "terminology",
+              "severity": "major",
+              "issue": "'tea restaurant' is a calque of 茶餐廳; the glossary asks for 'cha chaan teng', and Ending B already uses that term.",
+              "reasoning": "The calque means nothing to English speakers and the two strings now name the same place differently.",
+              "suggestion": "Ask the cha chaan teng owner"
+            },
+            {
+              "string_id": "intro.ending.b",
+              "category": "technical",
+              "severity": "minor",
+              "issue": "The Chinese ellipsis '……' has been kept at the end.",
+              "reasoning": "English uses '...' (or '…'); the double Chinese ellipsis looks like a font error in the game.",
+              "suggestion": "The cha chaan teng owner keeps wiping a glass. 'The rabbit? It's just gone off on the back of Kit's motorbike, helmet and all.' You run out of the door and see a rabbit's head drifting away through the traffic..."
+            },
+            {
+              "string_id": "intro.line.kit_joke",
+              "category": "character_voice",
+              "severity": "minor",
+              "issue": "Kit's slang ('nick', 'bike') is too informal for game text.",
+              "reasoning": "Standard English is easier for all international players to understand.",
+              "suggestion": "Please calm down, Granny. The rabbit is larger than my motorbike, so who could possibly steal it? Unless it ran away by itself and returned to the moon to celebrate the festival with Chang'e."
+            },
+            {
+              "string_id": "intro.narration.arrival",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "'Vanished without a trace' loses the playful image of 不翼而飛 ('flew off without wings'); rabbits cannot fly, which is the joke.",
+              "reasoning": "Keeping the image adds a little humour to the opening.",
+              "suggestion": "It is the eve of the Mid-Autumn Festival and Kwai Heung Street is strung with lanterns. {player_name} has only just reached the corner when the news arrives: the fair's prize treasure, the giant rabbit lantern, has flown off without any wings at all."
+            },
+            {
+              "string_id": "intro.ui.start",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'Investigate' is a bare command; a fuller label is friendlier.",
+              "reasoning": "Players should know exactly what the button does.",
+              "suggestion": "Start the case"
+            }
+          ],
+          "overall_comment": "A natural, readable translation. Three real problems: Granny's saying is still half-literal, 茶餐廳 became the calque 'tea restaurant', and the Chinese ellipsis was left in Ending B."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "intro.narration.arrival",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'Detective {player_name}' will display as 'Detective Detective' when the player keeps the default name.",
+              "reasoning": "The constraints warn about this: the default value of {player_name} is 'Detective'.",
+              "suggestion": "Mid-Autumn Eve, and Kwai Heung Street is ablaze with lanterns. But {player_name} has barely set foot on the street before the gossip hits: the fair's crown jewel, the giant rabbit lantern, has hopped it. No wings required."
+            },
+            {
+              "string_id": "intro.ending.a",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "The paper carrot under the lantern's paw is not in the source.",
+              "reasoning": "Adding plot details changes the story the writers wrote; endings must keep the reveal (Kit repaired it as a surprise) and nothing more.",
+              "suggestion": "The trail of paper scraps leads you up to the rooftop, and there sits the rabbit lantern, right as rain, a fresh patch on its torn ear. The culprit? Kit, who'd sneaked it up here to fix it as a surprise for Granny."
+            },
+            {
+              "string_id": "intro.line.kit_joke",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "Chang'e has been replaced by 'the Man in the Moon', and 'mate ... innit' piles on British slang.",
+              "reasoning": "The Mid-Autumn legend (Chang'e and the Jade Rabbit) is the reason a rabbit would go 'home' to the moon; without her the joke loses its logic. The extra slang also pushes Kit into parody.",
+              "suggestion": "Whoa, chill, Granny! That bunny's bigger than my bike, who's nicking that? Unless it did a runner, bounced back up to the moon for a Mid-Autumn sleepover with Chang'e."
+            },
+            {
+              "string_id": "intro.ui.start",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'Hop to it!' is a pun players will not understand as a start button.",
+              "reasoning": "A clear call to action is safer for the first thing the player clicks.",
+              "suggestion": "Begin the investigation"
+            },
+            {
+              "string_id": "intro.choice.ask",
+              "category": "cultural",
+              "severity": "minor",
+              "issue": "'diner' erases the cha chaan teng, a Hong Kong institution the glossary prefers to keep.",
+              "reasoning": "The Hong Kong setting is part of the game's identity.",
+              "suggestion": "Grill the cha chaan teng owner"
+            },
+            {
+              "string_id": "intro.line.granny_greeting",
+              "category": "character_voice",
+              "severity": "minor",
+              "issue": "Granny sounds old-fashioned; a modern idiom would be more relatable for young players.",
+              "reasoning": "Relatable characters keep players engaged.",
+              "suggestion": "So you're the detective, huh? Cool. I built that rabbit myself, bamboo and paper, and it's been the star of this street for forty Mid-Autumns. Whoever took it is toast, trust me."
+            }
+          ],
+          "overall_comment": "Lively and full of voice; the start-button pun works. But the narration says 'Detective {player_name}', Ending A adds a detail that is not in the source, and Chang'e has been replaced."
+        }
+      },
+      "reviewer_round2": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "intro.narration.arrival",
+              "category": "terminology",
+              "severity": "major",
+              "issue": "'Osmanthus Street' breaks the required glossary term 'Kwai Heung Street'.",
+              "reasoning": "The street name must be the same in every mission; the glossary marks it as required.",
+              "suggestion": "On the eve of the Mid-Autumn Festival, Kwai Heung Street is hung with lanterns. {player_name} has only just reached the end of the street when word comes that the pride of the lantern fair, the giant rabbit lantern, has vanished into thin air."
+            },
+            {
+              "string_id": "intro.line.kit_joke",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "The tag 'yeah?' at the end weakens the punchline.",
+              "reasoning": "Ending on the joke gives Kit better comic timing.",
+              "suggestion": "Chill out, Granny! That bunny's bigger than my bike, who's even gonna lift it? Unless it legged it back to the moon to do Mid-Autumn with Chang'e."
+            }
+          ],
+          "overall_comment": "The revised strings read much better. One small polish point; check the street name if it was changed."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "intro.ui.start",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Start the case' is 14 characters; the limit is 12.",
+              "reasoning": "The export will be blocked and the label will overflow the button.",
+              "suggestion": "Start case"
+            },
+            {
+              "string_id": "intro.line.kit_joke",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Kit now speaks careful standard English and sounds exactly like Granny.",
+              "reasoning": "His slang and rhythm are how players tell the two characters apart.",
+              "suggestion": "Calm down, Granny! That rabbit's bigger than my bike, who's gonna nick it? Unless it did a runner, all the way back to the moon for the festival with Chang'e."
+            },
+            {
+              "string_id": "intro.line.granny_greeting",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'he won't get far' and 'a thief's luck' make the same point twice.",
+              "reasoning": "Granny is more forceful if the proverb carries the threat alone.",
+              "suggestion": "So you're the detective? Good, good. I made that rabbit lantern with my own hands, every bamboo strip and every scrap of paper, and it has kept the neighbours company for forty Mid-Autumns. As for the thief: a rabbit's tail is short, and so is a thief's luck."
+            }
+          ],
+          "overall_comment": "The accepted changes work. Please double-check any string where the voice or the button length changed."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "intro.ui.start",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Begin the investigation' is 23 characters; the limit is 12.",
+              "reasoning": "The export will be blocked and the label will overflow the button.",
+              "suggestion": "Let's begin"
+            },
+            {
+              "string_id": "intro.line.granny_greeting",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Granny now says 'Cool' and 'toast': she sounds like a teenager, and her rabbit saying is gone.",
+              "reasoning": "Her profile says she is proud, a little formal and never 'cool'.",
+              "suggestion": "Ah. So you're the detective. Good. Good. I built that rabbit with these two hands, strip of bamboo by strip of bamboo, and it has watched over this street for forty Mid-Autumns. The thief? Thieves and rabbits' tails, young one: neither lasts long."
+            }
+          ],
+          "overall_comment": "The revised strings keep the creative energy without the over-adaptations. Check Granny's voice and the start button if they were changed."
+        }
+      },
+      "revision_notes": {
+        "intro.ui.start": "Shortened the button label to fit the 12-character limit, as accepted by the director (simulated).",
+        "intro.narration.arrival": "Applied the accepted change to the opening narration (simulated).",
+        "intro.line.granny_greeting": "Reworked Granny's line following the accepted feedback on her saying and voice (simulated).",
+        "intro.line.kit_joke": "Rewrote Kit's line following the accepted feedback (simulated).",
+        "intro.choice.follow": "Applied the accepted change to the choice label (simulated).",
+        "intro.choice.ask": "Applied the accepted change to the cha chaan teng choice (simulated).",
+        "intro.ending.a": "Applied the accepted change to Ending A (simulated).",
+        "intro.ending.b": "Applied the accepted change to Ending B (simulated)."
+      }
+    },
+    "voice": {
+      "baseline": {
+        "translations": [
+          {
+            "id": "voice.line.granny_scold",
+            "text": "Ah Kit boy, late again! Said good to deliver mooncakes at seven, now it is already seven thirty. Being a person needs \"one promise, a thousand gold\", understand or not?"
+          },
+          {
+            "id": "voice.line.kit_excuse",
+            "text": "Grandma, I am wronged! Tonight all orders were full, I drove so fast I almost flew to the moon. Not one double yolk lotus seed paste was crushed, you should praise me!"
+          },
+          {
+            "id": "voice.line.granny_tease",
+            "text": "Hmph, your mouth is faster than your car. Your generation, all day lowering heads to \"clock in\", cannot even tie one lantern, really each generation is not as good as the previous generation."
+          },
+          {
+            "id": "voice.line.kit_soft",
+            "text": "If cannot then learn. Grandma you teach me — your lantern although very old school, but really has feel, I am serious."
+          },
+          {
+            "id": "voice.choice.teach",
+            "text": "Please Grandma teach Ah Kit to tie lanterns"
+          },
+          {
+            "id": "voice.choice.deliver",
+            "text": "Let Ah Kit go to deliver the takeaway first"
+          },
+          {
+            "id": "voice.ending.a",
+            "text": "Grandma scolded Ah Kit \"clumsy hands and clumsy feet\" with her mouth, but her hands never stopped, teaching him one bamboo strip by one bamboo strip to tie rabbit ears. At midnight, there was one more crooked-head small rabbit lantern on the table."
+          },
+          {
+            "id": "voice.ending.b",
+            "text": "Ah Kit jumped on the motorcycle, turned back and shouted: 「Grandma, tomorrow I help you carry the lantern, free!」 Grandma waved her hand: 「Go go, slow on the road, don't learn that rabbit to run around.」"
+          }
+        ]
+      },
+      "translator_variants": {
+        "faithful": {
+          "translations": [
+            {
+              "id": "voice.line.granny_scold",
+              "text": "Kit, you are late again! We agreed that you would deliver the mooncakes at seven o'clock, and now it is already half past seven. A person must keep a promise worth a thousand pieces of gold. Do you understand?",
+              "note": "一諾千金 translated closely."
+            },
+            {
+              "id": "voice.line.kit_excuse",
+              "text": "Granny, I have been wronged! Every order tonight was full, and I rode so fast that I almost flew up to the moon. Not a single double-yolk lotus-paste mooncake was crushed. You should be praising me!",
+              "note": ""
+            },
+            {
+              "id": "voice.line.granny_tease",
+              "text": "Hmph. Your mouth is even faster than your motorbike. Your generation lowers their heads all day to \"check in\", yet none of you can even make a single lantern. Truly, each generation is worse than the one before.",
+              "note": "打卡 read as social-media check-ins."
+            },
+            {
+              "id": "voice.line.kit_soft",
+              "text": "If I cannot do it, then I will learn. Granny, please teach me. Your lanterns are very old school, but they really have feel. I am serious.",
+              "note": "Kept the English words from the source."
+            },
+            {
+              "id": "voice.choice.teach",
+              "text": "Ask Granny to teach Kit to make lanterns",
+              "note": "Exactly 40 characters."
+            },
+            {
+              "id": "voice.choice.deliver",
+              "text": "Let Kit finish his deliveries first",
+              "note": ""
+            },
+            {
+              "id": "voice.ending.a",
+              "text": "Granny scolded Kit aloud as \"clumsy of hand and foot\", but her hands never stopped, and strip by strip she taught him to make a rabbit's ear. At midnight, there was an extra small rabbit lantern with a tilted head on the table.",
+              "note": ""
+            },
+            {
+              "id": "voice.ending.b",
+              "text": "Kit jumped onto his motorbike, turned his head back and shouted, \"Granny, tomorrow I will help you carry the lantern, free of charge!\" Granny waved her hand. \"Go, go. Be slow on the road, and do not run around like that rabbit.\"",
+              "note": ""
+            }
+          ]
+        },
+        "balanced": {
+          "translations": [
+            {
+              "id": "voice.line.granny_scold",
+              "text": "Kit, late again! You said you'd bring the mooncakes at seven, and it's already half past. A promise is a promise, you know. Understand?",
+              "note": ""
+            },
+            {
+              "id": "voice.line.kit_excuse",
+              "text": "Granny, I've been framed! Orders were through the roof tonight, I was riding so fast I nearly flew to the moon. And not a single double-yolk lotus-paste mooncake got squashed. You ought to be praising me!",
+              "note": "冤枉 as a mock-dramatic protest."
+            },
+            {
+              "id": "voice.line.granny_tease",
+              "text": "Hmph. Your mouth's faster than your bike. Your lot spend all day staring at your phones, clocking in everywhere, and not one of you can make a single lantern. Every generation's worse than the last.",
+              "note": ""
+            },
+            {
+              "id": "voice.line.kit_soft",
+              "text": "Then I'll learn, won't I? Teach me, Granny. Your lanterns are dead old school, but they've got real vibes. I mean it.",
+              "note": "'Dead' and 'vibes' keep Kit young and British."
+            },
+            {
+              "id": "voice.choice.teach",
+              "text": "Ask Granny to teach Kit her craft",
+              "note": ""
+            },
+            {
+              "id": "voice.choice.deliver",
+              "text": "Let Kit get back to his deliveries",
+              "note": ""
+            },
+            {
+              "id": "voice.ending.a",
+              "text": "Granny grumbles that Kit has two left hands, but hers never stop moving as she shows him, strip by strip, how to shape a rabbit's ear. By midnight there is a small new rabbit lantern on the table, head cocked to one side.",
+              "note": ""
+            },
+            {
+              "id": "voice.ending.b",
+              "text": "Kit jumps on his motorbike and shouts back, \"Granny, I'll carry your lantern tomorrow, for free!\" Granny waves him away. \"Go on, go on. Take it slowly on the road, and don't go running off like that rabbit.\"",
+              "note": ""
+            }
+          ]
+        },
+        "creative": {
+          "translations": [
+            {
+              "id": "voice.line.granny_scold",
+              "text": "Kit, my lad! Late again! Seven o'clock, you swore, and the clock says half past. My word is my bond, young man, and so is yours. Or are those ears just for decoration?",
+              "note": "Granny's scolding made sharper and more affectionate."
+            },
+            {
+              "id": "voice.line.kit_excuse",
+              "text": "Granny, I'm innocent, I swear! Orders were off the scale tonight, I was going so fast I nearly hit orbit. Houston, we have mooncakes! And not one double-yolk got squished. Hero, me. Say it.",
+              "note": "A space joke for the moon exaggeration."
+            },
+            {
+              "id": "voice.line.granny_tease",
+              "text": "Hmph. That mouth runs faster than your bike. You lot have your noses glued to your phones, \"checking in\" at every noodle stall, and not one of you can tie a lantern. Each generation is a sorrier sight than the last.",
+              "note": ""
+            },
+            {
+              "id": "voice.line.kit_soft",
+              "text": "Can't do it? So I'll learn, easy. Go on, Granny, teach me! Your lanterns are well old school, yeah, but they've got proper heart. No lie.",
+              "note": "Code-mixing shown through teen slang."
+            },
+            {
+              "id": "voice.choice.teach",
+              "text": "Get Granny to pass on her craft",
+              "note": ""
+            },
+            {
+              "id": "voice.choice.deliver",
+              "text": "Send Kit zooming back to work",
+              "note": ""
+            },
+            {
+              "id": "voice.ending.a",
+              "text": "\"Butterfingers!\" Granny scolds, yet her hands never stop, guiding Kit's strip by strip through the curve of a rabbit's ear. At the stroke of midnight a little rabbit lantern sits on the table, its head tilted as if listening. Granny pretends not to smile, then hangs it in the shop window for the whole street to see.",
+              "note": ""
+            },
+            {
+              "id": "voice.ending.b",
+              "text": "Kit vaults onto his motorbike and hollers back, \"Granny! Lantern-moving tomorrow, on me, totally free!\" Granny flaps a hand at him. \"Off with you, then. Gently on those roads, and no running wild like that rabbit.\"",
+              "note": ""
+            }
+          ]
+        }
+      },
+      "reviewer": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "voice.line.kit_excuse",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Kit sounds like a formal adult ('I have been wronged', 'Every order tonight was full').",
+              "reasoning": "Kit's lines must sound young, quick and exaggerated; here they are indistinguishable from Granny's.",
+              "suggestion": "Granny, that's so unfair! Orders were mad tonight, I was going that fast I nearly ended up on the moon. And not one double-yolk mooncake got squashed. Some credit, please!"
+            },
+            {
+              "string_id": "voice.line.granny_scold",
+              "category": "fluency",
+              "severity": "major",
+              "issue": "'A promise worth a thousand pieces of gold' is a word-for-word calque of 一諾千金, and the affectionate 仔 of 阿杰仔 is lost.",
+              "reasoning": "The calque sounds odd in English; Granny should sound like a loving, scolding elder, not a textbook.",
+              "suggestion": "Kit, my lad, late again! Seven o'clock, we agreed, and here it is half past. A promise is worth its weight in gold, young man. Do you understand me?"
+            },
+            {
+              "string_id": "voice.line.kit_soft",
+              "category": "fluency",
+              "severity": "major",
+              "issue": "'They really have feel' copies the English word from the source, but it is not natural English.",
+              "reasoning": "In Hong Kong Chinese 'feel' is a code-mixed word; in English it needs a natural equivalent. Kit also sounds too formal here.",
+              "suggestion": "Can't do it? Then I'll learn, simple. Teach me, Granny, go on. Your lanterns are proper old school, but they've got heart. Seriously."
+            },
+            {
+              "string_id": "voice.ending.b",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Both voices inside the ending are flattened into the same neutral register ('do not run around like that rabbit').",
+              "reasoning": "This string is the test of two voices in one paragraph: Kit cheeky, Granny grandmotherly.",
+              "suggestion": "Kit leaps onto his motorbike and yells over his shoulder, \"Granny, I'll lug your lantern over tomorrow, no charge!\" Granny waves him off. \"Go on, then, go on. Ride slowly, and don't go gallivanting about like that rabbit.\""
+            },
+            {
+              "string_id": "voice.line.granny_tease",
+              "category": "terminology",
+              "severity": "minor",
+              "issue": "\"check in\" should be \"clock in\": 打卡 means recording your arrival at work.",
+              "reasoning": "Using the standard dictionary meaning avoids confusion.",
+              "suggestion": "Hmph. Your mouth is even faster than your motorbike. Your generation lowers their heads all day to \"clock in\", yet none of you can even make a single lantern. Truly, each generation is worse than the one before."
+            },
+            {
+              "string_id": "voice.choice.teach",
+              "category": "technical",
+              "severity": "minor",
+              "issue": "The label is exactly 40 characters, at the limit.",
+              "reasoning": "A shorter label leaves room and reads faster.",
+              "suggestion": "Let Granny teach Kit her craft"
+            }
+          ],
+          "overall_comment": "Every idea is translated, but both characters speak the same correct, formal English. Kit has lost his slang, and Granny's idiom is a calque. The choice button is exactly at its limit."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "voice.line.kit_excuse",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'I've been framed' means someone set him up for a crime; 冤枉呀 is a mock-dramatic 'that's unfair!'.",
+              "reasoning": "The mistranslation changes the joke and could even sound like a clue in a mystery game.",
+              "suggestion": "Granny, so not fair! Orders were through the roof tonight, I was riding so fast I nearly flew to the moon. And not a single double-yolk mooncake got squashed. You ought to be praising me!"
+            },
+            {
+              "string_id": "voice.line.granny_tease",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'clocking in' means arriving at work; 打卡 here is checking in on social media. Granny's contractions ('mouth's', 'generation's') also make her sound modern.",
+              "reasoning": "The generational contrast (phones vs. craft) is the point of the line.",
+              "suggestion": "Hmph. Your tongue is quicker than that bike of yours. Your generation does nothing but stare at phones and \"check in\" everywhere they go, and not one of you could make a lantern to save your life. Things go downhill with every generation."
+            },
+            {
+              "string_id": "voice.line.granny_scold",
+              "category": "character_voice",
+              "severity": "minor",
+              "issue": "The affection of 阿杰仔 is lost, and 'you know. Understand?' sounds casual rather than grandmotherly.",
+              "reasoning": "Granny scolds to show love and seniority.",
+              "suggestion": "Kit, my boy, late again! You said you'd bring the mooncakes at seven, and it's already half past. A promise is a promise, young man. Do you hear me?"
+            },
+            {
+              "string_id": "voice.line.kit_soft",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'dead old school' and 'vibes' are slang; standard English would be clearer.",
+              "reasoning": "Not all players know British slang.",
+              "suggestion": "If I cannot do it, I will learn. Please teach me, Granny. Your lanterns are traditional, but they have real character. I mean it."
+            },
+            {
+              "string_id": "voice.ending.a",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "'two left hands' is not the English idiom; it should be 'two left feet'.",
+              "reasoning": "Using a real idiom reads better.",
+              "suggestion": "Granny grumbles that Kit has two left feet, but hers never stop moving as she shows him, strip by strip, how to shape a rabbit's ear. By midnight there is a small new rabbit lantern on the table, head cocked to one side."
+            }
+          ],
+          "overall_comment": "Good, natural dialogue with distinct voices. Two meaning errors ('framed', 'clocking in') and one lost nuance in Granny's opening line."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "voice.ending.a",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "The last sentence (Granny hangs the lantern in the shop window) is not in the source.",
+              "reasoning": "Endings must not add events; the source ends on the small, crooked lantern on the table.",
+              "suggestion": "\"Butterfingers!\" Granny scolds, yet her hands never stop, guiding Kit's strip by strip through the curve of a rabbit's ear. At the stroke of midnight a little rabbit lantern sits on the table, its head tilted as if listening."
+            },
+            {
+              "string_id": "voice.line.kit_excuse",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "'Houston, we have mooncakes!' quotes an American space film; 'double-yolk' has also lost the word 'mooncake'.",
+              "reasoning": "The quote pulls players out of a Hong Kong street, and the constraint says 雙黃蓮蓉 must still be recognisably a mooncake.",
+              "suggestion": "Granny, I'm innocent, I swear! Orders were off the scale tonight, I was going so fast I nearly hit orbit. And not one double-yolk mooncake got squished. Hero, me. Say it."
+            },
+            {
+              "string_id": "voice.line.granny_scold",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Granny is too harsh; 'are those ears just for decoration?' is rude to a teenager.",
+              "reasoning": "Players should like Granny.",
+              "suggestion": "Oh Kit, dear, you're a little late. It's half past seven now. Please try to keep your promises, sweetheart."
+            },
+            {
+              "string_id": "voice.choice.teach",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "Kit has disappeared from the choice: the player asks Granny to teach Kit specifically.",
+              "reasoning": "The choice must say who learns, because the ending depends on it.",
+              "suggestion": "Ask Granny to teach Kit her craft"
+            },
+            {
+              "string_id": "voice.choice.deliver",
+              "category": "terminology",
+              "severity": "minor",
+              "issue": "外賣 should be translated as 'takeaway', not 'work'.",
+              "reasoning": "Keep terminology close to the source.",
+              "suggestion": "Send Kit back to his takeaway"
+            }
+          ],
+          "overall_comment": "Vivid, funny and the voices are unmistakable. Watch the over-adaptations: an added ending detail and an American film quote in a Hong Kong scene."
+        }
+      },
+      "reviewer_round2": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "voice.line.granny_tease",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'clock in' means arriving at work, but Granny is mocking young people on their phones: this is a social-media check-in.",
+              "reasoning": "The line's generational contrast depends on the phone meaning.",
+              "suggestion": "Hmph. Your mouth is even quicker than your motorbike. You young people spend all day bent over your phones to \"check in\", and none of you can make a single lantern. Each generation is worse than the one before."
+            },
+            {
+              "string_id": "voice.line.kit_excuse",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'Some credit, please!' is fine, but 'Orders were mad' may sound rude to some players; 'manic' keeps the slang without the ambiguity.",
+              "reasoning": "Small polish.",
+              "suggestion": "Granny, that's so unfair! Orders were manic tonight, I was going that fast I nearly ended up on the moon. And not one double-yolk mooncake got squashed. Some credit, please!"
+            }
+          ],
+          "overall_comment": "Kit now sounds like Kit. One terminology point if 打卡 was changed."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "voice.line.kit_soft",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Kit's turning-point line is now standard English ('If I cannot do it, I will learn'); he no longer sounds like himself.",
+              "reasoning": "The scene works because Kit stays cheeky while becoming sincere.",
+              "suggestion": "Can't do it? Then I'll learn. Teach me, Granny! Your lanterns are dead old school, but they've got real heart. I mean it."
+            }
+          ],
+          "overall_comment": "The meaning errors are fixed. Check Kit's sincere line if it was changed."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "voice.line.granny_scold",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "Granny now sounds sweet and generic ('sweetheart'); the scolding love and the promise idiom are gone.",
+              "reasoning": "Her profile: proud, sharp-tongued, scolds as a way of showing love.",
+              "suggestion": "Kit, my lad! Late again! Seven o'clock, you swore, and the clock says half past. My word is my bond, young man, and so is yours. Do you hear me?"
+            },
+            {
+              "string_id": "voice.choice.deliver",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'his takeaway' suggests his own meal or a takeaway shop, not food deliveries.",
+              "reasoning": "The glossary target for 外賣 is 'delivery / deliveries'.",
+              "suggestion": "Send Kit back to his deliveries"
+            }
+          ],
+          "overall_comment": "The over-adaptations are gone. Check Granny's opening and the delivery button if they changed."
+        }
+      },
+      "revision_notes": {
+        "voice.line.granny_scold": "Revised Granny's scolding following the accepted feedback (simulated).",
+        "voice.line.kit_excuse": "Revised Kit's excuse following the accepted feedback (simulated).",
+        "voice.line.granny_tease": "Revised Granny's complaint following the accepted feedback (simulated).",
+        "voice.line.kit_soft": "Revised Kit's sincere line following the accepted feedback (simulated).",
+        "voice.choice.teach": "Applied the accepted change to the choice label (simulated).",
+        "voice.choice.deliver": "Applied the accepted change to the choice label (simulated).",
+        "voice.ending.a": "Applied the accepted change to Ending A (simulated).",
+        "voice.ending.b": "Applied the accepted change to Ending B (simulated)."
+      }
+    },
+    "pun": {
+      "baseline": {
+        "translations": [
+          {
+            "id": "pun.line.king_intro",
+            "text": "{player_name}, want to know the whereabouts of the rabbit lantern? First pass my level! Guess right, there is reward; guess wrong... I will 'moon' laugh 'moon' louder!"
+          },
+          {
+            "id": "pun.line.king_riddle",
+            "text": "Listen well: \"Little white rabbit, loves to play, lost its tail and is not afraid.\" — Guess one character!"
+          },
+          {
+            "id": "pun.choice.answer",
+            "text": "It is the character \"免\"! The rabbit has no tail!"
+          },
+          {
+            "id": "pun.choice.mooncake",
+            "text": "Mooncake! Must be mooncake!"
+          },
+          {
+            "id": "pun.ending.a",
+            "text": "The Lantern Riddle King stroked his beard and laughed: \"Wonderful! The rabbit without tail is '免' — this clue is given to you for free: to find the lantern, you must 'wait'. When the moon climbs to the top of the archway, the rabbit will naturally appear.\""
+          },
+          {
+            "id": "pun.ending.b",
+            "text": "The Lantern Riddle King laughed until he bent his waist: \"Mooncake? You are so hungry your brain has become lotus seed paste! Double yolk lotus seed paste, two eggs — exactly your score!\""
+          }
+        ]
+      },
+      "translator_variants": {
+        "faithful": {
+          "translations": [
+            {
+              "id": "pun.line.king_intro",
+              "text": "{player_name}, do you want to know where the rabbit lantern is? First you must pass my test! If you guess correctly, there is a reward; if you guess wrong... I will laugh louder and louder!",
+              "note": "「月」 read as 越 ('the more ... the louder')."
+            },
+            {
+              "id": "pun.line.king_riddle",
+              "text": "Listen carefully: \"A little white rabbit loves to play; even when it loses its tail, it is not afraid.\" Guess one Chinese character!",
+              "note": "打一字 kept as 'guess one character'."
+            },
+            {
+              "id": "pun.choice.answer",
+              "text": "The character 'mian'! The rabbit lost its tail!",
+              "note": "免 romanised; 47 of 50 characters."
+            },
+            {
+              "id": "pun.choice.mooncake",
+              "text": "A mooncake! It must be a mooncake!",
+              "note": ""
+            },
+            {
+              "id": "pun.ending.a",
+              "text": "The Riddle King strokes his beard and laughs loudly: \"Wonderful! A rabbit without its tail is 'mian', which also means 'free', so I will give you this clue for free: to find the lantern, you must wait. When the moon climbs to the top of the archway, the rabbit will appear by itself.\"",
+              "note": "Nested quotation marks converted."
+            },
+            {
+              "id": "pun.ending.b",
+              "text": "The Riddle King laughs so hard that he bends over: \"A mooncake? You are so hungry that your brain has turned into lotus paste! A double-yolk lotus paste mooncake has two eggs, which is exactly your score!\"",
+              "note": ""
+            }
+          ]
+        },
+        "balanced": {
+          "translations": [
+            {
+              "id": "pun.line.king_intro",
+              "text": "{player_name}! So you want to find the rabbit lantern? You'll have to get past me first! Guess right and win a prize; guess wrong and I'll laugh more and more... moonly!",
+              "note": "Tried to keep a moon pun."
+            },
+            {
+              "id": "pun.line.king_riddle",
+              "text": "Listen closely: \"A little white bunny loves to play; lose its tail and it doesn't mind a bit.\" What word is left?",
+              "note": "Recreated as an English word riddle: bunny minus its tail."
+            },
+            {
+              "id": "pun.choice.answer",
+              "text": "Bun! Take the tail off 'bunny'!",
+              "note": "Answer matches the English riddle."
+            },
+            {
+              "id": "pun.choice.mooncake",
+              "text": "Mooncake! Definitely a mooncake!",
+              "note": ""
+            },
+            {
+              "id": "pun.ending.a",
+              "text": "The Riddle King strokes his beard and roars with laughter. \"Brilliant! A bunny without its tail is a bun, and this clue comes free with your bun: to find the lantern, you must wait. When the moon climbs over the archway, the rabbit will show itself.\"",
+              "note": "'Free' follows from the bun answer."
+            },
+            {
+              "id": "pun.ending.b",
+              "text": "The Riddle King doubles over with laughter. \"A mooncake? You're so hungry your brain has turned to lotus paste! Double yolk, two eggs... just like your score!\"",
+              "note": ""
+            }
+          ]
+        },
+        "creative": {
+          "translations": [
+            {
+              "id": "pun.line.king_intro",
+              "text": "Halt, {player_name}! Seeking the rabbit lantern, hmm? None shall pass without besting the Riddle King! Guess right and riches await. Guess wrong, and I shall laugh until I'm positively lunar-tic!",
+              "note": "'Lunar-tic' recreates the moon pun."
+            },
+            {
+              "id": "pun.line.king_riddle",
+              "text": "Hark, a riddle! \"A frisky white bunny lost its tail at play; now it's something you'd eat with your tea today.\" What word remains?",
+              "note": "New English riddle; answer: bun."
+            },
+            {
+              "id": "pun.choice.answer",
+              "text": "A bun! Bunny, tail snipped. Easy-peasy!",
+              "note": ""
+            },
+            {
+              "id": "pun.choice.mooncake",
+              "text": "Mooncake!! It's mooncake, I'd bet my lunch!",
+              "note": ""
+            },
+            {
+              "id": "pun.ending.a",
+              "text": "The Riddle King strokes his beard and booms with laughter. \"Bravo! Bunny minus tail equals bun, and tonight buns come free, so here's a free clue to go with it. Lanterns light up for those who wait: when the moon climbs over the archway, the rabbit will appear, and so will a certain delivery boy.\"",
+              "note": "Light / wait wordplay for 燈 / 等."
+            },
+            {
+              "id": "pun.ending.b",
+              "text": "The Riddle King collapses in a fit of giggles. \"A MOONCAKE? Your brain's gone full lotus paste! Double yolk? Double duck! That's two big fat zeros, my hungry friend, cracked straight onto your scorecard!\"",
+              "note": "British cricket 'duck' = zero."
+            }
+          ]
+        }
+      },
+      "reviewer": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "pun.line.king_riddle",
+              "category": "accuracy",
+              "severity": "critical",
+              "issue": "The riddle asks English players to guess a Chinese character (兔 minus a stroke = 免). Nobody can solve it.",
+              "reasoning": "The whole scene depends on a solvable riddle. It must be recreated in English while keeping a rabbit losing its tail.",
+              "suggestion": "Hear me well: \"A little white bunny loves to run and play; snip off its tail and it's lunch for the day!\" Now, what word is left?"
+            },
+            {
+              "string_id": "pun.choice.answer",
+              "category": "accuracy",
+              "severity": "critical",
+              "issue": "'The character mian' answers a riddle English players cannot read, and the label is close to the 50-character limit.",
+              "reasoning": "The answer button must name the answer to the English riddle.",
+              "suggestion": "Bun! A bunny with its tail snipped off!"
+            },
+            {
+              "string_id": "pun.line.king_intro",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "The moon pun 「月」笑「月」大聲 has disappeared: the line now just says 'I will laugh louder and louder'.",
+              "reasoning": "The Riddle King speaks in puns; the constraint asks for a moon or festival pun.",
+              "suggestion": "{player_name}! Seeking the rabbit lantern, are we? First you must get past me! Guess right and a prize is yours. Guess wrong... and I'll be howling at the moon with laughter!"
+            },
+            {
+              "string_id": "pun.ending.a",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "The ending still explains 'mian' and has lost the lantern / wait pun.",
+              "reasoning": "The ending must follow from the English answer, and recreate a light or waiting pun.",
+              "suggestion": "The Riddle King strokes his beard and chuckles. \"Splendid! A rabbit without its 't' is a rabbi, and a rabbi's blessing is free, so here's a free clue: good things come to those who wait. When the moon tops the archway, the rabbit will appear.\""
+            },
+            {
+              "string_id": "pun.ending.b",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "'Two eggs, which is exactly your score' is a literal rendering; English readers will not know that an egg means zero.",
+              "reasoning": "The roast must land as a joke in English.",
+              "suggestion": "The Riddle King bends double with laughter. \"A mooncake? You're so hungry your brain has turned to lotus paste! Two yolks in a mooncake, two big fat zeros on your scorecard!\""
+            },
+            {
+              "string_id": "pun.choice.mooncake",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'It must be a mooncake' is slightly stiff for a blurted answer.",
+              "reasoning": "The wrong answer should sound impulsive.",
+              "suggestion": "Mooncake! It's got to be mooncake!"
+            }
+          ],
+          "overall_comment": "The translation is accurate, but none of the wordplay survives: the riddle cannot be solved in English, the moon pun was silently 'corrected' away and the egg joke will not be understood. The riddle, the answer and Ending A must be fixed together."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "pun.ending.b",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "'two eggs... just like your score' only works if you know that an egg means zero in Chinese.",
+              "reasoning": "English players will miss the punchline of the roast.",
+              "suggestion": "The Riddle King doubles over with laughter. \"A mooncake? You're so hungry your brain has turned to lotus paste! Two yolks, two noughts, and not a single point to your name!\""
+            },
+            {
+              "string_id": "pun.ending.a",
+              "category": "cultural",
+              "severity": "major",
+              "issue": "The clue 'to find the lantern, you must wait' has lost the 燈 / 等 (lantern / wait) wordplay.",
+              "reasoning": "The constraint asks for a lantern, light or waiting pun.",
+              "suggestion": "The Riddle King strokes his beard and roars with laughter. \"Brilliant! A bunny without its tail is a bun, and this clue comes free with your bun: lighten up, and wait for the light. When the moon climbs over the archway, the rabbit will show itself.\""
+            },
+            {
+              "string_id": "pun.line.king_intro",
+              "category": "cultural",
+              "severity": "minor",
+              "issue": "'moonly' is not a word players will read as a pun; it just looks like a mistake.",
+              "reasoning": "A clear moon joke fits the Riddle King better.",
+              "suggestion": "{player_name}! So you want to find the rabbit lantern? You'll have to get past me first! Guess right and win a prize; guess wrong, and you'll hear me laughing all the way to the moon!"
+            },
+            {
+              "string_id": "pun.choice.answer",
+              "category": "technical",
+              "severity": "minor",
+              "issue": "The answer is too short to show the player's reasoning.",
+              "reasoning": "The button should explain the logic of the riddle.",
+              "suggestion": "A bun! Because if you take the tail 'ny' off the word 'bunny', you get 'bun'!"
+            },
+            {
+              "string_id": "pun.line.king_riddle",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "The source formula 打一字 says the answer is one character; the English should say so.",
+              "reasoning": "Faithfulness to the riddle formula.",
+              "suggestion": "Listen closely: \"A little white bunny loves to play; lose its tail and it doesn't mind a bit.\" Guess the Chinese character!"
+            }
+          ],
+          "overall_comment": "Good work: the riddle has been recreated in English and the answer and Ending A match it. The moon pun is weak, and two jokes (lantern / wait, egg = zero) were lost."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "pun.ending.a",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'and so will a certain delivery boy' is not in the source and gives away the culprit.",
+              "reasoning": "Adding a clue changes the mystery; the source only says the rabbit will appear.",
+              "suggestion": "The Riddle King strokes his beard and booms with laughter. \"Bravo! Bunny minus tail equals bun, and tonight buns come free, so here's a free clue to go with it. Lanterns light up for those who wait: when the moon climbs over the archway, the rabbit will appear.\""
+            },
+            {
+              "string_id": "pun.line.king_intro",
+              "category": "fluency",
+              "severity": "major",
+              "issue": "'lunar-tic' plays on 'lunatic', which some players may find insensitive.",
+              "reasoning": "A gentler pun avoids the issue without losing the humour.",
+              "suggestion": "Halt, {player_name}! Seeking the rabbit lantern, hmm? None shall pass without besting the Riddle King! Guess right and riches await. Guess wrong, and my laughter will be heard on the moon!"
+            },
+            {
+              "string_id": "pun.ending.b",
+              "category": "character_voice",
+              "severity": "minor",
+              "issue": "The Riddle King should not mock the player; remove the roast.",
+              "reasoning": "Players may feel insulted after a wrong answer.",
+              "suggestion": "The Riddle King smiles kindly. \"A mooncake? Not quite, but well tried! Better luck next time.\""
+            },
+            {
+              "string_id": "pun.choice.mooncake",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "The double exclamation mark looks careless on a button.",
+              "reasoning": "Interface text should look polished.",
+              "suggestion": "Mooncake! It's mooncake, I'd bet my lunch!"
+            },
+            {
+              "string_id": "pun.line.king_riddle",
+              "category": "cultural",
+              "severity": "minor",
+              "issue": "For British English, 'hare' is more natural than 'bunny'.",
+              "reasoning": "Locale-appropriate vocabulary.",
+              "suggestion": "Hark, a riddle! \"A frisky white hare lost its tail at play; now it's something you'd eat with your tea today.\" What word remains?"
+            }
+          ],
+          "overall_comment": "Very funny and consistent: riddle, answer and Ending A all use 'bun'. One spoiler was added to Ending A, and a few jokes are worth a second look."
+        }
+      },
+      "reviewer_round2": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "pun.line.king_intro",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'howling at the moon' can suggest anger or madness rather than laughter.",
+              "reasoning": "The Riddle King gloats; he does not rage.",
+              "suggestion": "{player_name}! Seeking the rabbit lantern, are we? First you must get past me! Guess right and a prize is yours. Guess wrong... and my laughter will reach the moon!"
+            }
+          ],
+          "overall_comment": "The riddle now works in English. Check that the answer button and Ending A use the same answer."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "pun.choice.answer",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "The answer label is now longer than 50 characters.",
+              "reasoning": "The export will be blocked and the button will overflow.",
+              "suggestion": "A bun! Snip the tail off 'bunny'!"
+            },
+            {
+              "string_id": "pun.line.king_riddle",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "The riddle now asks for a Chinese character, but the answer button says 'Bun!'. English players cannot solve it.",
+              "reasoning": "Riddle, answer and Ending A must match.",
+              "suggestion": "Listen closely: \"A little white bunny loves to play; lose its tail and it doesn't mind a bit.\" So, what word is left?"
+            }
+          ],
+          "overall_comment": "The jokes land better now. Check the answer button and the riddle if they changed."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "pun.line.king_riddle",
+              "category": "accuracy",
+              "severity": "critical",
+              "issue": "The riddle now uses 'hare', but the answer is 'bun': hare minus its tail is not bun.",
+              "reasoning": "The linked strings no longer match, so the scene cannot be solved.",
+              "suggestion": "Hark, a riddle! \"A frisky white bunny lost its tail at play; now it's something you'd have with your tea today.\" What word remains?"
+            },
+            {
+              "string_id": "pun.ending.b",
+              "category": "character_voice",
+              "severity": "major",
+              "issue": "The roast has gone: the Riddle King now sounds like a polite quiz host.",
+              "reasoning": "His character roasts wrong answers good-naturedly; the egg = zero joke is the pay-off of the wrong ending.",
+              "suggestion": "The Riddle King collapses in a fit of giggles. \"A MOONCAKE? Your brain's gone full lotus paste! Double yolk? Double duck! Two big fat zeros on your scorecard, my hungry friend!\""
+            }
+          ],
+          "overall_comment": "The spoiler is gone. Check the riddle and the roast if they were changed."
+        }
+      },
+      "revision_notes": {
+        "pun.line.king_intro": "Revised the Riddle King's opening following the accepted feedback on the moon pun (simulated).",
+        "pun.line.king_riddle": "Revised the riddle following the accepted feedback (simulated). Check the answer button and Ending A still match.",
+        "pun.choice.answer": "Applied the accepted change to the answer button (simulated).",
+        "pun.choice.mooncake": "Applied the accepted change to the wrong-answer button (simulated).",
+        "pun.ending.a": "Applied the accepted change to Ending A (simulated).",
+        "pun.ending.b": "Applied the accepted change to Ending B (simulated)."
+      }
+    },
+    "ui": {
+      "baseline": {
+        "translations": [
+          {
+            "id": "ui.hud.status",
+            "text": "Lantern: Out of {lantern_total} found {lantern_count}｜Gold coins: {coins}"
+          },
+          {
+            "id": "ui.hud.inventory",
+            "text": "Already put into backpack: {item_name}"
+          },
+          {
+            "id": "ui.hud.toast",
+            "text": "New clue!\n{玩家名稱} picked up a tuft of rabbit hair under the memorial archway."
+          },
+          {
+            "id": "ui.choice.use",
+            "text": "Use props"
+          },
+          {
+            "id": "ui.choice.later",
+            "text": "Talk about it later"
+          },
+          {
+            "id": "ui.ending.a",
+            "text": "You raise {item_name} to shine at the memorial archway, unexpectedly the wall reflected a big rabbit's shadow — the rabbit lantern is nearby!"
+          },
+          {
+            "id": "ui.ending.b",
+            "text": "You close the backpack, sit down to gnaw mooncake. From far away came Ah Kit's voice: 「Hey, {player_name}! The rabbit is here la!」"
+          }
+        ]
+      },
+      "translator_variants": {
+        "faithful": {
+          "translations": [
+            {
+              "id": "ui.hud.status",
+              "text": "Lanterns: {lantern_total}, found {lantern_count} | Coins: {coins}",
+              "note": "Kept the source order (total before count); 65 of 66 characters."
+            },
+            {
+              "id": "ui.hud.inventory",
+              "text": "Put in bag: {item_name}",
+              "note": ""
+            },
+            {
+              "id": "ui.hud.toast",
+              "text": "New clue!\n{player_name} picked up rabbit fur at the archway.",
+              "note": "Two lines, as in the source."
+            },
+            {
+              "id": "ui.choice.use",
+              "text": "Use the item",
+              "note": "Literal rendering of 使用道具."
+            },
+            {
+              "id": "ui.choice.later",
+              "text": "Later",
+              "note": ""
+            },
+            {
+              "id": "ui.ending.a",
+              "text": "You raise {item_name} and shine it at the archway, and unexpectedly the shadow of a big rabbit appears on the wall. The rabbit lantern is nearby!",
+              "note": ""
+            },
+            {
+              "id": "ui.ending.b",
+              "text": "You close your bag and sit down to eat a mooncake. Kit's voice comes from far away: \"Hey, {player_name}! The rabbit is here!\"",
+              "note": ""
+            }
+          ]
+        },
+        "balanced": {
+          "translations": [
+            {
+              "id": "ui.hud.status",
+              "text": "Lanterns: {lantern_total}/{lantern_count} · Coins: {coins}",
+              "note": "Compact HUD format."
+            },
+            {
+              "id": "ui.hud.inventory",
+              "text": "Added to your bag: {item_name}",
+              "note": "Item name last, as in the source."
+            },
+            {
+              "id": "ui.hud.toast",
+              "text": "New clue!\n{player_name} found rabbit fur beneath the archway.",
+              "note": ""
+            },
+            {
+              "id": "ui.choice.use",
+              "text": "Use",
+              "note": "Short verb for the small button."
+            },
+            {
+              "id": "ui.choice.later",
+              "text": "Not yet",
+              "note": ""
+            },
+            {
+              "id": "ui.ending.a",
+              "text": "You hold up the {item_name} and aim it at the archway. Suddenly the shadow of a giant rabbit looms on the wall. The lantern must be close by!",
+              "note": "Added 'the' before {item_name}, which arrives without an article."
+            },
+            {
+              "id": "ui.ending.b",
+              "text": "You shut your bag and sit down to nibble a mooncake. Then, from down the street, Kit calls out: \"Hey, {player_name}! The rabbit's over here!\"",
+              "note": ""
+            }
+          ]
+        },
+        "creative": {
+          "translations": [
+            {
+              "id": "ui.hud.status",
+              "text": "Lanterns: {lantern_count} of {lantern_total}\nCoins: {coins}",
+              "note": "Two tidy lines for readability."
+            },
+            {
+              "id": "ui.hud.inventory",
+              "text": "Bagged: {item_name}!",
+              "note": "Snappy pick-up message."
+            },
+            {
+              "id": "ui.hud.toast",
+              "text": "Ooh, a clue!\n{player name} spots rabbit fluff by the arch!",
+              "note": "A more excited headline."
+            },
+            {
+              "id": "ui.choice.use",
+              "text": "Use it!",
+              "note": ""
+            },
+            {
+              "id": "ui.choice.later",
+              "text": "Later!",
+              "note": ""
+            },
+            {
+              "id": "ui.ending.a",
+              "text": "You lift the {item_name} towards the archway and, whoa, a monster-sized rabbit shadow springs up the wall, ears and all. The lantern's close. You can practically hear it breathing!",
+              "note": ""
+            },
+            {
+              "id": "ui.ending.b",
+              "text": "You snap your bag shut and treat yourself to a mooncake. Then, from way down the street, Kit's voice: \"Oi, Detective! Over here! The bunny's here, innit!\"",
+              "note": "Kit calls the player by their role, which feels more natural."
+            }
+          ]
+        }
+      },
+      "reviewer": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "ui.choice.use",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Use the item' is 12 characters; the button allows 10.",
+              "reasoning": "The validator blocks the export, and the text would overflow the small button.",
+              "suggestion": "Use now"
+            },
+            {
+              "string_id": "ui.hud.status",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'Lanterns: {lantern_total}, found {lantern_count}' copies the Chinese order: with 2 of 5 found it shows 'Lanterns: 5, found 2'. It is also 65 of 66 characters.",
+              "reasoning": "English players expect 'found of total' (2 of 5); the current text reads as broken English in the most visible HUD element.",
+              "suggestion": "Lanterns {lantern_count} of {lantern_total} | Coins {coins}"
+            },
+            {
+              "string_id": "ui.ending.a",
+              "category": "fluency",
+              "severity": "major",
+              "issue": "'You raise {item_name}' has no article; with the item 'torch' the game shows 'You raise torch'.",
+              "reasoning": "The constraints say the game supplies a bare noun, so the English needs 'the {item_name}'.",
+              "suggestion": "You raise the {item_name} and shine it at the archway, and to your surprise the shadow of a huge rabbit appears on the wall. The rabbit lantern is close by!"
+            },
+            {
+              "string_id": "ui.hud.status",
+              "category": "technical",
+              "severity": "minor",
+              "issue": "Abbreviated HUD labels can be unclear; spell out what is counted.",
+              "reasoning": "Clarity for new players.",
+              "suggestion": "Lanterns found: {lantern_count} of {lantern_total} | Coins: {coins}"
+            },
+            {
+              "string_id": "ui.ending.b",
+              "category": "character_voice",
+              "severity": "minor",
+              "issue": "Kit's shout is flat ('The rabbit is here!'); his casual 喂 ... 啦 tone is lost.",
+              "reasoning": "Kit should sound like Kit even in a one-line callout.",
+              "suggestion": "You shut your bag and sit down to munch on a mooncake. From down the street comes Kit's voice: \"Oi, {player_name}! Rabbit's over here, come on!\""
+            },
+            {
+              "string_id": "ui.hud.toast",
+              "category": "technical",
+              "severity": "minor",
+              "issue": "Pop-up notifications should be a single line; remove the line break.",
+              "reasoning": "Single-line text is easier to lay out.",
+              "suggestion": "New clue! {player_name} picked up rabbit fur at the archway."
+            }
+          ],
+          "overall_comment": "Placeholders are all intact, but the 'Use' button is over its 10-character limit, the status bar keeps the Chinese order, and Ending A is missing an article before {item_name}."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "ui.hud.inventory",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Added to your bag: {item_name}' is 30 characters (the token counts as 11); the limit is 28.",
+              "reasoning": "The validator blocks the export.",
+              "suggestion": "In your bag: {item_name}"
+            },
+            {
+              "string_id": "ui.hud.status",
+              "category": "accuracy",
+              "severity": "major",
+              "issue": "'{lantern_total}/{lantern_count}' puts the total first, so a player who has found 2 of 5 sees '5/2'.",
+              "reasoning": "The validator cannot catch this: both placeholders are present. In English the count comes first.",
+              "suggestion": "Lanterns {lantern_count}/{lantern_total} · Coins {coins}"
+            },
+            {
+              "string_id": "ui.choice.use",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'Use' alone is a little abrupt next to 'Not yet'.",
+              "reasoning": "Paired buttons read better with a similar shape.",
+              "suggestion": "Use it"
+            },
+            {
+              "string_id": "ui.hud.toast",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "The toast should address the player more personally.",
+              "reasoning": "Personal notifications feel more immersive.",
+              "suggestion": "New clue!\nYou, {player name}, found rabbit fur beneath the archway."
+            },
+            {
+              "string_id": "ui.choice.later",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'Not yet' sounds as if the player will be forced to use the item later.",
+              "reasoning": "A neutral postpone button is clearer.",
+              "suggestion": "Maybe later"
+            }
+          ],
+          "overall_comment": "Clean and short, with a good article fix in Ending A. One CRITICAL length problem in the inventory line, and the status bar shows the numbers the wrong way round."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "ui.hud.status",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "The status bar contains a line break, but it must be a single line.",
+              "reasoning": "The validator blocks the export (newline_not_allowed); the HUD would push the screen down.",
+              "suggestion": "Lanterns: {lantern_count} of {lantern_total} · Coins: {coins}"
+            },
+            {
+              "string_id": "ui.hud.toast",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'{player name}' (with a space) is not the placeholder {player_name}; the game will print the braces literally and never insert the name.",
+              "reasoning": "Broken placeholder (placeholder_broken) and missing {player_name}.",
+              "suggestion": "Ooh, a clue!\n{player_name} spots rabbit fluff by the arch!"
+            },
+            {
+              "string_id": "ui.ending.b",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "{player_name} has been replaced by 'Detective', so the player's chosen name never appears.",
+              "reasoning": "Every placeholder in the source must appear in the translation (placeholder_missing).",
+              "suggestion": "You snap your bag shut and treat yourself to a mooncake. Then, from way down the street, Kit's voice: \"Oi, {player_name}! Over here! The bunny's here!\""
+            },
+            {
+              "string_id": "ui.ending.a",
+              "category": "accuracy",
+              "severity": "minor",
+              "issue": "'You can practically hear it breathing' adds an eerie idea that is not in the source.",
+              "reasoning": "Lanterns do not breathe; the source simply says the lantern is nearby.",
+              "suggestion": "You lift the {item_name} towards the archway and, whoa, a monster-sized rabbit shadow springs up the wall, ears and all. The lantern must be close!"
+            },
+            {
+              "string_id": "ui.hud.inventory",
+              "category": "fluency",
+              "severity": "minor",
+              "issue": "'Bagged' is slang; use the standard interface term.",
+              "reasoning": "Standard UI wording is clearer.",
+              "suggestion": "Added to inventory: {item_name}"
+            }
+          ],
+          "overall_comment": "Lively HUD text, but three technical faults will break the game: a line break in the single-line status bar, a broken {player name} placeholder in the toast, and {player_name} dropped from Ending B."
+        }
+      },
+      "reviewer_round2": {
+        "faithful": {
+          "findings": [
+            {
+              "string_id": "ui.hud.toast",
+              "category": "technical",
+              "severity": "major",
+              "issue": "The toast has lost its line break: it must be a headline and a detail on two lines.",
+              "reasoning": "The validator cannot catch this, but the pop-up layout expects two lines.",
+              "suggestion": "New clue!\n{player_name} found rabbit fur at the archway."
+            }
+          ],
+          "overall_comment": "Length and order problems are fixed. Check the toast layout if it was changed."
+        },
+        "balanced": {
+          "findings": [
+            {
+              "string_id": "ui.hud.toast",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'{player name}' is a broken placeholder; the player's name will never appear.",
+              "reasoning": "placeholder_broken and placeholder_missing block the export.",
+              "suggestion": "New clue!\n{player_name} found rabbit fur under the archway."
+            },
+            {
+              "string_id": "ui.choice.later",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Maybe later' is 11 characters; the limit is 10.",
+              "reasoning": "too_long blocks the export.",
+              "suggestion": "Later"
+            }
+          ],
+          "overall_comment": "The inventory line now fits and the status bar order is right. Check the toast and the 'later' button if they were changed."
+        },
+        "creative": {
+          "findings": [
+            {
+              "string_id": "ui.hud.inventory",
+              "category": "technical",
+              "severity": "critical",
+              "issue": "'Added to inventory: {item_name}' is 31 characters; the limit is 28.",
+              "reasoning": "too_long blocks the export.",
+              "suggestion": "Bagged it: {item_name}"
+            }
+          ],
+          "overall_comment": "All placeholders are now intact. Check the inventory line if it was changed."
+        }
+      },
+      "revision_notes": {
+        "ui.hud.status": "Applied the accepted change to the status bar (simulated). Placeholders copied exactly.",
+        "ui.hud.inventory": "Applied the accepted change to the inventory line (simulated).",
+        "ui.hud.toast": "Applied the accepted change to the clue notification (simulated).",
+        "ui.choice.use": "Shortened the button label as accepted by the director (simulated).",
+        "ui.choice.later": "Applied the accepted change to the button label (simulated).",
+        "ui.ending.a": "Applied the accepted change to Ending A (simulated).",
+        "ui.ending.b": "Applied the accepted change to Ending B (simulated)."
+      }
+    }
+  }
+}

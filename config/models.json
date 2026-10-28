@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "pricing_verified": true,
+  "pricing_checked_on": "2026-10-28",
+  "pricing_source": "Anthropic model table in the claude-api reference (cached 2026-10-06). Hugging Face prices depend on the routed provider and are not listed here.",
+  "anthropic": {
+    "default": "claude-haiku-5-5",
+    "request_options_note": "request_options are added to every Claude request for that model: 'thinking' goes into the body as is, 'effort' into output_config.effort. Haiku 5.5 thinks by default and thinking tokens count toward max_tokens, so it is turned off ({\"type\": \"disabled\"}, accepted at effort high or below). Sonnet 5.5 rejects 'disabled'; {\"type\": \"between_tools\"} turns thinking off there (effort high or below). Remove 'thinking' to use the model's default. If Claude answers 400 about thinking, the studio retries once without it and notes this in the run log.",
+    "models": [
+      {
+        "id": "claude-haiku-5-5",
+        "label": "Claude Haiku 5.5 — fastest and cheapest (recommended)",
+        "verified": true,
+        "pricing": {
+          "input_per_mtok": 0.1,
+          "output_per_mtok": 0.5,
+          "currency": "USD",
+          "note": "rate for prompts of 100K tokens or fewer (all prompts in this exercise)"
+        },
+        "request_options": {
+          "thinking": {
+            "type": "disabled"
+          },
+          "effort": "low"
+        }
+      },
+      {
+        "id": "claude-sonnet-5-5",
+        "label": "Claude Sonnet 5.5 — stronger, about 20x the price",
+        "verified": true,
+        "pricing": {
+          "input_per_mtok": 2.0,
+          "output_per_mtok": 10.0,
+          "currency": "USD"
+        },
+        "request_options": {
+          "thinking": {
+            "type": "between_tools"
+          },
+          "effort": "low"
+        }
+      }
+    ]
+  },
+  "huggingface": {
+    "default": "openai/gpt-oss-120b",
+    "note": "Instructor-configurable. Ids follow the Hugging Face Hub; append ':cheapest' or ':fastest' or ':<provider>' to choose a routing policy. Not tested live.",
+    "models": [
+      {
+        "id": "openai/gpt-oss-120b",
+        "label": "gpt-oss-120b (open weights)",
+        "verified": false,
+        "note": "Example model in the Inference Providers documentation (checked 2026-10-28)."
+      },
+      {
+        "id": "openai/gpt-oss-120b:cheapest",
+        "label": "gpt-oss-120b via the cheapest provider",
+        "verified": false
+      }
+    ]
+  },
+  "hkbu": {
+    "default": "",
+    "note": "Fill in the model names published by the HKBU GenAI service. Leave empty until confirmed.",
+    "models": []
+  },
+  "replay": {
+    "default": "replay",
+    "models": [
+      {
+        "id": "replay",
+        "label": "Replay Mode — prepared outputs, no internet or key needed",
+        "verified": true
+      }
+    ]
+  }
+}

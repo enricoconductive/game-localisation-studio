@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'">
+  <meta name="referrer" content="no-referrer">
+  <title>The Lantern Mystery · 燈籠之謎</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#stage" data-chrome="skip">Skip to the game</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo.svg" alt="" width="48" height="48">
+      <div>
+        <h1 class="brand-title"><span class="brand-en" lang="en">The Lantern Mystery</span> <span class="brand-zh" lang="zh-Hant">燈籠之謎</span></h1>
+        <p class="brand-sub" data-chrome="subtitle">A Mid-Autumn night-market mystery · translation test build</p>
+      </div>
+    </div>
+    <div class="ui-switch" role="group" aria-labelledby="ui-switch-label">
+      <span id="ui-switch-label" class="ui-switch-label" data-chrome="ui_label">Interface</span>
+      <button type="button" id="ui-en" class="seg" aria-pressed="true" lang="en">English</button>
+      <button type="button" id="ui-zh" class="seg" aria-pressed="false" lang="zh-Hant">繁體中文</button>
+    </div>
+  </header>
+
+  <section class="toolbar" aria-label="Translation tools">
+    <div class="field">
+      <label for="dialogue-select" data-chrome="dialogue_label">Dialogue language</label>
+      <select id="dialogue-select">
+        <option value="original">Original Chinese (原文)</option>
+        <option value="reference">Reference English (參考譯文)</option>
+        <option value="student" disabled>Student's imported English (學生譯文)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="player-name" data-chrome="name_label">Your name</label>
+      <input id="player-name" type="text" maxlength="20" autocomplete="off" spellcheck="false" placeholder="偵探">
+    </div>
+    <div class="tool-buttons">
+      <button type="button" id="btn-import" class="btn btn-gold" data-chrome="import">Import student JSON</button>
+      <input type="file" id="file-input" accept=".json,application/json" hidden>
+      <button type="button" id="btn-paste" class="btn" aria-expanded="false" aria-controls="paste-panel" data-chrome="paste">Paste JSON</button>
+      <button type="button" id="btn-reset" class="btn btn-ghost" data-chrome="reset">Reset to 中文</button>
+    </div>
+    <p class="hint" id="hint" data-chrome="hint"></p>
+  </section>
+
+  <section id="paste-panel" class="panel paste-panel" hidden aria-labelledby="paste-title">
+    <h2 id="paste-title" class="panel-title" data-chrome="paste_title">Paste translation JSON</h2>
+    <label for="paste-text" class="sr-only" data-chrome="paste_title">Paste translation JSON</label>
+    <textarea id="paste-text" rows="8" spellcheck="false" placeholder='{"format": "lantern-mystery-translation", …}'></textarea>
+    <div class="row">
+      <button type="button" id="btn-paste-apply" class="btn btn-gold" data-chrome="paste_apply">Check and apply</button>
+      <button type="button" id="btn-paste-cancel" class="btn btn-ghost" data-chrome="cancel">Cancel</button>
+    </div>
+  </section>
+
+  <section id="report" class="panel report" hidden tabindex="-1" aria-live="polite">
+    <h2 id="report-title" class="panel-title"></h2>
+    <p id="report-summary" class="report-summary"></p>
+    <ul id="report-critical" class="issue-list"></ul>
+    <details id="report-warnings-box" hidden>
+      <summary id="report-warnings-summary"></summary>
+      <ul id="report-warnings" class="issue-list"></ul>
+    </details>
+    <button type="button" id="btn-report-close" class="btn btn-small btn-ghost" data-chrome="close">Close</button>
+  </section>
+
+  <main id="stage" class="stage" tabindex="-1">
+    <div class="showing-row">
+      <p id="showing-badge" class="showing" data-mode="original" aria-live="polite"></p>
+      <p id="reference-note" class="reference-note" hidden></p>
+    </div>
+
+    <div id="loading" class="panel loading">
+      <p>Loading the game… 遊戲載入中…</p>
+      <p class="small">If this message does not go away, open the game from its GitHub Pages link or a local web server. It cannot run by double-clicking the file.</p>
+    </div>
+
+    <div id="load-error" class="panel load-error" hidden role="alert">
+      <h2 class="panel-title">The game files could not be loaded · 未能載入遊戲檔案</h2>
+      <p id="load-error-detail"></p>
+      <p>Please open the game from the <strong>GitHub Pages link</strong> your teacher gave you, or run a small local web server in the repository folder, for example <code>python3 -m http.server</code>, then visit <code>http://localhost:8000/game/</code>.</p>
+      <p lang="zh-Hant">請使用老師提供的 GitHub Pages 連結開啟遊戲，或在本機啟動網頁伺服器。直接雙擊 HTML 檔案無法載入遊戲內容。</p>
+    </div>
+
+    <section id="view-missions" class="view" hidden aria-labelledby="missions-title">
+      <h2 id="missions-title" class="view-title" data-chrome="choose_mission">Choose a mission</h2>
+      <ol id="mission-list" class="mission-list"></ol>
+    </section>
+
+    <section id="view-scene" class="view scene" hidden aria-labelledby="scene-mission-title">
+      <div class="scene-head">
+        <button type="button" id="btn-back" class="btn btn-small btn-ghost" data-chrome="back_missions">← Missions</button>
+        <h2 id="scene-mission-title" class="scene-title"></h2>
+      </div>
+      <p id="chinese-notice" class="notice" hidden></p>
+      <div class="scene-frame">
+        <p id="scene-showing" class="showing showing-in-scene" data-mode="original" aria-hidden="true"></p>
+        <div id="scene-body" class="scene-body"></div>
+      </div>
+      <div id="dialogue-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p data-chrome="footer">Original game · Game Localisation Studio v0.3 · translations are shown as plain text only</p>
+  </footer>
+
+  <script src="validator.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
