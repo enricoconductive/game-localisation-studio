@@ -75,6 +75,8 @@ Run in the instructor's own Colab account, using the bundle fallback because the
 | The live export played in the game | ✅ Imported, "Student's imported English" shown, both choices displayed, Ending A reached. |
 | Downloads from buttons (progress file and the three exports) | ✅ Each file arrives exactly once, after two fixes found in this test (see §3). A click by the instructor confirmed it. |
 | Restart session → Step 0 → **Resume my saved session** | ✅ "Loaded your saved session: Mission 1 … 2 version(s), 2 decision(s), current version v2". |
+| After publication: open from the "Open in Colab" link → **Run anyway** → Run all | ✅ Step 0 cloned the public repo in 3 s: "Downloading the studio…" then "The studio is ready". |
+| After publication: the GitHub Pages game URL | ✅ The game loads, 4 missions are available, Reference English is enabled, and the student option stays disabled until an import. |
 
 Earlier problems found in Colab and fixed: downloads duplicated (7 copies, then 5); low contrast in the dark theme; long outputs jumping; "Switch to Replay" shown while already in Replay; an unclear selected role; Live Claude replies cut off by Haiku 5.5's default thinking.
 
@@ -100,7 +102,6 @@ Earlier problems found in Colab and fixed: downloads duplicated (7 copies, then 
 
 - **The real HKBU API.** No specification was available. The adapter is configurable through `config/providers.json` and is tested only against a mock server. It is marked *not yet verified* until your colleague tests it.
 - **Hugging Face live calls.** The endpoint was checked against the documentation; there have been no live calls.
-- **Opening from the GitHub "Open in Colab" badge, the `git clone` path, and the GitHub Pages game URL.** These can only be tested after publication. The bundle fallback was used instead.
 - **Resume from an uploaded progress file in Colab, and the "Upload bundle" button.** Both use Colab's file picker inside an output frame, which could not be automated. The same code is tested headlessly with both ipywidgets 7 and 8 upload formats.
 - **19 pairs at once.** Rate limits under real classroom load were not tested. Retries with backoff, jitter and Retry-After, plus a session cap of 40 requests, are in place, and Replay Mode is the fallback.
 - **Safari, Firefox and Edge.** The game e2e tests use Chromium, and the Colab tests used Chrome.
