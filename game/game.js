@@ -58,8 +58,8 @@
     paste: { en: 'Paste JSON', zh: '貼上 JSON' },
     reset: { en: 'Reset to 中文', zh: '重設為中文' },
     hint: {
-      en: 'How to test your translation: export game_translation_en.json from Colab, press “Import student JSON”, then replay a mission. Use “Dialogue language” to compare it with the original or the reference.',
-      zh: '測試你的翻譯：從 Colab 匯出 game_translation_en.json，按「匯入學生 JSON」，然後重玩任務。可用「對白語言」與原文或參考譯文比較。'
+      en: 'How to test your translation: click “▶ Play my translation in the game” in Colab, or import game_translation_en.json here. Use “Dialogue language” to compare with the original or the reference.',
+      zh: '測試你的翻譯：在 Colab 按「▶ Play my translation in the game」，或在此匯入 game_translation_en.json。可用「對白語言」與原文或參考譯文比較。'
     },
     paste_title: { en: 'Paste translation JSON', zh: '貼上翻譯 JSON' },
     paste_apply: { en: 'Check and apply', zh: '檢查並套用' },
