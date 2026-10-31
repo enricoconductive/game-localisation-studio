@@ -165,7 +165,8 @@ def test_huggingface_request_shape(provider_config):
 
 def test_hkbu_not_configured(provider_config):
     s = FakeSession(FakeResponse(200, openai_body("x")))
-    prov = p.make_provider("hkbu", "hkbu-key-123456", provider_config, session=s)
+    cfg = {**provider_config, "hkbu": {**provider_config["hkbu"], "base_url": ""}}
+    prov = p.make_provider("hkbu", "hkbu-key-123456", cfg, session=s)
     with pytest.raises(p.ProviderError) as e:
         prov.complete("S", "U", model="any")
     assert e.value.kind == "not_configured" and s.calls == []
@@ -178,7 +179,8 @@ def test_hkbu_configured_openai_style(provider_config):
            "path_template": "{base_url}/deployments/{model}/chat/completions",
            "api_version": "2024-05-01", "query_params": {"api-version": "{api_version}"},
            "auth_header_name": "api-key", "auth_prefix": "", "extra_headers": {"X-Course": "TRA"},
-           "model_in_body": False, "response_text_path": "choices.0.message.content"}}
+           "model_in_body": False, "response_text_path": "choices.0.message.content",
+           "send_temperature": True}}
     s = FakeSession(FakeResponse(200, openai_body("hi from hkbu")))
     prov = p.make_provider("hkbu", "hkbu-key-123456", cfg, session=s)
     r = prov.complete("S", "U", model="gpt-x", temperature=0.2)
@@ -308,12 +310,14 @@ def test_catalog_default_is_cheapest():
     assert cat["anthropic"]["default"] == cheapest["id"] == "claude-haiku-5-5"
     assert {m["id"] for m in models} == {"claude-haiku-5-5", "claude-sonnet-5-5"}
     assert all(m["verified"] is False for m in cat["huggingface"]["models"])
-    assert cat["hkbu"]["models"] == []
+    assert cat["hkbu"]["default"] in {m["id"] for m in cat["hkbu"]["models"]}
+    assert all(m["verified"] is False for m in cat["hkbu"]["models"])
 
 
-def test_provider_config_hkbu_placeholders(provider_config):
+def test_provider_config_hkbu_gateway(provider_config):
     h = provider_config["hkbu"]
-    assert h["base_url"] == "" and h["verified"] is False and h["models"] == []
+    assert h["base_url"] == "https://genai.hkbu.edu.hk/api/v1" and h["verified"] is False
+    assert h["auth_prefix"] == "Bearer " and h["request_style"] == "openai_chat"
     for k in ("path_template", "auth_header_name", "auth_prefix", "extra_headers", "query_params",
               "request_style", "response_text_path", "notes"):
         assert k in h

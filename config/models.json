@@ -60,9 +60,30 @@
     ]
   },
   "hkbu": {
-    "default": "",
-    "note": "Fill in the model names published by the HKBU GenAI service. Leave empty until confirmed.",
-    "models": []
+    "default": "deepseek-v4-flash-0731",
+    "note": "Ids from a third-party gateway README, not official HKBU docs. Mark verified true after a live run.",
+    "models": [
+      {
+        "id": "deepseek-v4-flash-0731",
+        "label": "deepseek-v4-flash-0731",
+        "verified": false
+      },
+      {
+        "id": "qwen3.7-plus",
+        "label": "qwen3.7-plus",
+        "verified": false
+      },
+      {
+        "id": "gpt-6-luna",
+        "label": "gpt-6-luna",
+        "verified": false
+      },
+      {
+        "id": "gemini-3.8-flash",
+        "label": "gemini-3.8-flash",
+        "verified": false
+      }
+    ]
   },
   "replay": {
     "default": "replay",

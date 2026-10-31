@@ -33,7 +33,7 @@
   },
   "hkbu": {
     "display_name": "HKBU GenAI",
-    "base_url": "",
+    "base_url": "https://genai.hkbu.edu.hk/api/v1",
     "path_template": "{base_url}/chat/completions",
     "api_version": "",
     "auth_header_name": "Authorization",
@@ -45,13 +45,14 @@
     "response_text_path": "",
     "usage_input_path": "",
     "usage_output_path": "",
-    "send_temperature": true,
+    "send_temperature": false,
     "model_params": {},
     "supports_json_schema": false,
     "secret_name": "HKBU_API_KEY",
     "models": [],
     "verified": false,
-    "notes": "PLACEHOLDERS ONLY — no public specification was available. The instructor's colleague fills in base_url and the other fields. path_template may use {base_url}, {model} and {api_version}; query_params values may use the same. request_style is 'openai_chat' (choices.0.message.content) or 'anthropic_messages' (content.0.text); response_text_path overrides the default dot path. While base_url is empty students see: 'not set up for this course yet'. supports_json_schema: set true only if the gateway accepts strict JSON Schema replies (openai_chat → response_format json_schema; anthropic_messages → output_config.format)."
+    "notes": "REST v1 gateway, OpenAI-compatible: POST {base_url}/chat/completions with 'Authorization: Bearer <key>'. Checked 2026-10-31 without a key: /api/v1/models and /api/v1/chat/completions answer 401 'Authorization must use Bearer authentication with a valid API key' (unknown routes answer 404). Model ids come from a third-party gateway README (github.com/AndyZHENG0715/HKBU-GenAI-Gateway), not official docs; set verified true after a live run. Temperature is not sent because some models on the gateway reject it. path_template may use {base_url}, {model} and {api_version}. request_style is 'openai_chat' (choices.0.message.content) or 'anthropic_messages' (content.0.text). supports_json_schema: set true only if the gateway accepts strict JSON Schema replies.",
+    "docs_checked_on": "2026-10-31"
   },
   "replay": {
     "display_name": "Replay Mode",

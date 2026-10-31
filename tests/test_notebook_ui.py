@@ -589,6 +589,8 @@ def test_mission_titles_match_the_game(tmp_path):
 
 def test_hkbu_not_configured_is_friendly(tmp_path):
     s = make_studio(tmp_path)
+    s.provider_config["hkbu"]["base_url"] = ""
+    s.catalog["hkbu"]["models"] = []
     s.w["provider"].value = "hkbu"
     labels = [lab for lab, _ in s.w["model"].options]
     assert any("configured by your instructor — not yet verified" in lab for lab in labels)
@@ -598,6 +600,14 @@ def test_hkbu_not_configured_is_friendly(tmp_path):
     assert s.provider is None and s.w["btn_load_key"].disabled is False
     s.w["provider"].value = "huggingface"
     assert any("not yet verified" in lab for lab, _ in s.w["model"].options)
+
+
+def test_hkbu_configured_lists_models(tmp_path):
+    s = make_studio(tmp_path)
+    s.w["provider"].value = "hkbu"
+    assert s.w["model"].value == s.catalog["hkbu"]["default"]
+    assert all("not yet verified" in lab for lab, _ in s.w["model"].options)
+    assert "Load my key" in text_of(s.w["msg_connect"])
 
 
 @needs_real
