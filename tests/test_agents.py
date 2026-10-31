@@ -210,7 +210,7 @@ def test_revision_zero_cycles_and_nothing_to_revise(challenge, replay):
     ps.bulk_decide(st2, ["R1-01", "R1-02"], "reject", "director")
     with pytest.raises(ps.StudioError) as e:
         a.run_revision(st2, replay, challenge)
-    assert "Rejected suggestions are never applied" in e.value.user_message
+    assert "rejected ones are never applied" in e.value.user_message
     assert st2.revision["cycles_done"] == 0
     with pytest.raises(ps.StudioError):
         ps.new_project(challenge, "en-GB", "replay", "replay", "replay", max_cycles=3)

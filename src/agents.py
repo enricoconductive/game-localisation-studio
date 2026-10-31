@@ -751,9 +751,8 @@ def _record_usage(state: ProjectState, provider, resp, count_request: bool = Tru
 def _refuse_if_key(system: str, user: str) -> None:
     """A prompt that contains a loaded API key is never sent (nor stored as a snapshot)."""
     if find_secrets(f"{system}\n{user}"):
-        raise StudioError("This prompt was not sent: it contains your API key (or something that "
-                          "looks like one). Remove it from the instructions, rules, comments or "
-                          "uploaded text, then try again.")
+        raise StudioError("Not sent: the prompt contains your API key (or something like one). "
+                          "Remove it from your instructions, rules, comments or upload, then retry.")
 
 
 def _complete_counted(state, provider, system, prompt, **kw):
@@ -1090,8 +1089,7 @@ def _revision_plan(state: ProjectState):
     if rnd == 0:
         raise StudioError("Run the reviewer first; there is no feedback to apply yet.")
     if any(v.kind == "revision" and v.round == rnd for v in state.versions):
-        raise StudioError(f"Review round {rnd} has already been applied. Run the reviewer again "
-                          "before another revision.")
+        raise StudioError(f"Review round {rnd} is already applied. Run the reviewer again first.")
     cur = state.current_version()
     reviewed = state.version(state.revision.get("last_reviewed_version_id")) or cur
     decisions = state.latest_decisions()
@@ -1141,16 +1139,14 @@ def run_revision(state: ProjectState, provider, challenge: dict, role: str = "di
     """Apply accepted feedback (bounded by revision.max_cycles)."""
     max_c, done = state.revision.get("max_cycles", 1), state.revision.get("cycles_done", 0)
     if done >= max_c:
-        raise StudioError(f"All {max_c} revision cycle(s) allowed for this project have been used. "
-                          "Edit strings directly or approve the current version.")
+        raise StudioError(f"All {max_c} revision cycle(s) used. Edit strings directly, or approve.")
     cur = state.current_version()
     if cur is None:
         raise StudioError("Run the translator first.")
     rnd, human, accepts, locked = _revision_plan(state)
     if not human and not accepts:
-        raise StudioError(f"No findings from review round {rnd} were accepted, edited or "
-                          "overridden, so there is nothing to revise. Rejected suggestions are "
-                          "never applied.")
+        raise StudioError(f"Nothing to revise: no finding from round {rnd} was accepted or given "
+                          "your wording (rejected ones are never applied).")
     translations = dict(cur.translations)
     notes = {}
     for sid, text in human.items():

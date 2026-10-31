@@ -179,7 +179,7 @@ def test_intro_end_to_end_replay(tmp_path):
     s.section(5)
     spec = {x["id"]: x for x in s.state.strings}
     cards = s._finding_cards
-    # accept one whose suggestion is technically valid, reject one, override one, edit one
+    # accept one whose suggestion is technically valid, reject one, use own wording on two
     def ok_sugg(f):
         issues = validation.validate_string(f.string_id, f.suggestion,
                                             validation.StringSpec.from_dict(spec[f.string_id]))
@@ -196,17 +196,19 @@ def test_intro_end_to_end_replay(tmp_path):
     cards[accept_f.finding_id]["btn_accept"].click()
     cards[reject_f.finding_id]["comment"].value = "This 'fix' breaks the voice"
     cards[reject_f.finding_id]["btn_reject"].click()
-    cards[override_f.finding_id]["override"].value = override_text
+    cards[override_f.finding_id]["edit"].value = override_text
     cards[override_f.finding_id]["comment"].value = "Neither version works; mine is closer"
-    cards[override_f.finding_id]["btn_override"].click()
+    cards[override_f.finding_id]["btn_accept_edited"].click()
     cards[edit_f.finding_id]["edit"].value = valid_text(spec[edit_f.string_id], "Edited suggestion")
     cards[edit_f.finding_id]["btn_accept_edited"].click()
     dec = s.state.latest_decisions()
     assert dec[accept_f.finding_id].action == "accept" and dec[accept_f.finding_id].role == "AI Director"
     assert dec[reject_f.finding_id].action == "reject"
-    assert dec[override_f.finding_id].action == "override" and not dec[override_f.finding_id].agrees_with_reviewer
+    assert dec[override_f.finding_id].action == "accept_edited"
+    assert dec[override_f.finding_id].human_text == override_text
     assert dec[edit_f.finding_id].action == "accept_edited"
-    assert "Overrode" in text_of(w["decision_log"])
+    assert not dec[reject_f.finding_id].agrees_with_reviewer
+    assert "Overrode" in text_of(w["decision_log"]) and "Used my wording" in text_of(w["decision_log"])
     # role switch is recorded
     w["role"].value = "Quality Evaluator"
     w["rule_kind"].value = "style"
@@ -278,10 +280,9 @@ def test_synthetic_end_to_end_with_plain_fixture(synthetic_root, tmp_path):
     w["btn_reviewer"].click()
     assert len(s.state.findings) == 3, w["msg_run"].value     # the unknown id is dropped
     f1, f2, f3 = s.state.findings
-    s._finding_cards[f1.finding_id]["select"].value = True
-    s._finding_cards[f2.finding_id]["select"].value = True
-    w["bulk_comment"].value = "bulk ok"
-    w["btn_bulk_accept"].click()
+    s._finding_cards[f1.finding_id]["comment"].value = "ok"
+    s._finding_cards[f1.finding_id]["btn_accept"].click()
+    s._finding_cards[f2.finding_id]["btn_accept"].click()
     s._finding_cards[f3.finding_id]["btn_reject"].click()
     w["btn_revision"].click()
     assert s.state.current_version().kind == "revision", w["msg_director"].value
@@ -553,11 +554,11 @@ def test_key_box_fallback_when_no_secret(tmp_path):
 def test_hkbu_key_help_follows_the_verified_flag(tmp_path):
     s = make_studio(tmp_path)
     s.w["provider"].value = "hkbu"
-    assert "configured by your instructor — not yet verified" in text_of(s.w["key_help"])
+    assert "set up by your instructor, unverified" in text_of(s.w["key_help"])
     s.provider_config["hkbu"]["verified"] = True
     s._refresh_key_help()
-    assert "configured by your instructor" in text_of(s.w["key_help"])
-    assert "not yet verified" not in text_of(s.w["key_help"])
+    assert "set up by your instructor" in text_of(s.w["key_help"])
+    assert "unverified" not in text_of(s.w["key_help"])
 
 
 @needs_real
@@ -593,20 +594,20 @@ def test_hkbu_not_configured_is_friendly(tmp_path):
     s.catalog["hkbu"]["models"] = []
     s.w["provider"].value = "hkbu"
     labels = [lab for lab, _ in s.w["model"].options]
-    assert any("configured by your instructor — not yet verified" in lab for lab in labels)
+    assert any("set up by your instructor, unverified" in lab for lab in labels)
     assert "not set up for this course yet" in text_of(s.w["msg_connect"])
     s.w["btn_load_key"].click()
     assert "not set up for this course yet" in text_of(s.w["msg_connect"])
     assert s.provider is None and s.w["btn_load_key"].disabled is False
     s.w["provider"].value = "huggingface"
-    assert any("not yet verified" in lab for lab, _ in s.w["model"].options)
+    assert any("unverified" in lab for lab, _ in s.w["model"].options)
 
 
 def test_hkbu_configured_lists_models(tmp_path):
     s = make_studio(tmp_path)
     s.w["provider"].value = "hkbu"
     assert s.w["model"].value == s.catalog["hkbu"]["default"]
-    assert all("not yet verified" in lab for lab, _ in s.w["model"].options)
+    assert all("unverified" in lab for lab, _ in s.w["model"].options)
     assert "Load my key" in text_of(s.w["msg_connect"])
 
 
@@ -972,11 +973,11 @@ def _notebook_markdown():
 
 def test_notebook_text_stays_short():
     cells = _notebook_markdown()
-    assert len(cells[0].split()) <= 110, "intro cell is too long"
+    assert len(cells[0].split()) <= 90, "intro cell is too long"
     sections = [c for c in cells if re.search(r"^## \d · ", c, re.M)]
     assert len(sections) == 6
     for c in sections:
-        assert len(c.split()) <= 60, c[:60]
+        assert len(c.split()) <= 40, c[:60]
 
 
 def test_section5_tabs_in_order_with_history_below(tmp_path):
@@ -988,7 +989,7 @@ def test_section5_tabs_in_order_with_history_below(tmp_path):
     assert s.w["btn_review2"] in list(studio_ui.iter_widgets(revise))
     assert s.w["btn_approve"] in list(studio_ui.iter_widgets(tabs._bodies[4]))
     hist = s.w["history_acc"]
-    assert isinstance(hist, studio_ui._Accordion) and hist._titles == ["History — versions and decision log"]
+    assert isinstance(hist, studio_ui._Accordion) and hist._titles == ["History and decision log"]
     assert hist.selected_index is None                                   # collapsed by default
     inside = list(studio_ui.iter_widgets(hist))
     for key in ("hist_pick", "btn_hist_compare", "btn_restore", "history_table", "decision_log"):

@@ -230,7 +230,7 @@ def test_autosave_failure_shows_the_reason(tmp_path):
     s.connect_replay()
     s.w["btn_start"].click()
     msg = s.w["msg_mission"].value
-    assert "Autosave did not work this time: the project file could not be written" in msg
+    assert "Autosave failed: the project file could not be written" in msg
     assert "Autosave failed" in s.w["status_html"].value
 
 

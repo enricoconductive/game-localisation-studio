@@ -43,10 +43,10 @@ The status bar shows **Live requests this session: n / 40**. This counts every l
 
 | Section | What you do | Main button |
 |---|---|---|
-| **1 · Connect** | Choose Replay Mode or a live AI. | **Load my key** → **Test connection** (or **Use Replay Mode instead**) |
-| **2 · Choose your mission** | Pick a mission (start with **Mission 1 — The Lantern Mystery (Introductory)**; the names match the game) and an **English variant**. Read the source strings. Open **Scene**, **Character profiles**, **Intended meaning of each string** and **Glossary (required terms flagged)**. | **Start this mission** |
-| **3 · Configure your agents** | Set up the translator (preset, sliders, instructions) and the reviewer (what it checks, how strict it is). | **Show the full prompt that will be sent** |
-| **4 · Run the agents** | Run the baseline, the translator and the reviewer. Change the prompt, run again and compare. | **2 · Run translator agent** |
+| **1 · Connect** | Choose Replay Mode or a live AI. | **Load my key** → **Test connection** (or **Use Replay instead**) |
+| **2 · Choose your mission** | Pick a mission (start with **Mission 1 — The Lantern Mystery (Introductory)**; the names match the game) and an **English variant**. Read the source strings. Open **Scene**, **Characters**, **Intended meanings** and **Glossary**. | **Start this mission** |
+| **3 · Configure your agents** | Set up the translator (preset, sliders, instructions) and the reviewer (what it checks, how strict it is). | **Show full prompt** |
+| **4 · Run the agents** | Run the baseline, the translator and the reviewer. Change the prompt, run again and compare. | **2 · Run translator** |
 | **5 · Human Director** | Decide on every reviewer suggestion, add project rules, send feedback, edit, approve. | **Approve final translation** |
 | **6 · Test and export** | Write your reflection, play your translation, export the three files to hand in. | **▶ Play my translation in the game**, **Export all three files** |
 
@@ -79,38 +79,37 @@ The translator's **instructions** box is a prompt. Five tips:
 |---|---|
 | "Granny Wong speaks like a proud, sharp-tongued elder: short sentences, an old proverb where the source has one, never slang. Kit is 17: contractions, casual slang, short bursts. They must never sound alike." | "Make the characters sound good and add some fun." (Nothing the agent can check, and it invites invented content.) |
 
-**Show the full prompt that will be sent** shows exactly what the model receives. Editing the preview box changes nothing: edit the instructions and settings above it.
+**Show full prompt** shows exactly what the model receives. Editing the preview box changes nothing: edit the instructions and settings above it.
 
 ## 6. The key activity: change the prompt, run again, compare, explain
 
 1. In Section 3, pick a preset: **Faithful**, **Balanced** or **Creative**. A preset only sets the visible sliders and the instructions, so open **What the presets change** to see the differences.
 2. In Section 4, click **1 · Baseline (one-shot)**. This is a deliberately minimal prompt with no context, so you can see what your agents add.
-3. Click **2 · Run translator agent**. Every run becomes a new version.
-4. Go back to Section 3. Change **one** thing (another preset, a slider, a line of your instructions) and click **2 · Run translator agent** again.
-5. In the **Compare runs** tab (it opens by itself after your second translator run), choose **Run A:** and **Run B:**, then click **Compare these two runs**. Changed strings are highlighted, and the prompt differences are shown under **What changed in the prompt (A → B)**.
+3. Click **2 · Run translator**. Every run becomes a new version.
+4. Go back to Section 3. Change **one** thing (another preset, a slider, a line of your instructions) and click **2 · Run translator** again.
+5. In the **Compare runs** tab (it opens by itself after your second translator run), choose **Run A:** and **Run B:**, then click **Compare A and B**. Changed strings are highlighted, and the prompt differences are shown under **Prompt changes (A → B)**.
 6. **Explain it to each other:** *What in the prompt caused these differences?* Note your answer; it is useful for your reflection.
 
 Each run shows how many requests it will make. In Replay Mode the requests are simulated, free and not counted.
 
 ## 7. Judging the reviewer's findings
 
-Click **3 · Run reviewer agent**. Each finding is labelled **Suggestion — you decide**. **The reviewer is not always right.** Some suggestions are wrong or debatable, on purpose.
+Click **3 · Run reviewer**. Each finding is labelled **Suggestion — you decide**. **The reviewer is not always right.** Some suggestions are wrong or debatable, on purpose.
 
 The message under the buttons tells you what happened:
 
-- "The reviewer made N suggestion(s)…": decide on each one in Section 5.
+- "The reviewer made N suggestion(s): decide in Section 5.": decide on each one.
 - "The reviewer checked N string(s) and found no problems.": nothing to decide; look for what it missed yourself.
 - "Review skipped: no string has changed since the last review…": no request was sent. Edit strings or run a revision first.
-- "⚠️ The reviewer replied with N finding(s), but none could be used…": this does **not** mean the translation is fine. Run the reviewer again, or switch to Replay Mode.
+- "⚠️ The reviewer sent N finding(s), but none could be used…": this does **not** mean the translation is fine. Run the reviewer again, or switch to Replay Mode.
 
 For every finding in Section 5, choose one:
 
 | Button | Use it when… |
 |---|---|
 | **Accept** | the problem is real and the suggested string is good. |
-| **Reject** | the problem is not real, or the fix makes things worse. |
-| **Accept with my edit** | the problem is real, but you want to improve the suggested wording. |
-| **Override with my own wording** | you disagree with the suggestion and write your own string instead. Your disagreement is recorded. |
+| **Reject** | the problem is not real, or the fix makes things worse. Your disagreement is recorded. |
+| **Use my wording** | you want a different string. The box starts with the reviewer's suggestion: edit it (or replace it completely), then click. |
 
 Before you decide, the Quality Evaluator checks:
 
@@ -119,18 +118,18 @@ Before you decide, the Quality Evaluator checks:
 - **Does it flatten a voice?** Does Kit still sound like Kit, and Granny like Granny?
 - **Do linked strings still match?** For example a riddle, its answer button and the reaction to it.
 
-Always write *why* in the comment box: your comments are the evidence of your judgement. Use **Accept selected** / **Reject selected** only after reading each finding.
+Always write *why* in the comment box: your comments are the evidence of your judgement.
 
 The **Technical checks** tab (automatic checks) is separate from the reviewer: **MUST FIX** items block approval; **CHECK** items are warnings. For example, a string that "has a space (or an invisible space-like character) at the start or end, or a double space" is a CHECK item: retype the start and end of the string.
 
 ## 8. Rules, revision, approval and export
 
-Section 5 has five tabs, worked from left to right: **a · Decide** → **b · Rules** → **c · Revise** → **d · Final edits** → **e · Approve**. The result of every button appears just below the tabs. Under them, the collapsible **History — versions and decision log** panel holds the version history and the decision log. In Sections 4–6, long tables scroll inside their own box, so the buttons stay where they are.
+Section 5 has five tabs, worked from left to right: **a · Decide** → **b · Rules** → **c · Revise** → **d · Final edits** → **e · Approve**. The result of every button appears just below the tabs. Under them, the collapsible **History and decision log** panel holds the version history and the decision log. In Sections 4–6, long tables scroll inside their own box, so the buttons stay where they are.
 
-- **Add a project rule** for anything the agents should always follow, for example "Kit always calls Granny Wong 'Granny'." This is **project memory**: the rule is added to your agents' future prompts. The AI model itself is not retrained.
-- **Send accepted feedback to the translator.** Only strings with **accepted** findings are re-sent. Your own wording (edits and overrides) is applied directly, with no AI request, and rejected suggestions are never applied. You can then click **Review the revised strings (round 2, optional)**.
-- **Edit the final translation yourself** in **d · Final edits**, then click **Save my edits as a new version**. Save your edits before running other steps.
-- **Version history** (in **History — versions and decision log**): use **Compare with current** or **Restore this version** if a change made things worse.
+- **Add rule** (in **b · Rules**) for anything the agents should always follow, for example "Kit always calls Granny Wong 'Granny'." This is **project memory**: the rule is added to your agents' future prompts. The AI model itself is not retrained.
+- **Send accepted feedback** (in **c · Revise**). Only strings with **accepted** findings are re-sent. Your own wording (**Use my wording**) is applied directly, with no AI request, and rejected suggestions are never applied. You can then click **Review again (optional)**.
+- **Edit the final translation yourself** in **d · Final edits**, then click **Save edits as new version**. Save your edits before running other steps.
+- **Version history** (in **History and decision log**): use **Compare with current** or **Restore version** if a change made things worse.
 - **Approve final translation** (in **e · Approve**) when you are satisfied. Any later change revokes the approval, so approve again. Then click **Download progress** (the studio reminds you): your autosave lives only in this Colab runtime.
 - **Export** in Section 6: **Export all three files** gives you:
   - `game_translation_en.json`, the file you play in the game;
@@ -164,9 +163,9 @@ Every error message ends with the same advice: you can always continue in Replay
 | "You have used all 40 live requests allowed for this exercise." | Click **Switch to Replay** and carry on. |
 | "The translator reply was cut off because it was too long…" | Ask for short notes in the instructions, then try again, or click **Switch to Replay**. Nothing was changed. |
 | "⚠️ Only part of this step worked. …" | The strings that worked are kept; the others keep their previous text. Run the step again. |
-| "Autosave did not work this time: …" (and **⚠️ Autosave failed:** in the status bar) | Read the reason, fix it (for example remove a key you pasted), then click **Download progress**. |
+| "Autosave failed: …" (also in the status bar) | Read the reason, fix it (for example remove a key you pasted), then click **Download progress**. |
 
-**About Replay Mode.** Replay shows outputs prepared by the course team, always labelled **REPLAY MODE — prepared, simulated outputs. Not a live AI response.** It needs no key or internet. It does **not** respond to your own prompt edits: it has one prepared output per preset (Faithful, Balanced, Creative), so in Replay compare runs by switching presets. Your edits are still saved in your prompt and report. All prepared English is British: if you chose American or International English, the studio reminds you that "Replay examples are written in British English; live agents will follow your choice."
+**About Replay Mode.** Replay shows outputs prepared by the course team, always labelled **REPLAY MODE — simulated outputs, not live AI** It needs no key or internet. It does **not** respond to your own prompt edits: it has one prepared output per preset (Faithful, Balanced, Creative), so in Replay compare runs by switching presets. Your edits are still saved in your prompt and report. All prepared English is British: if you chose American or International English, the studio reminds you that "Replay text is British English; live agents follow your choice."
 
 ## 11. Disconnected, behind, or changing computer
 
@@ -176,12 +175,12 @@ Use the **🆘 If you get stuck** box at the bottom of the notebook.
 - **Colab reset the whole runtime** (after a long break, for example)? The autosave is lost with it. Use your downloaded progress file: **Choose file**, then **Resume from file**. So click **Download progress** in the status bar **before every break**, after approving and after exporting.
 - **Nothing downloaded** after **Download progress** or an export? The file is saved anyway: open the Files panel (📁 folder icon on the left) → `exports` (progress files) or `exports` → your mission's folder (exports) → **⋮** next to the file → **Download**. Allow downloads from colab.research.google.com if your browser asks.
 - **Changing computer, or handing over to your partner?** Click **Download progress file**. On the other computer, choose the file with **Choose file**, then click **Resume from file**.
-- **Behind the class?** In **Checkpoint:** choose one of the Mission 1 checkpoints ("Catch up: agents already run", "Catch up: review done", "Catch up: revision done") and click **Load this checkpoint**. Your previous work is kept as a backup.
+- **Behind the class?** In **Checkpoint:** choose one of the Mission 1 checkpoints ("Catch up: agents already run", "Catch up: review done", "Catch up: revision done") and click **Load checkpoint**. Your previous work is kept as a backup.
 - **Mission in a mess?** **Reset this mission** asks you to confirm, and keeps a backup copy.
 
 ## 12. Reflection
 
-Before you export, answer this together in Section 6 and click **Save reflection**:
+Before you export, answer this together in Section 6 and click **Save reflection (goes in your report)**:
 
 > **What did your agents get wrong, what did you change, and why was the final result better?**
 

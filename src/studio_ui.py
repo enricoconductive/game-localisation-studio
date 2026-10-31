@@ -36,17 +36,15 @@ GAME_URL = "https://enricoconductive.github.io/game-localisation-studio/game/"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ROLES = ("AI Director", "Quality Evaluator")
 PROVIDER_CHOICES = [("Claude (Anthropic)", "anthropic"), ("HKBU GenAI", "hkbu"),
-                    ("Hugging Face", "huggingface"), ("Replay Mode — prepared outputs, no key", "replay")]
-LOCALE_CHOICES = [("British English (en-GB)", "en-GB"), ("American English (en-US)", "en-US"),
-                  ("International English (en)", "en")]
+                    ("Hugging Face", "huggingface"), ("Replay Mode (simulated, no key)", "replay")]
+LOCALE_CHOICES = [("British (en-GB)", "en-GB"), ("American (en-US)", "en-US"),
+                  ("International (en)", "en")]
 MISSION_ORDER = ("intro", "voice", "pun", "ui")
 REFLECTION_QUESTION = ("What did your agents get wrong, what did you change, and why was the "
                        "final result better?")
-REPLAY_BADGE = "REPLAY MODE — prepared, simulated outputs. Not a live AI response."
-REPLAY_LOCALE_NOTE = ("Replay examples are written in British English; live agents will follow "
-                      "your choice.")
-DOWNLOAD_REMINDER = ("💾 Click “Download progress” in the status bar: the autosave is lost if "
-                     "Colab resets.")
+REPLAY_BADGE = "REPLAY MODE — simulated outputs, not live AI"
+REPLAY_LOCALE_NOTE = "Replay text is British English; live agents follow your choice."
+DOWNLOAD_REMINDER = "💾 Click “Download progress” (status bar): autosave is lost if Colab resets."
 PLAY_TEXT = "▶ Play my translation in the game"
 # One layout grid for every panel: each labelled input has the same label width, so all
 # inputs start at the same x; buttons in a row share one width and height.
@@ -56,20 +54,20 @@ BTN_W = "240px"
 BTN_H = "34px"
 _LABEL_STYLE = {"description_width": LABEL_W}
 # Short help under each Section 3 control (the engine's help text is longer).
-SHORT_HELP = {"strategy": "How closely to follow the source wording.",
-              "cultural_adaptation": "Keep Hong Kong references, or adapt them.",
-              "register": "The overall tone of the English.",
-              "voice_strength": "How distinctive each character sounds.",
+SHORT_HELP = {"strategy": "How close to the source.",
+              "cultural_adaptation": "Keep or adapt Hong Kong references.",
+              "register": "Tone of the English.",
+              "voice_strength": "How distinct each voice is.",
               "glossary_strictness": "How strictly to follow the glossary.",
-              "strictness": "How small a problem it reports.",
-              "max_findings": "Most suggestions in one round."}
-ACTION_TEXT = {"accept": "Accepted", "reject": "Rejected", "accept_edited": "Accepted with my edit",
-               "override": "Overridden with my own wording", "direct_edit": "Edited directly",
-               "add_rule": "Added a project rule", "send_revision": "Sent feedback to translator",
+              "strictness": "Smallest problem it reports.",
+              "max_findings": "Most suggestions per round."}
+# "override" is no longer a button ("Use my wording" records accept_edited); kept for saved projects.
+ACTION_TEXT = {"accept": "Accepted", "reject": "Rejected", "accept_edited": "Used my wording",
+               "override": "Overrode with own wording", "direct_edit": "Edited directly",
+               "add_rule": "Added a rule", "send_revision": "Sent feedback to translator",
                "restore_version": "Restored a version", "approve_final": "Approved final translation",
                "revoke_approval": "Revoked approval"}
-STEP_TITLES = ("Connect", "Choose mission", "Configure agents", "Run agents", "Human Director",
-               "Test & export")
+STEP_TITLES = ("Connect", "Mission", "Configure", "Run", "Director", "Export")
 FILES_PANEL = "open the Files panel (📁 folder icon on the left)"
 # One stylesheet, shown (hidden) inside the status bar and the welcome box, so every Colab
 # output frame has it. Each section is a light "card" with dark text, so the studio reads
@@ -617,7 +615,7 @@ class Studio:
     def _load_challenge(self, mission: str) -> dict:
         if mission == "custom":
             if not self.custom_challenge:
-                raise StudioError("Upload your own material first (in the box below the mission list).")
+                raise StudioError("Upload your own file first (below the mission list).")
             return self.custom_challenge
         path = self._mission_files().get(mission)
         if not path:
@@ -634,10 +632,10 @@ class Studio:
                 title = self._load_challenge(mid).get("title", mid)
             except Exception:  # noqa: BLE001
                 title = mid
-            suffix = " — start here" if mid == "intro" else " — after the intro"
+            suffix = " — start here" if mid == "intro" else ""
             opts.append((f"{title}{suffix}", mid))
         if self.custom_challenge:
-            opts.append((f"Your own material: {self.custom_challenge.get('title', 'custom')}", "custom"))
+            opts.append((f"Your file: {self.custom_challenge.get('title', 'custom')}", "custom"))
         return opts
 
     # ------------------------------------------------------------------ action wrapper
@@ -656,8 +654,7 @@ class Studio:
             text = result if isinstance(result, Safe) else esc_br(result or "Done.")
             kind = "warn" if isinstance(result, Warn) else "ok"
             if was_approved and self.state is before and not before.approval.get("approved"):
-                text += ("<br><b>⚠️ Approval revoked</b> (something changed). Approve again in "
-                         "Section 5 → e · Approve.")
+                text += "<br><b>⚠️ Approval revoked</b> — approve again (Section 5 → e · Approve)."
                 kind = "warn"
             msg.value = box(kind, text)
         except Exception as e:  # noqa: BLE001 - every error becomes a friendly message
@@ -667,17 +664,17 @@ class Studio:
             else:
                 saved = self._try_autosave()
                 details = esc(self._mask(traceback.format_exc()[-3000:]))
-                msg.value = box("error", "❌ Something went wrong; this step did not finish. "
+                msg.value = box("error", "❌ This step did not finish. "
                                 + ("Your work is saved." if saved else "Your earlier work is kept.")
                                 + " Try again, or see “If you get stuck”."
-                                + f"<details><summary>Technical details (for your instructor)</summary>"
+                                + f"<details><summary>Details (for your instructor)</summary>"
                                   f"<pre style='white-space:pre-wrap'>{details}</pre></details>")
         finally:
             for b in buttons:
                 b.disabled = False
             self._busy_msg = None
             if not self._try_autosave():
-                msg.value += box("warn", "Autosave did not work this time: "
+                msg.value += box("warn", "Autosave failed: "
                                  + esc(self.autosave_problem or "unknown reason.")
                                  + " Fix it, or click “Download progress”.")
             try:
@@ -708,12 +705,12 @@ class Studio:
 
     def _require_project(self) -> ps.ProjectState:
         if self.state is None:
-            raise StudioError("Start a mission first (Section 2 → “Start this mission”).")
+            raise StudioError("Start a mission first (Section 2).")
         return self.state
 
     def _require_provider(self):
         if self.provider is None:
-            raise StudioError("Connect first (Section 1), or click “Use Replay Mode instead”.")
+            raise StudioError("Connect first (Section 1), or click “Use Replay instead”.")
         return self.provider
 
     # ------------------------------------------------------------------ providers
@@ -730,12 +727,12 @@ class Studio:
                 continue
             label = m.get("label") or m["id"]
             if name == "hkbu":
-                label += " (configured by your instructor — not yet verified)" if not m.get("verified") else ""
+                label += " (set up by your instructor, unverified)" if not m.get("verified") else ""
             elif not m.get("verified"):
-                label += " (not yet verified)"
+                label += " (unverified)"
             opts.append((label, m["id"]))
         if not opts and name == "hkbu":
-            opts = [("configured by your instructor — not yet verified", "")]
+            opts = [("set up by your instructor, unverified", "")]
         return opts or [("(no models listed)", "")]
 
     def _default_model(self, name: str) -> str:
@@ -768,7 +765,7 @@ class Studio:
             self._refresh_model_options()
         finally:
             self._suspend = False
-        return "✅ Replay Mode is on: prepared, simulated outputs (free, no key)."
+        return "✅ Replay Mode is on: simulated outputs, free, no key."
 
     def use_provider(self, provider, name: str, translator_model: str,
                      reviewer_model: str | None = None) -> None:
@@ -884,10 +881,10 @@ class Studio:
         w["btn_test"] = _button("Test connection", "info", icon="plug")
         w["btn_test"].on_click(lambda b: self._action(b, self._test_connection, "msg_connect",
                                                       "Testing the connection (1 small request)…"))
-        w["btn_use_replay"] = _button("Use Replay Mode instead", "warning", icon="play")
+        w["btn_use_replay"] = _button("Use Replay instead", "warning", icon="play")
         w["btn_use_replay"].on_click(lambda b: self._action(b, self.connect_replay, "msg_connect"))
         w["adv_reviewer"] = widgets.Checkbox(value=False, indent=True, style=dict(_LABEL_STYLE),
-                                             description="Advanced: use a different model for the reviewer",
+                                             description="Advanced: separate reviewer model",
                                              layout=_layout(width="100%"))
         w["reviewer_model"] = _hidden(_dropdown(self._models_for("replay"), "Reviewer model:"))
         w["adv_reviewer"].observe(lambda c: (_hidden(w["reviewer_model"], not c["new"]),
@@ -938,20 +935,19 @@ class Studio:
         name = self.w["provider"].value
         cfg = self.provider_config.get(name, {})
         if name == "replay":
-            self.w["key_help"].value = _note_html("Replay Mode needs no key and no internet.")
+            self.w["key_help"].value = _note_html("Replay needs no key or internet.")
             return
         secret = esc(cfg.get("secret_name") or "API_KEY")
         extra = ""
         if name == "hkbu" and not cfg.get("verified"):
-            extra = ("<br>HKBU GenAI is <b>configured by your instructor — not yet verified</b>.")
+            extra = "<br>HKBU GenAI: set up by your instructor, <b>unverified</b>."
         elif name == "hkbu":
-            extra = "<br>HKBU GenAI is configured by your instructor."
+            extra = "<br>HKBU GenAI: set up by your instructor."
         elif not cfg.get("verified"):
-            extra = "<br>This provider is <b>not yet verified</b> for this course."
+            extra = "<br>This provider is <b>unverified</b> for this course."
         self.w["key_help"].value = box("info", (
-            f"<b>Add your key in Colab Secrets:</b> 🔑 (left sidebar) → <b>Add new secret</b> → "
-            f"Name <code>{secret}</code> → paste the key → <b>Notebook access</b> on → "
-            f"<b>Load my key</b>.{extra}"))
+            f"<b>Colab Secrets:</b> 🔑 (left sidebar) → <b>Add new secret</b> → Name "
+            f"<code>{secret}</code> → paste key → <b>Notebook access</b> on → <b>Load my key</b>.{extra}"))
 
     def _load_key(self) -> str:
         name = self.w["provider"].value
@@ -961,8 +957,7 @@ class Studio:
         if name == "hkbu" and not (self.provider_config.get("hkbu", {}).get("base_url") or "").strip():
             raise providers._error("not_configured", "HKBU GenAI")
         if not model:
-            raise StudioError("No model is set up for this provider. Ask your instructor, or use "
-                              "Replay Mode.")
+            raise StudioError("No model set up for this provider. Ask your instructor, or use Replay.")
         box_w = self.w["key_box"]
 
         def from_box(_prompt=""):
@@ -977,8 +972,8 @@ class Studio:
         except providers.ProviderError as e:
             if e.kind == "no_key":
                 _hidden(box_w, False)
-                raise StudioError(e.user_message + " Or paste the key into the “Key:” box and "
-                                  "click “Load my key” again.") from None
+                raise StudioError(e.user_message + " Or paste it in the “Key:” box and click "
+                                  "“Load my key” again.") from None
             raise
         finally:
             box_w.value = ""
@@ -989,7 +984,7 @@ class Studio:
             key = None  # noqa: F841 - the key now lives only inside the provider object
         reviewer = self.w["reviewer_model"].value if self.w["adv_reviewer"].value else model
         self.use_provider(prov, name, model, reviewer)
-        return f"🔑 Key loaded for {self._provider_display()} (hidden). Now click “Test connection”."
+        return f"🔑 Key loaded for {self._provider_display()} (hidden). Next: “Test connection”."
 
     def _test_connection(self) -> Safe:
         prov = self._require_provider()
@@ -1011,14 +1006,14 @@ class Studio:
         w["mission"].observe(lambda c: self._refresh_mission_preview(), names="value")
         w["locale"] = widgets.ToggleButtons(options=LOCALE_CHOICES, value="en-GB",
                                             style={"button_width": "200px"})
-        w["team"] = _text("Team name (optional):", "e.g. Team Lantern (no personal data)", full=False)
+        w["team"] = _text("Team (optional):", "e.g. Team Lantern (no real names)", full=False)
         w["mission_brief"] = _html()
         w["source_table"] = _html()
         w["ctx_scene"], w["ctx_chars"], w["ctx_meaning"], w["ctx_gloss"] = _html(), _html(), _html(), _html()
         w["context_acc"] = _accordion([
-            ("Scene", w["ctx_scene"]), ("Character profiles", _scroll(w["ctx_chars"], "360px")),
-            ("Intended meaning of each string", _scroll(w["ctx_meaning"], "360px")),
-            ("Glossary (required terms flagged)", _scroll(w["ctx_gloss"], "360px"))])
+            ("Scene", w["ctx_scene"]), ("Characters", _scroll(w["ctx_chars"], "360px")),
+            ("Intended meanings", _scroll(w["ctx_meaning"], "360px")),
+            ("Glossary", _scroll(w["ctx_gloss"], "360px"))])
         w["upload"] = widgets.FileUpload(accept=".txt,.csv,.json", multiple=False,
                                          description="Choose file")
         w["btn_use_upload"] = _button("Use this file", "info", icon="upload")
@@ -1026,21 +1021,21 @@ class Studio:
                                                             "Reading your file…"))
         w["btn_start"] = _button("Start this mission", "success", icon="flag")
         w["btn_start"].on_click(lambda b: self._action(b, self._start_mission, "msg_mission"))
-        w["btn_start_confirm"] = _button("Yes, start again (a backup copy is kept)", "danger")
+        w["btn_start_confirm"] = _button("Yes, start again (backup kept)", "danger")
         w["btn_start_confirm"].on_click(
             lambda b: self._action(b, lambda: self._start_mission(confirmed=True), "msg_mission"))
         w["btn_start_cancel"] = _button("Cancel")
         w["btn_start_cancel"].on_click(lambda b: (_hidden(w["start_confirm"]),
                                                   setattr(w["msg_mission"], "value",
-                                                          box("info", "Nothing was changed."))))
-        w["start_confirm"] = _hidden(_row(w["btn_start_confirm"], w["btn_start_cancel"], width="320px"))
+                                                          box("info", "Nothing changed."))))
+        w["start_confirm"] = _hidden(_row(w["btn_start_confirm"], w["btn_start_cancel"], width="260px"))
         upload_help = _note(
-            "<code>.txt</code> (one string per line), <code>.csv</code> with a <code>source</code> "
-            f"column, or <code>.json</code>. Max {importers.MAX_BYTES // 1024} KB, "
-            f"{importers.MAX_STRINGS} strings. Custom material <b>cannot be played in the game</b>.")
+            "<code>.txt</code> (one string per line), <code>.csv</code> (a <code>source</code> column) "
+            f"or <code>.json</code>. Max {importers.MAX_BYTES // 1024} KB, {importers.MAX_STRINGS} "
+            "strings. <b>Not playable in the game.</b>")
         w["upload"].layout = _layout(width=BTN_W, height=BTN_H)
         self._refresh_mission_preview()
-        w["upload_acc"] = _accordion([("Optional: upload your own material (.txt / .csv / .json)",
+        w["upload_acc"] = _accordion([("Optional: upload your own text",
                                        widgets.VBox([upload_help, _row(w["upload"], w["btn_use_upload"])]))])
         return widgets.VBox([
             _h3("2 · Choose your mission (≈5 min)"),
@@ -1067,9 +1062,9 @@ class Studio:
         est = ch.get("estimated_minutes")
         when = ""
         if est and ch.get("id") == "intro":
-            when = f"About {est} minutes, including setup"
+            when = f"≈{est} min, including setup"
         elif est:
-            when = f"About {est} minutes — already connected? Skip Section 1"
+            when = f"≈{est} min — already connected? Skip Section 1"
         w["mission_brief"].value = (
             f"<h4 style='margin:6px 0'>{esc(ch.get('title'))} {esc(ch.get('title_zh', ''))}</h4>"
             + (f"<p style='margin:2px 0'><i>{esc(when)}</i></p>" if when else "")
@@ -1121,7 +1116,7 @@ class Studio:
     def _use_upload(self) -> str:
         files = compat.uploaded_files(self.w["upload"].value)
         if not files:
-            raise StudioError("Choose a file first with the “Choose file” button.")
+            raise StudioError("Click “Choose file” first.")
         name, data = files[0]
         return self.import_material(name, data)
 
@@ -1139,8 +1134,8 @@ class Studio:
             self._suspend = False
         self._refresh_mission_preview()
         compat.clear_upload(self.w["upload"])
-        msg = (f"Loaded {len(ch['strings'])} string(s). Check the table, then click “Start this "
-               "mission”. Custom material cannot be played in the game.")
+        msg = (f"Loaded {len(ch['strings'])} string(s). Check the table, then “Start this mission”. "
+               "Custom material cannot be played in the game.")
         if ch.get("import_warnings"):
             msg += f" {len(ch['import_warnings'])} warning(s) above."
         return msg
@@ -1154,9 +1149,9 @@ class Studio:
                          and self.state_path.exists())
             if has_progress or unhandled:
                 _hidden(self.w["start_confirm"], False)
-                what = ("You already have work in this mission." if has_progress else
-                        "A saved session was found (see “Resume my saved session”).")
-                return Warn(f"⚠️ {what} Starting replaces it (a backup is kept). Are you sure?")
+                what = ("This mission has work." if has_progress else
+                        "A saved session exists (“Resume my saved session”).")
+                return Warn(f"⚠️ {what} Starting replaces it (backup kept). Are you sure?")
         _hidden(self.w["start_confirm"])
         if self.state is not None:
             self._save_copy(f"backup_{self.state.challenge_id}")
@@ -1207,36 +1202,36 @@ class Studio:
             (r_checks if spec["kind"] == "checkbox" else r_sliders).append(cell)
         w["r_instructions"] = _textarea(rows=6)
         w["r_instructions"].observe(self._on_reviewer_change, names="value")
-        w["btn_r_reset"] = _button("Reset reviewer to default", "", icon="undo")
+        w["btn_r_reset"] = _button("Reset reviewer", "", icon="undo")
         w["btn_r_reset"].on_click(lambda b: self._action(b, self._reset_reviewer, "msg_config"))
         w["preview_step"] = _dropdown(
-            [("Translator agent", "translator"), ("Baseline (one-shot)", "baseline"),
-             ("Reviewer agent", "reviewer"), ("Revision (feedback to translator)", "revision")],
+            [("Translator", "translator"), ("Baseline", "baseline"),
+             ("Reviewer", "reviewer"), ("Revision", "revision")],
             "Prompt for:", "translator", width="460px")
-        w["btn_preview"] = _button("Show the full prompt that will be sent", "info", width="320px", icon="eye")
+        w["btn_preview"] = _button("Show full prompt", "info", icon="eye")
         w["btn_preview"].on_click(lambda b: self._action(b, self._show_preview, "msg_preview"))
         w["preview_info"] = _html()
         w["preview_system"] = _textarea(rows=3)
         w["preview_user"] = _textarea(rows=10)
         w["preview_box"] = widgets.VBox([
             w["preview_info"], _html("<b>System message</b>"), w["preview_system"],
-            _html("<b>User message</b> — a copy: edit the instructions above instead"), w["preview_user"]])
-        w["preview_acc"] = _hidden(_accordion([("Full prompt that will be sent", w["preview_box"])]))
+            _html("<b>User message</b> (a copy: edit the instructions above)"), w["preview_user"]])
+        w["preview_acc"] = _hidden(_accordion([("Full prompt", w["preview_box"])]))
         examples = _html(table(["✅ Good", "❌ Poor"], [[
             "“Granny Wong: short, sharp sentences; an old proverb where the source has one; never slang.”",
             "“Make it good.” — nothing the agent can check."]]))
         return widgets.VBox([
             _h3("3 · Configure your agents (≈15 min)"),
-            _h4("Translator agent"),
+            _h4("Translator"),
             _row(*pbtns, width="180px"), w["msg_config"], w["preset_info"],
             _grid(t_cells),
             _html("<b>Translator instructions</b>"), w["t_instructions"],
             _row(w["btn_t_reset"]), w["replay_notice"],
-            _h4("Reviewer agent"),
+            _h4("Reviewer"),
             _grid(r_checks), _grid(r_sliders),
             _html("<b>Reviewer instructions</b>"), w["r_instructions"], _row(w["btn_r_reset"]),
-            _accordion([("Good vs poor instructions (examples)", examples)]),
-            _h4("See exactly what will be sent"),
+            _accordion([("Good vs poor instructions", examples)]),
+            _h4("Preview the prompt"),
             _row(w["preview_step"], w["btn_preview"]),
             w["msg_preview"], w["preview_acc"]])
 
@@ -1300,11 +1295,11 @@ class Studio:
             text = self.w[ikey].value
             problem = providers.key_refusal(
                 text, f"{role} instructions",
-                f"The {role} instructions look like they contain an API key. Please remove it.")
+                f"The {role} instructions seem to contain an API key. Remove it.")
             if problem:
                 raise StudioError(problem)
             if len(text) > 8000:
-                raise StudioError(f"The {role} instructions are too long (limit 8000 characters).")
+                raise StudioError(f"The {role} instructions are too long (max 8000 characters).")
             cfg = dict(self.state.agents.get(role) or agents.default_agent_config(role))
             new_settings = agents.normalise_settings(role, self._read_settings(role))
             if cfg.get("settings") == new_settings and cfg.get("instructions") == text:
@@ -1321,7 +1316,7 @@ class Studio:
             return
         try:
             self._sync_config_from_widgets()
-            self.w["msg_config"].value = box("ok", f"Saved your {esc(role)} changes.")
+            self.w["msg_config"].value = box("ok", f"Saved {esc(role)} changes.")
         except Exception as e:  # noqa: BLE001
             self.w["msg_config"].value = box("error", "❌ " + esc(getattr(e, "user_message", str(e))))
         self._try_autosave()
@@ -1345,7 +1340,7 @@ class Studio:
         p = compat.presets().get(name, {})
         msg = f"{compat.preset_label(name)} preset applied: {p.get('description', '')}"
         if lost:
-            msg += " Your earlier edits were replaced."
+            msg += " Your edits were replaced."
         return msg
 
     def _reset_translator(self) -> str:
@@ -1357,7 +1352,7 @@ class Studio:
         st.agents["reviewer"] = agents.default_agent_config("reviewer")
         st.log("agent_config", "reviewer reset to default")
         self._load_config_widgets()
-        return "Reviewer reset to the default."
+        return "Reviewer reset."
 
     def _show_preview(self) -> str:
         st = self._require_project()
@@ -1370,15 +1365,15 @@ class Studio:
         live = self._is_live()
         reqs = p["requests"]
         req_text = (f"This will make {reqs} request(s)." if live else
-                    f"{reqs} simulated request(s) in Replay Mode — free and not counted.")
+                    f"Replay: {reqs} simulated request(s), free.")
         self.w["preview_info"].value = box("info", (
             f"<b>{esc(dict((v, k) for k, v in self.w['preview_step'].options)[step])}</b> · "
             f"{esc(req_text)}<br>{esc(p['temperature_note'])}"
-            + ("<br>First batch only; the other batches differ only in their strings."
+            + ("<br>First batch shown; the others differ only in their strings."
                if reqs > 1 else "")))
         _hidden(self.w["preview_acc"], False)
         self.w["preview_acc"].selected_index = 0
-        return f"Full prompt shown below ({len(p['user'])} characters)."
+        return f"Full prompt below ({len(p['user'])} characters)."
 
     def _refresh_configure(self) -> None:
         if self.state is None:
@@ -1418,8 +1413,8 @@ class Studio:
     # .................................................................. 4 run
     def _build_run(self) -> widgets.VBox:
         w = self.w
-        steps = (("baseline", "1 · Baseline (one-shot)"), ("translator", "2 · Run translator agent"),
-                 ("reviewer", "3 · Run reviewer agent"))
+        steps = (("baseline", "1 · Baseline (one-shot)"), ("translator", "2 · Run translator"),
+                 ("reviewer", "3 · Run reviewer"))
         rows = []
         for step, text in steps:
             b = _button(text, "primary")
@@ -1431,7 +1426,7 @@ class Studio:
         w["results_table"] = _html()
         w["cmp_a"] = _dropdown([("—", "")], "Run A:")
         w["cmp_b"] = _dropdown([("—", "")], "Run B:")
-        w["btn_compare"] = _button("Compare these two runs", "info", icon="columns")
+        w["btn_compare"] = _button("Compare A and B", "info", icon="columns")
         w["btn_compare"].on_click(lambda b: self._action(b, self._compare_runs, "msg_run"))
         w["compare_out"] = _html()
         w["review_cards"] = _html()
@@ -1442,7 +1437,7 @@ class Studio:
             ("Results", _scroll(w["results_table"], "400px")),
             ("Compare runs", widgets.VBox([
                 w["cmp_a"], w["cmp_b"], _row(w["btn_compare"]), _scroll(w["compare_out"], "360px")])),
-            ("Reviewer findings", _scroll(w["review_cards"], "400px")),
+            ("Findings", _scroll(w["review_cards"], "400px")),
             ("Technical checks", _scroll(w["validation_summary"], "400px"))])
         return widgets.VBox([_h3("4 · Run the agents (≈20 min)"), *rows, w["msg_run"], w["run_tabs"]])
 
@@ -1469,8 +1464,8 @@ class Studio:
             if not self._is_live() and cfg.get("edited"):
                 extra = " " + compat.replay_variant_note(cfg)
             return self._with_partial(
-                f"New version {v.version_id}: {v.label}. Change the prompt, run again, then see "
-                "“Compare runs”." + extra, history_before)
+                f"New version {v.version_id}: {v.label}. Change the prompt and run again to compare."
+                + extra, history_before)
         if step == "reviewer":
             found = agents.run_reviewer(st, wrapped, self.challenge)
             self.w["run_tabs"].selected_index = 2
@@ -1478,8 +1473,8 @@ class Studio:
         if step == "revision":
             v = agents.run_revision(st, wrapped, self.challenge, role=self.role)
             self._record_version(v, before, "reviser", cfg)
-            return (f"Revision ready ({v.version_id}). Only accepted findings were re-sent; your own "
-                    "wording was applied directly.")
+            return (f"Revision ready ({v.version_id}): accepted findings re-sent; your wording applied "
+                    "directly.")
         raise StudioError(f"Unknown step '{step}'.")
 
     def _with_partial(self, message: str, history_before: int) -> str:
@@ -1495,18 +1490,17 @@ class Studio:
         """Plain-English result of a reviewer run (skipped / nothing found / all dropped)."""
         counts = found.counts_text() if hasattr(found, "counts_text") else ""
         if getattr(found, "skipped", False):
-            return ("Review skipped: no string has changed since the last review (no request sent). "
-                    "Edit strings or revise first.")
+            return ("Review skipped: no string has changed since the last review. Edit or revise first.")
         if getattr(found, "all_dropped", False):
-            return Warn(f"⚠️ The reviewer replied with {found.received} finding(s), but none could "
-                        f"be used ({counts}). This does NOT mean the translation is fine: run it "
-                        "again, or switch to Replay.")
+            return Warn(f"⚠️ The reviewer sent {found.received} finding(s), but none could be used "
+                        f"({counts}). This does NOT mean the translation is fine: run it again, "
+                        "or switch to Replay.")
         if not found:
             n = len(getattr(found, "reviewed_ids", ()) or ())
             msg = (f"The reviewer checked {n} string(s) and found no problems." if n else
-                   "The reviewer had no findings for the strings it checked.")
+                   "The reviewer found no problems.")
             return Warn(msg + f" Note: {counts}.") if counts else msg
-        msg = f"The reviewer made {len(found)} suggestion(s). You decide in Section 5."
+        msg = f"The reviewer made {len(found)} suggestion(s): decide in Section 5."
         return Warn(msg + f" Note: {counts}.") if counts else msg
 
     def _record_version(self, v, snap_before: int, agent: str, cfg: dict) -> None:
@@ -1600,12 +1594,12 @@ class Studio:
             sys_diff = ""
             if pa.system != pb.system:
                 sys_diff = "<p><b>System message</b></p>" + exports.prompt_diff_html(pa.system, pb.system)
-            out += ("<h4 style='margin:8px 0 2px 0'>What changed in the prompt (A → B)</h4>"
+            out += ("<h4 style='margin:8px 0 2px 0'>Prompt changes (A → B)</h4>"
                     f"<div class='gls-diff'>{_DIFF_CSS}{sys_diff}"
                     + exports.prompt_diff_html(pa.user, pb.user) + "</div>")
         else:
             who = a if pa is None else b
-            out += box("plain", f"{esc(who.version_id)} was written by a human: no prompt to compare.")
+            out += box("plain", f"{esc(who.version_id)} is human-written: no prompt to compare.")
         if not st.mode == "live" and any(self._version_meta(x).get("edited") for x in (a, b)):
             out += box("replay", esc(compat.replay_variant_note(st.agents["translator"])))
         out += box("info", "💬 <b>Discuss:</b> What in the prompt caused these differences?")
@@ -1614,10 +1608,10 @@ class Studio:
     def _compare_runs(self) -> Safe:
         a, b = self.w["cmp_a"].value, self.w["cmp_b"].value
         if not a or not b:
-            raise StudioError("Run the translator at least once, then choose two versions.")
+            raise StudioError("Run the translator first, then pick two versions.")
         self.w["compare_out"].value = self.compare_html(a, b)
         self.w["run_tabs"].selected_index = 1
-        return Safe("Comparison updated (tab “Compare runs”).")
+        return Safe("Comparison updated.")
 
     def _refresh_compare_options(self) -> None:
         st = self.state
@@ -1645,7 +1639,7 @@ class Studio:
         decision = ""
         if with_decision:
             if d is None:
-                decision = badge("No decision yet", "#7f8c8d")
+                decision = badge("Undecided", "#7f8c8d")
             else:
                 colour = "#1e8449" if d.agrees_with_reviewer else "#c0392b"
                 decision = badge(ACTION_TEXT.get(d.action, d.action) + f" · {d.role}", colour)
@@ -1657,10 +1651,10 @@ class Studio:
             f"{badge(f.severity, _SEV_COLOURS.get(f.severity, '#7f8c8d'))} {decision}"
             f"<span style='float:right;color:#b9770e;font-weight:bold'>Suggestion — you decide</span></div>"
             f"<div style='margin-top:4px'><i>Source:</i> {esc_br(st.source_text(f.string_id))}</div>"
-            f"<div><i>Translation reviewed:</i> {esc_br(text)}</div>"
+            f"<div><i>Translation:</i> {esc_br(text)}</div>"
             f"<div><i>Issue:</i> {esc_br(f.issue)}</div>"
             f"<div><i>Reasoning:</i> {esc_br(f.reasoning)}</div>"
-            f"<div><i>Reviewer's suggestion:</i> <b>{esc_br(f.suggestion) or '—'}</b></div>"
+            f"<div><i>Suggestion:</i> <b>{esc_br(f.suggestion) or '—'}</b></div>"
             + (f"<div><i>Your text:</i> {esc_br(d.human_text)}</div>" if d is not None and d.human_text else "")
             + (f"<div><i>Comment:</i> {esc_br(d.comment)}</div>" if d is not None and d.comment else "")
             + "</div>")
@@ -1678,7 +1672,7 @@ class Studio:
         base = st.baseline_version()
         latest_tr = next((v for v in reversed(st.versions) if v.kind == "translator"), None)
         if base is None and latest_tr is None:
-            w["results_table"].value = box("plain", "No results yet — click “1 · Baseline”.")
+            w["results_table"].value = box("plain", "No results yet: click “1 · Baseline”.")
         else:
             rows = []
             for sid in st.string_ids():
@@ -1690,7 +1684,7 @@ class Studio:
                                 if note else "")])
             label = f"Translator (latest: {latest_tr.version_id})" if latest_tr else "Translator (latest)"
             w["results_table"].value = (
-                (f"<p style='margin:2px 0'>Latest translator run: <b>{esc(latest_tr.label)}</b></p>"
+                (f"<p style='margin:2px 0'>Latest: <b>{esc(latest_tr.label)}</b></p>"
                  if latest_tr else "")
                 + (box("plain", esc(REPLAY_LOCALE_NOTE)) if self._replay_locale_note() else "")
                 + table(["Id", "Source", "Baseline", label], rows))
@@ -1701,7 +1695,7 @@ class Studio:
             w["review_cards"].value = (f"<p style='margin:2px 0'>Review round {last} · decide in "
                                        "Section 5.</p>" + cards)
         else:
-            w["review_cards"].value = box("plain", "No reviewer findings yet.")
+            w["review_cards"].value = box("plain", "No findings yet.")
         w["validation_summary"].value = self._validation_html()
 
     def _estimate_text(self, step: str) -> str:
@@ -1731,7 +1725,7 @@ class Studio:
             items.append(f"<li>{badge(label, colour)} <code>{esc(i.string_id or '')}</code> "
                          f"{esc(i.message)} <i>{esc(i.fix_hint)}</i></li>")
         return box("error" if rep.critical else "warn",
-                   f"<b>{esc(rep.summary())}</b> (automatic checks, not the reviewer)"
+                   f"<b>{esc(rep.summary())}</b> (automatic, not the reviewer)"
                    f"<ul style='margin:4px 0 0 18px'>{''.join(items)}</ul>")
 
     # .................................................................. 5 director
@@ -1739,39 +1733,33 @@ class Studio:
         w = self.w
         w["decide_status"] = _html()
         w["findings_box"] = widgets.VBox(layout=_layout(width="100%"))
-        w["bulk_comment"] = _text("Comment:", "For the selected findings (optional)")
-        w["btn_bulk_accept"] = _button("Accept selected", "success")
-        w["btn_bulk_reject"] = _button("Reject selected", "danger")
-        w["btn_bulk_accept"].on_click(lambda b: self._action(b, lambda: self._bulk("accept"), "msg_director"))
-        w["btn_bulk_reject"].on_click(lambda b: self._action(b, lambda: self._bulk("reject"), "msg_director"))
-        w["rule_kind"] = _dropdown([("Style rule", "style"), ("Glossary rule", "glossary")],
-                                   "Rule type:", "style")
-        w["rule_from"] = _dropdown([("(not linked to a finding)", "")], "From:")
+        w["rule_kind"] = _dropdown([("Style", "style"), ("Glossary", "glossary")], "Rule type:", "style")
+        w["rule_from"] = _dropdown([("(no finding)", "")], "From finding:")
         w["rule_text"] = _text("Rule:", "e.g. Kit always calls Granny Wong 'Granny'.")
-        w["rule_src"] = _text("Source:", "source term (glossary)", full=False)
-        w["rule_tgt"] = _text("English:", "English term (glossary)", full=False)
-        w["btn_rule"] = _button("Add a project rule", "info", icon="plus")
+        w["rule_src"] = _text("Source:", "glossary only", full=False)
+        w["rule_tgt"] = _text("English:", "glossary only", full=False)
+        w["btn_rule"] = _button("Add rule", "info", icon="plus")
         w["btn_rule"].on_click(lambda b: self._action(b, self._add_rule, "msg_director"))
         w["rules_list"] = _html()
         w["edit_grid"] = widgets.VBox(layout=_layout(width="100%"))
-        w["edit_comment"] = _text("Comment:", "Why did you edit? (optional)")
-        w["btn_save_edits"] = _button("Save my edits as a new version", "warning", width="300px", icon="save")
+        w["edit_comment"] = _text("Comment:", "Why? (optional)")
+        w["btn_save_edits"] = _button("Save edits as new version", "warning", width="260px", icon="save")
         w["btn_save_edits"].on_click(lambda b: self._action(b, self._save_edits, "msg_director"))
         w["max_cycles"] = _dropdown([("0 (no revision)", 0), ("1 (default)", 1), ("2", 2)],
-                                    "Revision cycles allowed:", 1, width="360px")
+                                    "Revision cycles:", 1, width="360px")
         w["max_cycles"].observe(self._on_max_cycles, names="value")
         w["revision_info"] = _html()
-        w["btn_revision"] = _button("Send accepted feedback to the translator", "primary", icon="paper-plane")
+        w["btn_revision"] = _button("Send accepted feedback", "primary", icon="paper-plane")
         w["btn_revision"].on_click(lambda b: self._action(b, lambda: self.run_step("revision"),
                                                           "msg_director", "Working… (0 requests so far)"))
-        w["btn_review2"] = _button("Review the revised strings (round 2, optional)", "")
+        w["btn_review2"] = _button("Review again (optional)", "")
         w["btn_review2"].on_click(lambda b: self._action(b, lambda: self.run_step("reviewer"),
                                                          "msg_director", "Working… (0 requests so far)"))
         w["history_table"] = _html()
         w["hist_pick"] = _dropdown([("—", "")], "Version:")
         w["btn_hist_compare"] = _button("Compare with current", "info")
         w["btn_hist_compare"].on_click(lambda b: self._action(b, self._history_compare, "msg_director"))
-        w["btn_restore"] = _button("Restore this version", "warning", icon="history")
+        w["btn_restore"] = _button("Restore version", "warning", icon="history")
         w["btn_restore"].on_click(lambda b: self._action(b, self._restore, "msg_director"))
         w["hist_compare_out"] = _html()
         w["decision_log"] = _html()
@@ -1780,12 +1768,9 @@ class Studio:
         w["btn_approve"].on_click(lambda b: self._action(b, self._approve, "msg_director"))
         # Five tabs, worked left to right; every result message appears just below them.
         w["director_tabs"] = _tabs([
-            ("a · Decide", widgets.VBox([
-                w["decide_status"], w["bulk_comment"],
-                _row(w["btn_bulk_accept"], w["btn_bulk_reject"]),
-                _scroll(w["findings_box"], "420px")])),
+            ("a · Decide", widgets.VBox([w["decide_status"], _scroll(w["findings_box"], "420px")])),
             ("b · Rules", widgets.VBox([
-                _note("Rules go into your agents' future prompts (the model is not retrained)."),
+                _note("Rules are added to future prompts (the model is not retrained)."),
                 w["rule_kind"], w["rule_from"], w["rule_text"], w["rule_src"], w["rule_tgt"],
                 _row(w["btn_rule"]), _scroll(w["rules_list"], "240px")])),
             ("c · Revise", widgets.VBox([
@@ -1794,7 +1779,7 @@ class Studio:
             ("d · Final edits", widgets.VBox([
                 w["edit_comment"], _row(w["btn_save_edits"]), _scroll(w["edit_grid"], "400px")])),
             ("e · Approve", widgets.VBox([_row(w["btn_approve"]), w["approval_info"]]))])
-        w["history_acc"] = _accordion([("History — versions and decision log", widgets.VBox([
+        w["history_acc"] = _accordion([("History and decision log", widgets.VBox([
             w["hist_pick"], _row(w["btn_hist_compare"], w["btn_restore"]),
             _scroll(w["history_table"], "200px"), _scroll(w["hist_compare_out"], "360px"),
             _h4("Decision log"), _scroll(w["decision_log"], "400px")]))])
@@ -1803,59 +1788,41 @@ class Studio:
             w["director_tabs"], w["msg_director"], w["history_acc"]])
 
     def _card_widgets(self, f) -> dict:
+        """One finding: Accept / Reject, or edit the suggestion and “Use my wording”."""
         st = self.state
         cur = st.current_version()
-        cw = {"html": _html(), "select": widgets.Checkbox(value=False, indent=False, description="Select",
-                                                          layout=_layout(width="120px")),
-              "comment": widgets.Text(placeholder="Your comment: why? (recorded in the log)",
-                                      layout=_layout(width="100%")),
-              "edit": _textarea(f.suggestion or "", rows=2),
-              "override": _textarea((cur.translations.get(f.string_id, "") if cur else ""), rows=2)}
+        start = f.suggestion or (cur.translations.get(f.string_id, "") if cur else "")
+        cw = {"html": _html(),
+              "edit": _textarea(start, rows=2),
+              "comment": widgets.Text(placeholder="Comment: why? (optional, logged)",
+                                      layout=_layout(width="100%"))}
         for action, text, style in (("accept", "Accept", "success"), ("reject", "Reject", "danger"),
-                                    ("accept_edited", "Accept with my edit", "info"),
-                                    ("override", "Override with my own wording", "warning")):
-            b = _button(text, style, width="260px")
+                                    ("accept_edited", "Use my wording", "info")):
+            b = _button(text, style, width="160px")
             b.on_click(lambda btn, a=action, fid=f.finding_id:
                        self._action(btn, lambda: self.decide(fid, a), "msg_director"))
             cw[f"btn_{action}"] = b
-        for key in ("edit", "override"):
-            cw[key].layout = _layout(flex="1 1 auto", width="auto", margin="0 8px 0 0")
-
-        def pair(ta, btn):
-            return widgets.HBox([ta, btn], layout=_layout(width="100%", align_items="center",
-                                                          margin="3px 0"))
+        cw["edit"].layout = _layout(flex="1 1 auto", width="auto", margin="0 8px 0 0")
         cw["box"] = widgets.VBox([
-            cw["html"], _row(cw["btn_accept"], cw["btn_reject"], cw["select"], width="130px"),
-            pair(cw["edit"], cw["btn_accept_edited"]), pair(cw["override"], cw["btn_override"]),
+            cw["html"], _row(cw["btn_accept"], cw["btn_reject"]),
+            widgets.HBox([cw["edit"], cw["btn_accept_edited"]],
+                         layout=_layout(width="100%", align_items="center", margin="3px 0")),
             cw["comment"]],
             layout=_layout(border="1px solid #e4e7eb", padding="6px 8px", margin="4px 0"))
         return cw
 
     def decide(self, finding_id: str, action: str) -> str:
+        """Record a decision. "accept_edited" and the older "override" both take the card's
+        text box (projects saved before the two buttons were merged may hold "override")."""
         st = self._require_project()
         cw = self._finding_cards.get(finding_id) or {}
-        human = None
-        if action == "accept_edited":
-            human = cw["edit"].value if cw else None
-        elif action == "override":
-            human = cw["override"].value if cw else None
+        human = cw["edit"].value if cw and action in ("accept_edited", "override") else None
         comment = cw["comment"].value if cw else ""
         d = ps.decide_finding(st, finding_id, action, self.role, human_text=human, comment=comment)
         if cw:
             cw["comment"].value = ""
-        return (f"{d.decision_id}: {ACTION_TEXT[action]} for {finding_id} ({d.string_id}), recorded "
-                f"as {self.role}." + ("" if d.agrees_with_reviewer else " Your disagreement is recorded."))
-
-    def _bulk(self, action: str) -> str:
-        st = self._require_project()
-        ids = [fid for fid, cw in self._finding_cards.items() if cw["select"].value]
-        if not ids:
-            raise StudioError("Tick “Select” on at least one finding first.")
-        ds = ps.bulk_decide(st, ids, action, self.role, comment=self.w["bulk_comment"].value)
-        for fid in ids:
-            self._finding_cards[fid]["select"].value = False
-        self.w["bulk_comment"].value = ""
-        return f"{ACTION_TEXT[action]}: {len(ds)} finding(s) ({', '.join(ids)})."
+        return (f"{d.decision_id}: {ACTION_TEXT[action]} — {finding_id} ({d.string_id}), as "
+                f"{self.role}." + ("" if d.agrees_with_reviewer else " Disagreement recorded."))
 
     def _add_rule(self) -> str:
         st = self._require_project()
@@ -1865,19 +1832,19 @@ class Studio:
                         from_finding=self.w["rule_from"].value or None)
         for k in ("rule_text", "rule_src", "rule_tgt"):
             self.w[k].value = ""
-        return f"Rule {r.rule_id} added: your agents will see it in future prompts."
+        return f"Rule {r.rule_id} added to future prompts."
 
     def _save_edits(self) -> str:
         st = self._require_project()
         cur = st.current_version()
         if cur is None:
-            raise StudioError("Run the translator first; there is nothing to edit yet.")
+            raise StudioError("Run the translator first.")
         edits = {sid: ta.value for sid, ta in self._grid.items() if ta.value != cur.translations.get(sid, "")}
         if not edits:
-            raise StudioError("You have not changed any string in the grid.")
+            raise StudioError("No string has changed.")
         v = ps.direct_edit(st, edits, self.role, comment=self.w["edit_comment"].value)
         self.w["edit_comment"].value = ""
-        return f"Saved {len(edits)} edited string(s) as new version {v.version_id}."
+        return f"Saved {len(edits)} edit(s) as version {v.version_id}."
 
     def _on_max_cycles(self, change) -> None:
         if self._suspend or self.state is None:
@@ -1896,7 +1863,7 @@ class Studio:
         if not vid or st.current_version_id is None:
             raise StudioError("Choose a version first.")
         self.w["hist_compare_out"].value = self.compare_html(vid, st.current_version_id)
-        return Safe("Comparison shown in “History”, under the version table.")
+        return Safe("Comparison shown under the version table.")
 
     def _restore(self) -> str:
         st = self._require_project()
@@ -1908,14 +1875,13 @@ class Studio:
         meta["restored_from"] = vid
         meta.pop("snapshot", None)
         self.extras["version_meta"][v.version_id] = meta
-        return f"Restored {vid} as the new current version {v.version_id}."
+        return f"Restored {vid} as {v.version_id} (current)."
 
     def _approve(self) -> str:
         st = self._require_project()
         open_n = len(st.open_findings())
         ps.approve_final(st, self.role)
-        msg = (f"Approved {st.approval['version_id']} ({self.role}). Any later change revokes it. "
-               "Next: Section 6.")
+        msg = f"Approved {st.approval['version_id']} ({self.role}). Later changes revoke it. Next: Section 6."
         if open_n:
             msg += f" Note: {open_n} finding(s) had no decision."
         return msg + "\n" + DOWNLOAD_REMINDER
@@ -1940,9 +1906,9 @@ class Studio:
         open_n = len(st.open_findings())
         w["decide_status"].value = (_note_html(
             f"Deciding as <b>{esc(self.role)}</b> · {len(st.findings)} finding(s), "
-            f"<b>{open_n} without a decision</b>") if st.findings else
-            box("plain", "No reviewer findings yet — run the reviewer in Section 4."))
-        rule_opts = [("(not linked to a finding)", "")] + [(f"{f.finding_id} · {f.string_id}", f.finding_id)
+            f"<b>{open_n} undecided</b>") if st.findings else
+            box("plain", "No findings yet: run the reviewer (Section 4)."))
+        rule_opts = [("(no finding)", "")] + [(f"{f.finding_id} · {f.string_id}", f.finding_id)
                                                             for f in st.findings]
         if list(w["rule_from"].options) != rule_opts:
             w["rule_from"].options = rule_opts
@@ -1950,7 +1916,7 @@ class Studio:
         rrows = [[esc(r.rule_id), esc(r.kind), esc(r.text), esc(r.source_term or ""),
                   esc(r.target_term or ""), esc(r.role)] for r in st.memory_rules]
         w["rules_list"].value = (table(["Rule", "Type", "Text", "Source", "English", "Added by"], rrows)
-                                 if rrows else "<i>No project rules yet.</i>")
+                                 if rrows else "<i>No rules yet.</i>")
         done, max_c = st.revision.get("cycles_done", 0), st.revision.get("max_cycles", 1)
         self._suspend = True
         try:
@@ -1965,8 +1931,8 @@ class Studio:
         req = (f"This will make {n} request(s)." if self._is_live()
                else f"Replay: {n} simulated request(s), free.")
         w["revision_info"].value = _note_html(
-            f"Cycles used: <b>{done} of {max_c}</b> · only <b>accepted</b> findings are re-sent; "
-            f"your own wording is applied directly · {esc(req)}")
+            f"Cycles used: <b>{done} of {max_c}</b> · re-sends <b>accepted</b> findings; your wording "
+            f"is applied directly · {esc(req)}")
         self._refresh_grid()
         hrows = []
         for v in st.versions:
@@ -2022,7 +1988,7 @@ class Studio:
                          f"<code>{esc(d.string_id or '')}</code> {esc(d.finding_id or '')}",
                          esc_br(d.reviewer_suggestion or ""), esc_br(d.human_text or ""), esc(agree),
                          esc_br(d.comment or "")])
-        return (table(["#", "Who", "What", "String / finding", "Reviewer suggestion", "Human choice",
+        return (table(["#", "Who", "What", "String / finding", "Suggestion", "Human text",
                        "Agreed / overrode", "Comment"], rows) if rows else "<i>No decisions yet.</i>")
 
     def _approval_html(self) -> str:
@@ -2031,7 +1997,7 @@ class Studio:
         ap = st.approval
         if ap.get("approved") and ok:
             return box("ok", f"✅ <b>{esc(ap['version_id'])}</b> approved by {esc(ap.get('role'))} at "
-                             f"{esc(ap.get('approved_at'))}. Any later change revokes it.")
+                             f"{esc(ap.get('approved_at'))}. Later changes revoke it.")
         rep = ps.validate_current(st) if st.current_version() else None
         blocking = [i.message for i in rep.critical] if rep else ["There is no translation yet."]
         text = "<b>Not approved yet.</b> "
@@ -2053,8 +2019,9 @@ class Studio:
         w["summary_validation"] = _html()
         w["summary_history"] = _html()
         w["prompt_evolution"] = _html()
-        w["reflection"] = _textarea(rows=6, placeholder="Write your answer together (a few sentences).")
-        w["btn_reflection"] = _button("Save reflection", "info", icon="save")
+        w["reflection"] = _textarea(rows=6, placeholder="A few sentences, written together.")
+        w["btn_reflection"] = _button("Save reflection (goes in your report)", "info", width="320px",
+                                      icon="save")
         w["btn_reflection"].on_click(lambda b: self._action(b, self._save_reflection, "msg_export"))
         w["btn_export_all"] = _button("Export all three files", "primary", width="270px", icon="download")
         w["btn_export_game"] = _button("Export game_translation_en.json", "", width="270px", icon="download")
@@ -2066,21 +2033,21 @@ class Studio:
                                                              "Checking and saving…"))
         # The game link is rebuilt by _refresh_export after every action (approval, edits…).
         w["play_link"] = _html()
-        w["btn_next_mission"] = _button("Start the next mission", "warning", icon="forward")
+        w["btn_next_mission"] = _button("Next mission", "warning", icon="forward")
         w["btn_next_mission"].on_click(lambda b: self._action(b, self._next_mission, "msg_export"))
         w["summary_tabs"] = _tabs([
             ("Summary", _scroll(w["summary_table"], "380px")),
-            ("Findings & decisions", _scroll(w["summary_findings"], "380px")),
+            ("Decisions", _scroll(w["summary_findings"], "380px")),
             ("Technical checks", _scroll(w["summary_validation"], "380px")),
-            ("Revision history", _scroll(w["summary_history"], "380px")),
-            ("Prompt evolution", _scroll(w["prompt_evolution"], "380px"))])
+            ("History", _scroll(w["summary_history"], "380px")),
+            ("Prompt changes", _scroll(w["prompt_evolution"], "380px"))])
         return widgets.VBox([
             _h3("6 · Test and export (≈10 min)"),
             w["summary_tabs"],
             _h4("Reflection"), _html(f"<b>{esc(REFLECTION_QUESTION)}</b>"),
             w["reflection"], _row(w["btn_reflection"]),
             _h4("Play"), w["play_link"],
-            _h4("Export"), _note("Export files to hand in your work."),
+            _h4("Export"), _note("Hand in these three files."),
             _row(w["btn_export_all"]),
             _row(w["btn_export_game"], w["btn_export_settings"], w["btn_export_report"]),
             w["msg_export"], w["download_out_game_translation"], w["download_out_agent_settings"],
@@ -2091,7 +2058,7 @@ class Studio:
         text = self.w["reflection"].value
         if text != st.reflection:
             ps.set_reflection(st, text)
-        return "Reflection saved (it goes into your workflow report)."
+        return "Reflection saved (it goes in your report)."
 
     def export(self, which: str = "all") -> Safe:
         st = self._require_project()
@@ -2100,10 +2067,10 @@ class Studio:
         ok, reasons = ps.can_export(st)
         if not ok:
             raise StudioError(
-                "Export blocked — nothing was written; your work is kept.\n"
+                "Export blocked (nothing written; your work is kept).\n"
                 + "\n".join(f"• {r}" for r in reasons[:6])
-                + "\nHow to fix: in Section 5, fix problems in “d · Final edits”, approve in "
-                  "“e · Approve”, then export again.")
+                + "\nHow to fix: Section 5 → fix in “d · Final edits”, approve in “e · Approve”, "
+                  "export again.")
         out_dir = self.mission_export_dir()
         results = exports.export_all(st, self.challenge, self.manifest, out_dir)
         bad = [r for r in results.values() if not r.ok]
@@ -2122,13 +2089,13 @@ class Studio:
                          + (" — download started." if started else
                             " — use the Files panel to download it." if self.colab else "") + "</li>")
         warn = results["game_translation"].issues
-        wtxt = (f"<br>{len(warn)} warning(s) to review (not blocking)." if warn else "")
+        wtxt = (f"<br>{len(warn)} warning(s) (not blocking)." if warn else "")
         if self.colab:
             steps = self._files_panel_steps(results[keys[0]].path, "the file")
             where = ("If nothing downloads: " if all_started else "To download: ") + steps
         else:
             where = f"Folder: {esc(out_dir)}"
-        where += " Same file names every mission: your browser may add “(1)”."
+        where += " Same names every mission: your browser may add “(1)”."
         return Safe("<ul style='margin:2px 0 0 18px'>" + "".join(parts) + "</ul>" + where + wtxt
                     + "<br>" + esc(DOWNLOAD_REMINDER))
 
@@ -2165,14 +2132,14 @@ class Studio:
         path = self._save_copy(f"studio_progress_{self.state.challenge_id}")
         started = self._start_download(path, self.w[out_key])
         if started:
-            text = (f"Progress file saved to <code>{esc(path)}</code> — download started.<br>"
+            text = (f"Progress saved to <code>{esc(path)}</code> — download started.<br>"
                     "If nothing downloads: " + self._files_panel_steps(path))
         elif self.colab:
             text = (f"Saved to <code>{esc(path)}</code> — use the Files panel to download it: "
                     + self._files_panel_steps(path))
         else:
-            text = f"Progress file saved to <code>{esc(path)}</code>."
-        return Safe(text + "<br>To continue later: “Resume from file” in “If you get stuck”.")
+            text = f"Progress saved to <code>{esc(path)}</code>."
+        return Safe(text + "<br>To continue later: “Resume from file” (If you get stuck).")
 
     def _next_mission(self) -> str:
         st = self._require_project()
@@ -2187,7 +2154,7 @@ class Studio:
             self._suspend = False
         self._refresh_mission_preview()
         msg = self._start_mission(confirmed=True)
-        return (f"Finished project saved as {copy_path}. {msg} 🔁 Swap roles now.")
+        return f"Finished project saved ({copy_path}). {msg} 🔁 Swap roles now."
 
     def _refresh_export(self) -> None:
         w, st = self.w, self.state
@@ -2204,7 +2171,7 @@ class Studio:
             next((v for v in reversed(st.versions) if v.kind == "translator"), None)
         ap = st.approval
         final = st.version(ap.get("version_id")) if ap.get("approved") else st.current_version()
-        final_head = "Final approved" if ap.get("approved") else "Final approved (current — not approved yet)"
+        final_head = "Final (approved)" if ap.get("approved") else "Current (not approved yet)"
         rows = []
         for sid in st.string_ids():
             rows.append([f"<code>{esc(sid)}</code>", esc_br(st.source_text(sid)),
@@ -2236,7 +2203,7 @@ class Studio:
                          + exports.prompt_diff_html(cfg.get("default_instructions", ""), cfg.get("instructions", "")))
             pair = prompts.get(role) or {}
             if pair.get("initial") and pair.get("final"):
-                parts.append(f"<p><b>{esc(role.title())}: first prompt sent → latest prompt sent</b></p>"
+                parts.append(f"<p><b>{esc(role.title())}: first → latest prompt sent</b></p>"
                              + exports.prompt_diff_html(pair["initial"]["user"], pair["final"]["user"]))
         w["prompt_evolution"].value = f"<div class='gls-diff'>{_DIFF_CSS}{''.join(parts)}</div>"
         self._refresh_play_link()
@@ -2264,7 +2231,7 @@ class Studio:
         try:
             url = self.play_url()
         except Exception:  # noqa: BLE001 - the link is a convenience; exports still work
-            url, self._play_reason = None, "No game link this time: export the game file instead."
+            url, self._play_reason = None, "No game link: export the game file instead."
         if url is None:
             self.w["play_link"].value = _note_html(esc(self._play_reason))
             return
@@ -2290,13 +2257,13 @@ class Studio:
         w["btn_resume_file"].on_click(lambda b: self._action(b, self._resume_from_upload, "msg_stuck"))
         w["resume_upload"].layout = _layout(width=BTN_W, height=BTN_H)
         w["checkpoint"] = _dropdown(self._checkpoint_options(), "Checkpoint:")
-        w["btn_checkpoint"] = _button("Load this checkpoint", "warning")
+        w["btn_checkpoint"] = _button("Load checkpoint", "warning")
         w["btn_checkpoint"].on_click(lambda b: self._action(b, self._load_checkpoint, "msg_stuck"))
         w["btn_reset"] = _button("Reset this mission", "danger", icon="trash")
         w["btn_reset"].on_click(lambda b: self._action(b, self._reset_mission, "msg_stuck"))
-        w["btn_reset_confirm"] = _button("Yes, reset (a backup copy is kept)", "danger")
+        w["btn_reset_confirm"] = _button("Yes, reset (backup kept)", "danger")
         w["btn_reset_confirm"].on_click(lambda b: self._action(b, lambda: self._reset_mission(True), "msg_stuck"))
-        w["btn_reset_confirm"].layout.width = "300px"
+        w["btn_reset_confirm"].layout.width = "260px"
         w["reset_confirm"] = _hidden(_row(w["btn_reset_confirm"]))
         w["stuck_box"] = widgets.VBox([
             _h3("🆘 If you get stuck"),
@@ -2320,12 +2287,11 @@ class Studio:
             except (OSError, ValueError, AttributeError):
                 pass
             opts.append((str(label), str(p)))
-        return opts or [("(no checkpoints available)", "")]
+        return opts or [("(none available)", "")]
 
     def _resume_saved(self) -> str:
         if not self.state_path.exists():
-            raise StudioError("No saved session in this Colab runtime. Use “Resume from file” with "
-                              "your downloaded progress file.")
+            raise StudioError("No saved session here. Use “Resume from file” with your progress file.")
         msg = self._load_text(self.state_path.read_text(encoding="utf-8"), "your saved session")
         self._saved_session_handled = True
         _hidden(self.w["resume_row"])
@@ -2334,7 +2300,7 @@ class Studio:
     def _resume_from_upload(self) -> str:
         files = compat.uploaded_files(self.w["resume_upload"].value)
         if not files:
-            raise StudioError("Choose your progress file (.json) first with “Choose file”.")
+            raise StudioError("Click “Choose file” and pick your progress file (.json) first.")
         name, data = files[0]
         if len(data) > 5_000_000:
             raise StudioError("That file is too large to be a progress file.")
@@ -2351,19 +2317,19 @@ class Studio:
     def _load_checkpoint(self) -> str:
         path = self.w["checkpoint"].value
         if not path:
-            raise StudioError("No checkpoint is available. Ask your instructor.")
+            raise StudioError("No checkpoint available. Ask your instructor.")
         if self.state is not None:
             self._save_copy(f"backup_{self.state.challenge_id}")
         self._backup_unhandled_session()
         msg = self._load_text(Path(path).read_text(encoding="utf-8"), "the catch-up checkpoint")
-        return msg + " Your previous work (if any) is backed up in the exports folder."
+        return msg + " Earlier work (if any) is backed up in exports."
 
     def _reset_mission(self, confirmed: bool = False) -> str:
         st = self._require_project()
         if not confirmed:
             _hidden(self.w["reset_confirm"], False)
-            return Warn("⚠️ This clears all versions and decisions (a backup is kept). Click "
-                        "“Yes, reset” to continue.")
+            return Warn("⚠️ This clears all versions and decisions (backup kept). Click “Yes, reset” "
+                        "to confirm.")
         _hidden(self.w["reset_confirm"])
         mission = "custom" if st.challenge_id == "custom" else st.mission
         self._suspend = True
@@ -2388,7 +2354,7 @@ class Studio:
     def _refresh_status(self) -> None:
         st = self.state
         if self.provider is None:
-            mode = badge("NOT CONNECTED — go to Section 1", "#7f8c8d")
+            mode = badge("NOT CONNECTED — see Section 1", "#7f8c8d")
         elif self._is_live():
             mode = badge(f"LIVE · {self._provider_display()} / {self.translator_model}", "#1e8449")
             if self.reviewer_model and self.reviewer_model != self.translator_model:
@@ -2407,7 +2373,7 @@ class Studio:
                 parts.append(f"Est. cost: ${u['est_cost_usd']:.4f}")
             parts.append(f"Mission: <b>{esc(self._challenge_title())}</b>")
             if self._live_hint:
-                parts.append("⚠️ made in Live Mode — load your key in Section 1, or “Switch to Replay”")
+                parts.append("⚠️ Live project: load your key (Section 1) or “Switch to Replay”")
         else:
             parts.append("Mission: <i>not started</i>")
         parts.append(f"Role: <b>{esc(self.role)}</b>")
@@ -2421,8 +2387,8 @@ class Studio:
         b.description = "✓ Replay Mode on" if replay_on else "Switch to Replay"
         b.button_style = "" if replay_on else "warning"
         b.icon = "" if replay_on else "play"
-        b.tooltip = ("You are in Replay Mode (prepared outputs)" if replay_on
-                     else "Use prepared outputs instead of a live AI")
+        b.tooltip = ("Replay Mode is on (simulated outputs)" if replay_on
+                     else "Use simulated outputs instead of live AI")
         b.disabled = replay_on
         self._refresh_role_labels()
 
@@ -2454,8 +2420,8 @@ class Studio:
                 info = (f" Saved session found (mission “{esc(data.get('challenge_id'))}”, "
                         f"{esc(data.get('updated_at'))}): click <b>Resume my saved session</b>.")
             except (OSError, ValueError, AttributeError):
-                info = " A saved session file was found but could not be read."
-        mode = ("Replay Mode (prepared outputs)" if self.provider is not None and not self._is_live()
+                info = " A saved session exists but could not be read."
+        mode = ("Replay Mode (simulated outputs)" if self.provider is not None and not self._is_live()
                 else ("live AI" if self.provider is not None else "not connected"))
         self.w["welcome_html"].value = box("ok", f"✅ <b>The studio is ready</b> — {esc(mode)}."
-                                           + info + " Scroll down to Section 1.")
+                                           + info + " Go to Section 1.")

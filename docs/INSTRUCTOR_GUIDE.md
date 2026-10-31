@@ -168,7 +168,7 @@ Two common gateway shapes, given **only as illustrations of how the fields combi
 ```
 
 - `id` must be exactly what the service expects. It is what replaces `{model}` and goes in the body.
-- While `verified` is `false`, the dropdown shows the label followed by *(configured by your instructor — not yet verified)*.
+- While `verified` is `false`, the dropdown shows the label followed by *(set up by your instructor, unverified)*.
 - Optional: add `"pricing": {"input_per_mtok": <number>, "output_per_mtok": <number>, "currency": "USD"}` to get a cost estimate in the status bar.
 - **Never put a key in either configuration file.**
 
@@ -177,7 +177,7 @@ Two common gateway shapes, given **only as illustrations of how the fields combi
 1. Push the changes to GitHub (or build a bundle, section 16), then open the notebook in a **fresh** Colab runtime.
 2. Add your own key in Colab Secrets as `HKBU_API_KEY` with **Notebook access** on.
 3. In Section 1 choose **HKBU GenAI**, pick the model, click **Load my key**, then **Test connection**. This sends one small request ("Reply with the single word OK"). You should see **Connected to HKBU GenAI with model '…'.**
-4. Then run Mission 1 end to end in Live Mode: **1 · Baseline (one-shot)**, **2 · Run translator agent**, **3 · Run reviewer agent**, **Send accepted feedback to the translator**. Check that the status bar's **Live requests this session** and **Tokens** counters move. If the token counters stay at zero, fix the `usage_*_path` fields.
+4. Then run Mission 1 end to end in Live Mode: **1 · Baseline (one-shot)**, **2 · Run translator**, **3 · Run reviewer**, **Send accepted feedback**. Check that the status bar's **Live requests this session** and **Tokens** counters move. If the token counters stay at zero, fix the `usage_*_path` fields.
 5. Only when all of this works, set `"verified": true` for the model in `models.json` and for `hkbu` in `providers.json`, and update the notes with the date.
 
 | Message in Section 1 | Likely cause |
@@ -188,7 +188,7 @@ Two common gateway shapes, given **only as illustrations of how the fields combi
 | "…sent back a reply the studio could not use. (no text in the reply)" | Wrong `request_style` or `response_text_path`. |
 | "Could not reach HKBU GenAI…" | Wrong `base_url`, or the service is reachable only from the campus network or VPN. A Colab machine is not on the campus network. |
 
-The key-help box in Section 1 reads `"verified"` under `hkbu` in `providers.json`: while it is `false` it says HKBU GenAI is *configured by your instructor — not yet verified*; once it is `true` it says only *configured by your instructor*. Each model label follows its own `verified` flag in `models.json`.
+The key-help box in Section 1 reads `"verified"` under `hkbu` in `providers.json`: while it is `false` it says HKBU GenAI is *set up by your instructor, unverified*; once it is `true` it says only *set up by your instructor*. Each model label follows its own `verified` flag in `models.json`.
 
 ## 5. Claude and Hugging Face: models and cost
 
@@ -233,14 +233,14 @@ The status bar shows each pair's running **Est. cost** in Live Mode. Even the wo
 
 - Secret name: `HF_TOKEN` (a fine-grained token with permission to make calls to Inference Providers).
 - Default model: `openai/gpt-oss-120b`. You can append `:cheapest`, `:fastest` or `:<provider>` to choose a routing policy (`openai/gpt-oss-120b:cheapest` is listed).
-- Both models are `verified: false`. The request shape follows the Inference Providers documentation but **has not been tested live**, and the dropdown labels say *(not yet verified)*.
+- Both models are `verified: false`. The request shape follows the Inference Providers documentation but **has not been tested live**, and the dropdown labels say *(unverified)*.
 - Prices depend on the provider the router chooses and are not listed, so no cost estimate is shown.
 
 To offer another model, add an entry to the provider's `models` list in `config/models.json`, and mark it `verified: true` only after you have run Mission 1 with it.
 
 ## 6. Replay Mode
 
-**What it is.** Replay serves outputs written in advance by the course team from `fixtures/replay_outputs.json`. It needs no key and no internet, costs nothing, and never counts against the request cap. Every screen, the status bar, the comparisons, the exports and the game label it: **REPLAY MODE — prepared, simulated outputs. Not a live AI response.** In the game, the badge reads "Showing: Student's imported English · simulated (Replay Mode)".
+**What it is.** Replay serves outputs written in advance by the course team from `fixtures/replay_outputs.json`. It needs no key and no internet, costs nothing, and never counts against the request cap. Every screen, the status bar, the comparisons, the exports and the game label it: **REPLAY MODE — simulated outputs, not live AI** In the game, the badge reads "Showing: Student's imported English · simulated (Replay Mode)".
 
 **Presets and variants.** For each mission there is one prepared baseline and **one prepared translator output per preset** (Faithful, Balanced, Creative), each with its own reviewer findings and round-2 findings. This means the key activity (change the prompt, run again, compare) still works in Replay, as long as students switch **presets**. If students edit the sliders or instructions themselves, Replay serves the output of the preset they started from and says so ("Your own edits are saved in your prompt and report, but Replay Mode cannot generate a new response — switch to Live Mode to test them."). All prepared English is British English, whatever English variant the project uses. When a project is set to en-US or en, the studio says so: "Replay examples are written in British English; live agents will follow your choice."
 
@@ -268,7 +268,7 @@ To offer another model, add an entry to the provider's `models` list in `config/
 - [ ] **Test run in Replay:** open the Colab link in a fresh runtime, do Mission 1 end to end (all six sections), export, and import `game_translation_en.json` into the game.
 - [ ] **Test live with one key:** **Load my key** → **Test connection** → one full Mission 1 run. Note the cost in the status bar.
 - [ ] Open the **game link** on a second device. Check **English** / **繁體中文**, **Reference English**, and import `game/translations/example_student_export_intro.json`.
-- [ ] Try the **Checkpoint:** dropdown (**Load this checkpoint**) and **Download progress** → **Resume from file** once.
+- [ ] Try the **Checkpoint:** dropdown (**Load checkpoint**) and **Download progress** → **Resume from file** once.
 - [ ] Build `studio_bundle.zip` (`python3 tools/make_bundle.py`) and keep it ready to share (section 16).
 - [ ] Prepare a breakout-room list of 19 pairs and decide which advanced mission each pair does.
 - [ ] Prepare an LMS assignment for `workflow_report.html` (and, optionally, the other two files).
@@ -289,17 +289,17 @@ The section times printed in the notebook add up to about 83 minutes for Mission
 | 0:00 | 10 min | Welcome, aims, the director principle; quick demo of the game in **Original Chinese** and **Reference English**; explain the two roles. | — |
 | 0:10 | 8 min | Breakout rooms. Open the notebook, **File → Save a copy in Drive**, Step 0 (≈3 min), Section 1 (≈5 min: Replay, or **Load my key** → **Test connection**). | Pair decides who starts as AI Director. |
 | 0:18 | 5 min | Section 2: start Mission 1. | **🔁 Swap 1** after Section 2. |
-| 0:23 | 15 min | Section 3: presets, instructions, **Show the full prompt that will be sent**. | |
-| 0:38 | 20 min | Section 4: baseline, translator, **change the prompt → run again → Compare these two runs**, reviewer. ⭐ Key activity. | **🔁 Swap 2** after Section 4. |
+| 0:23 | 15 min | Section 3: presets, instructions, **Show full prompt**. | |
+| 0:38 | 20 min | Section 4: baseline, translator, **change the prompt → run again → Compare A and B**, reviewer. ⭐ Key activity. | **🔁 Swap 2** after Section 4. |
 | 0:58 | 25 min | Section 5: decide on every finding, add a rule, send feedback, approve. | |
 | 1:23 | 10 min | Section 6: export, play in the game. | |
 | 1:33 | 10 min | **Break.** Ask every pair to click **Download progress** first. | |
-| 1:43 | 5 min | Five-minute plenary: "Which finding did you reject, and why?" Assign advanced missions. | **🔁 Swap 3** (Start the next mission). |
+| 1:43 | 5 min | Five-minute plenary: "Which finding did you reject, and why?" Assign advanced missions. | **🔁 Swap 3** (**Next mission**). |
 | 1:48 | 40 min | One advanced mission (A, B or C), Sections 2–6 (skip Section 1). | Swap again at the orange boxes if time allows. |
 | 2:28 | 25 min | Debrief and reflection: each pair writes the reflection and exports again; compare decisions across pairs; collect `workflow_report.html`. | — |
 | 2:53 | 7 min | Buffer for overruns, technical problems and catch-up. | — |
 
-**Assigning advanced missions.** Either give every pair the same one (easier to debrief), or split the class into three groups, about 6 pairs each on A, B and C, and have each group report back. **Start the next mission** in Section 6 always moves to the next mission in the order intro → voice → pun → ui. For B or C, students pick the mission in Section 2 instead.
+**Assigning advanced missions.** Either give every pair the same one (easier to debrief), or split the class into three groups, about 6 pairs each on A, B and C, and have each group report back. **Next mission** in Section 6 always moves to the next mission in the order intro → voice → pun → ui. For B or C, students pick the mission in Section 2 instead.
 
 ### 8.1 Role-swap points
 
@@ -319,12 +319,12 @@ The help box (**🆘 If you get stuck**) offers three Mission 1 checkpoints in t
 | Catch up: review done (Mission 1) | + reviewer findings, no decisions | 1:00, a pair has not run the reviewer |
 | Catch up: revision done (Mission 1) | + sample decisions, one project rule, one revision | 1:20, a pair has not revised (they can still approve and export) |
 
-**Load this checkpoint** saves the pair's previous work as a backup first.
+**Load checkpoint** saves the pair's previous work as a backup first.
 
 Other ways to save time:
 
 - set **Revision cycles allowed:** to `0 (no revision)` and go straight to editing and approval;
-- skip **Review the revised strings (round 2, optional)**;
+- skip **Review again (optional)**;
 - move everyone to Replay (no waiting for replies);
 - turn the advanced mission into a whole-class demonstration on your screen.
 
@@ -413,7 +413,7 @@ A simple rubric (adapt the weights to your course):
 | Criterion (weight) | Strong | Adequate | Weak | Where to look in the report |
 |---|---|---|---|---|
 | **Agent configuration** (20%) | Instructions rewritten in the pair's own words, targeted at this mission's challenge; at least one deliberate prompt change compared and explained. | Preset adjusted with minor edits; one comparison made. | Preset left unchanged; no comparison. | Prompt evolution; version history |
-| **Critical evaluation of findings** (30%) | Every finding decided; the wrong findings (see the answer key in the instructor pack) rejected or overridden; debatable ones argued either way. | Most findings decided; some wrong findings accepted, or comments missing. | Everything accepted (often with **Accept selected**); no comments. | Findings and decisions table; *Agreed / overrode* column |
+| **Critical evaluation of findings** (30%) | Every finding decided; the wrong findings (see the answer key in the instructor pack) rejected or overridden; debatable ones argued either way. | Most findings decided; some wrong findings accepted, or comments missing. | Everything accepted; no comments. | Findings and decisions table; *Agreed / overrode* column |
 | **Justified interventions** (20%) | Comments give reasons (meaning, voice, constraint, glossary, linked strings); useful project rules; direct edits where the reviewer missed something. | Some reasons; generic rules. | Interventions without reasons. | Comments; rules; human-edit versions |
 | **Technical validity** (15%) | Approved; no CRITICAL issues; warnings checked; placeholders and limits respected; the game plays correctly. | Approved with warnings left unexplained. | Not approved / export blocked, or obvious placeholder errors. | Validation section; final translation column |
 | **Reflection** (15%) | Specific: names strings, quotes before and after, links outcomes to prompt changes and decisions, admits what did not work. | General but accurate. | Vague or missing. | Reflection |
@@ -422,14 +422,14 @@ A pair working in Replay Mode is not disadvantaged. Assess their judgement, not 
 
 ## 13. Common student errors
 
-- **Accepting everything.** Clicking **Accept selected** on every finding without reading them.
+- **Accepting everything.** Clicking **Accept** on every finding without reading them.
 - **Not counting characters** in a suggested button label, or forgetting that a `{placeholder}` token counts towards the limit.
 - **Treating the reviewer, or the Reference English, as the answer key.**
 - **Changing several things at once**, then being unable to say what caused a difference.
-- **Editing the preview box** under **Show the full prompt that will be sent** (it changes nothing), instead of the instructions box.
+- **Editing the preview box** under **Show full prompt** (it changes nothing), instead of the instructions box.
 - **Expecting Replay to respond to their own wording**, when only preset changes produce different prepared outputs.
 - **Forgetting to change "Who is deciding:"** after a swap, so the log attributes decisions to the wrong role.
-- **Typing in the edit grid and then running another step** without **Save my edits as a new version**.
+- **Typing in the edit grid and then running another step** without **Save edits as new version**.
 - **Changing something after approval** and not noticing the "Approval revoked" message, then wondering why export is blocked.
 - **Accepting only one of a set of linked strings** (the pun riddle, its answer and Ending A; the café choice and Ending B).
 - **Translating or reformatting placeholders**, for example `{player name}` or `{玩家名稱}`.
@@ -456,7 +456,7 @@ A pair working in Replay Mode is not disadvantaged. Assess their judgement, not 
 | "Review skipped: no string has changed since the last review…" | No string changed since the last review, so no request was sent. | Edit strings or run a revision first, then review again. |
 | "⚠️ The reviewer replied with N finding(s), but none could be used…" | Every finding in the reply named a string id that does not exist or had no issue text, so all were dropped (the message lists the counts). This does **not** mean the translation is fine. | Run the reviewer again, or switch to Replay. |
 | "This text contains your API key — remove it from the …" | A student pasted their key into instructions, a comment, a rule, the reflection or an uploaded file. | Remove it. The key belongs only in Colab Secrets. If it was shown on screen, rotate it. |
-| "Autosave did not work this time: … Fix this, or use “Download progress” to keep a copy of your work." (status bar: **⚠️ Autosave failed:** with the reason) | The project could not be written (for example it contains something that looks like a key, or the disk is full). | Fix the reason shown, then click **Download progress**. |
+| "Autosave failed: … Fix it, or click “Download progress”." (also in the status bar, with the reason) | The project could not be written (for example it contains something that looks like a key, or the disk is full). | Fix the reason shown, then click **Download progress**. |
 | Nothing downloads after **Download progress** or an export. | The browser blocked an automatic (or a second) download, or Colab could not start it. Chrome asks before a site downloads several files at once ("Export all three files"); once a student clicks **Block**, *every* later download from Colab silently fails, including single files (observed in testing). The message only says **download started** when Colab accepted the download; otherwise it says "use the Files panel to download it". | The file is always saved: open the Files panel (📁 folder icon on the left) → `exports` (progress files) or `exports` → the mission's folder, e.g. `intro` (exports) → **⋮** next to the file → **Download**. Click the download icon at the right of Chrome's address bar → **Always allow … to download multiple files** → Done (or chrome://settings/content/automaticDownloads → allow colab.research.google.com). A repeated download may be saved as `game_translation_en (1).json`; that is the same file. |
 | Colab disconnected, same runtime. | Idle timeout or network drop. | Run Step 0 again → **Resume my saved session** (the autosave is still in `/content`). |
 | **Resume my saved session** says no saved session was found. | The runtime was deleted or recycled, and the autosave (`/content/studio_state.json`) went with it. | **Resume from file** with a progress file. This is why students should **Download progress** before every break. Otherwise load a **Checkpoint:**. |
@@ -474,7 +474,7 @@ A pair working in Replay Mode is not disadvantaged. Assess their judgement, not 
 
 - **Keys.** Students keep keys in Colab Secrets, which belong to their Google account. The studio reads the key once, keeps it only inside the connection object in memory, and never stores it in the project, the autosave, the progress file, messages or exports. Error messages mask it. If anything that looks like a key appears in instructions, comments, rules or translations, the studio refuses to save or export it. These behaviours are covered by `tests/test_security.py`, `tests/test_providers.py` and `tests/test_notebook_ui.py`.
 - **Configuration files never contain keys**, only the *name* of the secret.
-- **What is sent to a live provider:** the system and user prompts shown by **Show the full prompt that will be sent**. That is the game's source text, context, character profiles and glossary; the pair's instructions and settings; their project rules; for the reviewer, the translation under review; for a revision, the accepted findings and the director's comments. **No personal data is needed.** Tell students not to write names, student numbers or other personal details in instructions, comments or rules. The team name is not sent to the model, but it appears in the exports.
+- **What is sent to a live provider:** the system and user prompts shown by **Show full prompt**. That is the game's source text, context, character profiles and glossary; the pair's instructions and settings; their project rules; for the reviewer, the translation under review; for a revision, the accepted findings and the director's comments. **No personal data is needed.** Tell students not to write names, student numbers or other personal details in instructions, comments or rules. The team name is not sent to the model, but it appears in the exports.
 - **Replay Mode** makes no network requests at all (tested in `tests/test_security.py`).
 - **Exports contain no keys.** `agent_settings.json` records models, prompts, settings, glossary and rules. `workflow_report.html` is a self-contained page with no scripts and no external resources (tested). The game renders imported text as plain text only (tested in `tests/game/security.test.js` and the end-to-end suite).
 - **The reference English never reaches the agents.** It lives only in `game/translations/en.reference.json` and in the private instructor pack; `tests/test_reference_isolation.py` checks this.
@@ -502,7 +502,7 @@ The setup cell checks the zip before unpacking it (no unsafe paths, size limits)
 
 ## 17. Extending the activity
 
-- **New missions.** All game and challenge content is generated from one data source by `tools/gen_content.py`, which is in the private instructor pack because it also holds the instructor notes. Add a mission there, then run `python3 tools/gen_content.py <path to this repository>` from the pack. It rewrites the manifest, story, translations and challenge files in the repository, and the instructor notes and `INSTRUCTOR_REVIEW.md` in the pack. For Replay Mode, add prepared outputs for the new mission to `fixtures/replay_outputs.json` (one per preset). For **Start the next mission**, add its id to `MISSION_ORDER` in `src/studio_ui.py`. Then run the tests, which check consistency between the content files, and have the new source text proofread.
+- **New missions.** All game and challenge content is generated from one data source by `tools/gen_content.py`, which is in the private instructor pack because it also holds the instructor notes. Add a mission there, then run `python3 tools/gen_content.py <path to this repository>` from the pack. It rewrites the manifest, story, translations and challenge files in the repository, and the instructor notes and `INSTRUCTOR_REVIEW.md` in the pack. For Replay Mode, add prepared outputs for the new mission to `fixtures/replay_outputs.json` (one per preset). For **Next mission**, add its id to `MISSION_ORDER` in `src/studio_ui.py`. Then run the tests, which check consistency between the content files, and have the new source text proofread.
 - **New providers or models.** A new model for an existing provider is a single entry in `config/models.json`. An OpenAI-compatible service can often be connected through the configurable HKBU fields (section 4). A provider with a different protocol needs code in `src/providers.py`.
 - **Students' own material.** In Section 2, students can upload a `.txt` (one string per line), a `.csv` with a `source` column (optional: id, context, max_len, speaker) or a `.json` file. The limits are UTF-8, 200 KB, 200 strings and 500 characters per string. Custom material goes through the whole workflow and exports `custom_translation_en.json` and the report, but **cannot be played in the game** and has no Replay outputs (use Live Mode).
 - **More revision cycles.** **Revision cycles allowed:** in Section 5 offers 0, 1 (default) or 2, with an optional round-2 review. Use 2 with stronger groups to discuss diminishing returns.
