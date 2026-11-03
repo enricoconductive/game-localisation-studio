@@ -22,7 +22,10 @@ const story = readJson(path.join(CONTENT, 'story.json'));
 const zh = readJson(path.join(CONTENT, 'translations', 'zh-Hant.json')).strings;
 const REF_PATH = path.join(CONTENT, 'translations', 'en.reference.json');
 const STUDENT_PATH = path.join(CONTENT, 'translations', 'example_student_export_intro.json');
+const DRAFT_PATH = path.join(CONTENT, 'translations', 'en.draft.json');
 const reference = fs.existsSync(REF_PATH) ? readJson(REF_PATH) : null;
+const draft = fs.existsSync(DRAFT_PATH) ? readJson(DRAFT_PATH) : null;
+const NO_DRAFT = !draft && `en.draft.json not present in ${CONTENT}`;
 const student = fs.existsSync(STUDENT_PATH) ? readJson(STUDENT_PATH) : null;
 const NO_REF = !reference && `en.reference.json not present in ${CONTENT}`;
 const NO_STUDENT = !student && `example_student_export_intro.json not present in ${CONTENT}`;
@@ -121,6 +124,7 @@ async function openGame(opts, initScript, suffix) {
     if (m.type() !== 'error') return;
     // a missing optional reference file is handled by the game (option disabled); ignore the browser's 404 line
     if (!reference && /en\.reference\.json$/.test((m.location() || {}).url || '')) return;
+    if (!draft && /en\.draft\.json$/.test((m.location() || {}).url || '')) return;
     errors.push(m.text());
   });
   page.on('dialog', (d) => { dialogs.push(d.message()); d.dismiss().catch(() => {}); });
@@ -526,6 +530,24 @@ test('a Colab game link (#t=…) loads the student translation; the hash is remo
   await page.waitForTimeout(100);
   assert.equal((await L(page)).report, null);
   assert.equal(await hashNow(page), '#stage');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('the warm-up link (#draft) opens the draft in one click, clearly labelled; the hash is removed', { skip: NO_DRAFT }, async () => {
+  const { page, context, errors } = await openGame(null, null, '#draft');
+  const s = await L(page);
+  assert.equal(s.dialogue, 'draft');
+  assert.equal(s.overrides, 0, 'the draft is not a student import');
+  assert.match(s.showing, /^Showing: Warm-up draft/);
+  assert.match(await page.textContent('#reference-note'), /Warm-up draft/);
+  assert.equal(await hashNow(page), '');
+  for (const m of manifest.missions) {
+    const got = await play(page, m.id, endingPaths(m.id).A, async (kind, node) => { await checkScreen(page, kind, node, draft); });
+    assert.equal(got, 'A', m.id);
+  }
+  await page.click('#ui-zh');
+  assert.match(await page.textContent('#showing-badge'), /熱身初稿/);
   assert.deepEqual(errors, []);
   await context.close();
 });

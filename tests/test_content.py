@@ -409,3 +409,28 @@ def test_example_student_export_is_valid_and_differs_from_reference(manifest):
     ref = load(REFERENCE_PATH)["strings"]
     different = [sid for sid, t in stu["strings"].items() if t != ref[sid]]
     assert len(different) >= 5, "the demo needs visibly different wording"
+
+
+DRAFT_PATH = ROOT / "game" / "translations" / "en.draft.json"
+
+
+def test_warmup_draft_loads_in_the_game_and_keeps_its_mistakes():
+    """The warm-up draft (game/#draft) must pass every CRITICAL check so the game shows it,
+    while still being visibly unpolished: same wording as the one-shot baseline wherever
+    that already fits the game."""
+    from src import validation as v
+    draft = json.loads(DRAFT_PATH.read_text(encoding="utf-8"))
+    assert draft["source"] == "draft" and draft["format"] == "lantern-mystery-translation"
+    manifest = v.load_manifest()
+    spec = v.spec_from_manifest(manifest)
+    assert set(draft["strings"]) == set(spec)
+    rep = v.validate_translations(draft["strings"], spec)
+    assert rep.critical == []
+    replay = json.loads((ROOT / "fixtures" / "replay_outputs.json").read_text(encoding="utf-8"))
+    baseline = {}
+    for ch in replay["challenges"].values():
+        t = ch["baseline"]["translations"]
+        baseline.update({x["id"]: x["text"] for x in t} if isinstance(t, list) else t)
+    same = [sid for sid in spec if draft["strings"][sid] == baseline[sid]]
+    assert len(same) >= 20, "the draft should stay the unpolished baseline"
+    assert "Osmanthus Street" in draft["strings"]["intro.narration.arrival"]

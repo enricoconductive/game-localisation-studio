@@ -248,6 +248,7 @@ details summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; }
 }
 .showing::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px #fff; flex: 0 0 auto; }
 .showing[data-mode="reference"] { background: #1f618d; }
+.showing[data-mode="draft"] { background: #9a5b00; }
 .showing[data-mode="student"] { background: var(--ok); }
 .showing.is-replay { background: linear-gradient(90deg, var(--ok) 60%, var(--amber)); }
 .reference-note { margin: 0; font-size: .88rem; color: #cfe3f3; flex-basis: 100%; }

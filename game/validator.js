@@ -25,7 +25,7 @@
   var FORMAT = 'lantern-mystery-translation';
   var MAX_FILE_BYTES = 100 * 1024;
   var MAX_CHARACTER_NAME = 20;
-  var ALLOWED_SOURCES = ['live', 'replay', 'mixed', 'original', 'reference'];
+  var ALLOWED_SOURCES = ['live', 'replay', 'mixed', 'original', 'reference', 'draft'];
   var FILE_LOCALES = ['en-GB', 'en-US', 'en', 'zh-Hant-HK'];
 
   var PLACEHOLDER_RE = /\{[a-z_][a-z0-9_]*\}/g;

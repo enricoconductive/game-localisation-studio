@@ -19,7 +19,7 @@ MAX_FILE_BYTES = 100 * 1024
 MAX_CHARACTER_NAME = 20
 ALLOWED_LOCALES = ("en-GB", "en-US", "en")
 FILE_LOCALES = ALLOWED_LOCALES + ("zh-Hant-HK",)       # locales a game file may declare
-ALLOWED_SOURCES = ("live", "replay", "mixed", "original", "reference")
+ALLOWED_SOURCES = ("live", "replay", "mixed", "original", "reference", "draft")
 ID_RE = re.compile(r"^[a-z]+\.[a-z_]+\.[a-z0-9_]+$")
 PLACEHOLDER_RE = re.compile(r"\{[a-z_][a-z0-9_]*\}")
 

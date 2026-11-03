@@ -28,7 +28,8 @@
     manifest: 'strings_manifest.json',
     story: 'story.json',
     zh: 'translations/zh-Hant.json',
-    reference: 'translations/en.reference.json'
+    reference: 'translations/en.reference.json',
+    draft: 'translations/en.draft.json'
   };
   var MAX_BYTES = 100 * 1024;
   var TITLE_CARD = '__title_card__'; // virtual node for missions whose start node is not a `title`
@@ -50,6 +51,7 @@
     dialogue_label: { en: 'Dialogue language', zh: '對白語言' },
     opt_original: { en: 'Original Chinese (原文)', zh: '原文（中文） Original Chinese' },
     opt_reference: { en: 'Reference English (參考譯文)', zh: '參考譯文（英文） Reference English' },
+    opt_draft: { en: 'Warm-up draft, with mistakes (初稿)', zh: '熱身初稿（有錯） Warm-up draft' },
     opt_student: { en: 'Student\'s imported English (學生譯文)', zh: '學生譯文（英文） Student\'s imported English' },
     opt_unavailable: { en: ' — not available', zh: '（未能載入）' },
     opt_import_first: { en: ' — import a file first', zh: '（請先匯入檔案）' },
@@ -84,8 +86,13 @@
     still_chinese_one: { en: '1 string in this mission is still in Chinese.', zh: '此任務仍有 1 句以中文原文顯示。' },
     showing_original: { en: 'Showing: Original Chinese', zh: '正在顯示：中文原文' },
     showing_reference: { en: 'Showing: Reference English (course team) — one possible solution', zh: '正在顯示：參考譯文（課程團隊）— 其中一種可行譯法' },
+    showing_draft: { en: 'Showing: Warm-up draft — a quick machine draft with deliberate mistakes', zh: '正在顯示：熱身初稿——刻意留有錯誤的機器初稿' },
     showing_student: { en: 'Showing: Student\'s imported English', zh: '正在顯示：學生匯入的英文譯文' },
     showing_replay: { en: ' · simulated (Replay Mode)', zh: ' · 模擬（重播模式）' },
+    draft_note: {
+      en: 'Warm-up draft: play it and note what sounds wrong. You will fix these problems in the studio, then compare.',
+      zh: '熱身初稿：試玩並記下不自然的地方。之後你會在工作室修正，再作比較。'
+    },
     reference_note: {
       en: 'Reference translation — one possible solution prepared by the course team. It is not the only correct translation.',
       zh: '參考譯文——由課程團隊準備的其中一種可行譯法，並非唯一正確答案。'
@@ -119,8 +126,9 @@
     story: null,
     zh: Object.create(null),
     uiLang: 'en',
-    dialogue: 'original',     // 'original' | 'reference' | 'student'
+    dialogue: 'original',     // 'original' | 'draft' | 'reference' | 'student'
     reference: null,          // {strings: Map, characters: Map, note: string} or null
+    draft: null,              // same shape as reference: the warm-up draft (#draft)
     overrides: new Map(),     // student layer: id -> English (later imports override earlier ones)
     characters: new Map(),    // student layer: character key -> English name
     imports: [],              // [{label, source, count}]
@@ -167,16 +175,19 @@
   }
 
   function referenceAvailable() { return !!(state.reference && state.reference.strings.size); }
+  function draftAvailable() { return !!(state.draft && state.draft.strings.size); }
   function studentAvailable() { return state.overrides.size > 0; }
   function dialogueEnglish() { return state.dialogue !== 'original'; }
 
   function activeLayer() {
     if (state.dialogue === 'reference' && state.reference) return state.reference.strings;
+    if (state.dialogue === 'draft' && state.draft) return state.draft.strings;
     if (state.dialogue === 'student') return state.overrides;
     return null;
   }
   function activeCharacters() {
     if (state.dialogue === 'reference' && state.reference) return state.reference.characters;
+    if (state.dialogue === 'draft' && state.draft) return state.draft.characters;
     if (state.dialogue === 'student') return state.characters;
     return null;
   }
@@ -186,8 +197,9 @@
 
   function setDialogue(mode, opts) {
     if (mode === 'reference' && !referenceAvailable()) mode = 'original';
+    if (mode === 'draft' && !draftAvailable()) mode = 'original';
     if (mode === 'student' && !studentAvailable()) mode = 'original';
-    if (mode !== 'original' && mode !== 'reference' && mode !== 'student') mode = 'original';
+    if (['original', 'draft', 'reference', 'student'].indexOf(mode) === -1) mode = 'original';
     state.dialogue = mode;
     store(STORE_DIALOGUE, mode);
     refresh(opts);
@@ -276,6 +288,7 @@
 
   function showingText() {
     if (state.dialogue === 'reference') return chrome('showing_reference');
+    if (state.dialogue === 'draft') return chrome('showing_draft');
     if (state.dialogue === 'student') return chrome('showing_student') + (studentReplay() ? chrome('showing_replay') : '');
     return chrome('showing_original');
   }
@@ -296,6 +309,10 @@
     for (var i = 0; i < opts.length; i++) {
       var o = opts[i];
       if (o.value === 'original') { o.textContent = chrome('opt_original'); o.disabled = false; }
+      if (o.value === 'draft') {
+        o.disabled = !draftAvailable();
+        o.textContent = chrome('opt_draft') + (o.disabled ? chrome('opt_unavailable') : '');
+      }
       if (o.value === 'reference') {
         o.disabled = !referenceAvailable();
         o.textContent = chrome('opt_reference') + (o.disabled ? chrome('opt_unavailable') : '');
@@ -316,8 +333,8 @@
       b.classList.toggle('is-replay', replay);
     });
     var note = $('reference-note');
-    if (state.dialogue === 'reference') {
-      note.textContent = chrome('reference_note');
+    if (state.dialogue === 'reference' || state.dialogue === 'draft') {
+      note.textContent = chrome(state.dialogue === 'draft' ? 'draft_note' : 'reference_note');
       note.hidden = false;
     } else {
       note.hidden = true;
@@ -687,6 +704,16 @@
   }
 
   var SHARED_RE = /^#(?:[^&]*&)*t=/;
+  var DRAFT_RE = /^#draft$/;
+
+  /** "#draft" opens the warm-up draft straight away (one click from the notebook). */
+  function openDraftFromLink() {
+    if (!DRAFT_RE.test(location.hash || '')) return false;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+    if (!draftAvailable()) return false;
+    setDialogue('draft', { focus: false });
+    return true;
+  }
 
   /** Import a translation carried in the URL fragment (#t=…), then remove the fragment. */
   function importFromLink() {
@@ -820,7 +847,8 @@
       return;
     }
     var optionalReference = fetchJson(CONTENT.reference).catch(function () { return null; });
-    Promise.all([fetchJson(CONTENT.manifest), fetchJson(CONTENT.story), fetchJson(CONTENT.zh), optionalReference]).then(function (res) {
+    var optionalDraft = fetchJson(CONTENT.draft).catch(function () { return null; });
+    Promise.all([fetchJson(CONTENT.manifest), fetchJson(CONTENT.story), fetchJson(CONTENT.zh), optionalReference, optionalDraft]).then(function (res) {
       var manifest = res[0], story = res[1], zh = res[2];
       if (!manifest || typeof manifest.strings !== 'object' || !Array.isArray(manifest.missions)) throw new Error(CONTENT.manifest + ' does not look like a strings manifest');
       if (!story || typeof story.missions !== 'object') throw new Error(CONTENT.story + ' does not look like a story graph');
@@ -831,13 +859,15 @@
         if (typeof zh.strings[id] === 'string') state.zh[id] = zh.strings[id];
       });
       state.reference = loadReference(res[3]);
+      state.draft = loadReference(res[4]);
       // Restore the dialogue choice; "student" falls back to Original Chinese because imports are not stored.
       var savedDialogue = load(STORE_DIALOGUE);
-      state.dialogue = savedDialogue === 'reference' && referenceAvailable() ? 'reference' : 'original';
+      state.dialogue = savedDialogue === 'reference' && referenceAvailable() ? 'reference'
+        : savedDialogue === 'draft' && draftAvailable() ? 'draft' : 'original';
       store(STORE_DIALOGUE, state.dialogue);
       applyChrome();
       renderMissions(false);
-      importFromLink();
+      if (!importFromLink()) openDraftFromLink();
     }).catch(function (err) {
       showLoadError('Problem: ' + (err && err.message ? err.message : String(err)) + '.');
     });

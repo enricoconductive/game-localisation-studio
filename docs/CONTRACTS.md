@@ -138,7 +138,7 @@ Exported English file, `game_translation_en.json`:
 ```
 
 - `locale` ∈ `en-GB | en-US | en` (international English).
-- `source` ∈ `live | replay | mixed | original | reference` (`reference` = `game/translations/en.reference.json`, the course team's reference English, which may carry an extra `note` field; it is never sent to agents). The game shows a "simulated (Replay Mode)" badge when it is `replay` or `mixed`.
+- `source` ∈ `live | replay | mixed | original | reference | draft` (`reference` = `game/translations/en.reference.json`, the course team's reference English, which may carry an extra `note` field; it is never sent to agents. `draft` = `game/translations/en.draft.json`, the warm-up draft: the one-shot baseline, shortened only where the game would reject it; `game/#draft` opens it). The game shows a "simulated (Replay Mode)" badge when it is `replay` or `mixed`.
 - `characters` is optional. Each value is a non-empty string of at most 20 code points with no newline.
 - `mission` is optional, informational only.
 - File size is at most 100 KB.
@@ -191,7 +191,7 @@ Each issue is `{severity, code, string_id|null, message, fix_hint}`. `message` a
 - (c) A present but empty/whitespace-only value gives only `empty_text` (never `missing_id` too). `missing_id` means the key is absent.
 - (d) Game-file validation: missing ids are WARNING by default, for every mission the file touches plus its `mission` field. With `require_all_for_mission` (Python) / `requireAllForMission` (JS) they are CRITICAL — the Python export always uses this.
 - (e) A `characters` key that is not in the manifest is CRITICAL `bad_structure`. A name that is empty, longer than 20 code points or contains a newline is `bad_structure`; one with control/broken characters is `bad_encoding`; Chinese in a name is a `untranslated_cjk` WARNING.
-- (f) `source` ∈ `live | replay | mixed | original | reference`: a present but different value is CRITICAL `bad_structure`; a missing `source` is a WARNING `bad_structure`. `locale` must be a string in `en-GB | en-US | en | zh-Hant-HK`, else WARNING `bad_structure`. `approved` and `generated_*` are informational.
+- (f) `source` ∈ `live | replay | mixed | original | reference | draft`: a present but different value is CRITICAL `bad_structure`; a missing `source` is a WARNING `bad_structure`. `locale` must be a string in `en-GB | en-US | en | zh-Hant-HK`, else WARNING `bad_structure`. `approved` and `generated_*` are informational.
 - (g) "Whitespace" (for `empty_text` and `whitespace`) is JavaScript's `\s` set in both validators (Python uses `validation.JS_WHITESPACE`, not `str.strip()`).
 - A top-level value that is not an object is `wrong_format`. A wrong `format` and a wrong `schema_version` are reported separately, and string checks still run. A non-string value is `bad_structure` for that id. Broken-placeholder messages may list one or several fragments; the code set is what must agree.
 

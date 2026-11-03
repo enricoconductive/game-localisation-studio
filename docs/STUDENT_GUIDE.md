@@ -8,6 +8,8 @@ You and your partner direct a small team of AI agents that localises a Hong Kong
 
 ## 1. Open the notebook and make your own copy
 
+**Warm-up (5 minutes):** at the top of the notebook, click **▶ Play the game first**. The game opens with a deliberately rough English draft. Play a mission and note what sounds wrong: by the end of the session you will have fixed it.
+
 1. Click the **Open in Colab** badge on the course GitHub page. The notebook opens in Google Colab.
 2. Colab may warn that the notebook was not written by Google. Click **Run anyway**.
 3. Choose **File → Save a copy in Drive**, then work in your copy (it opens in a new tab).
@@ -145,7 +147,7 @@ Section 5 has five tabs, worked from left to right: **a · Decide** → **b · R
 1. After **Approve final translation**, click **▶ Play my translation in the game** in Section 6. The game opens in a new tab with your approved translation already loaded. (Before approval, Section 6 says "Approve in Section 5 first.")
 2. Link not working? Open the game (<https://enricoconductive.github.io/game-localisation-studio/game/>), click **Import student JSON** and choose your exported `game_translation_en.json`. (Or click **Paste JSON**, paste the file's contents and click **Check and apply**.)
 3. The game switches **Dialogue language** to **Student's imported English** by itself. Choose your mission and play both endings.
-4. To compare, switch **Dialogue language** to **Original Chinese** or **Reference English**. The reference is *one possible solution*, not the answer key.
+4. To compare, switch **Dialogue language** to **Warm-up draft** (where you started), **Original Chinese** or **Reference English**. The reference is *one possible solution*, not the answer key.
 5. **Interface** switches the menus between **English** and **繁體中文**. **Reset to 中文** clears your imported file.
 
 If the game says **This file was not applied**, read the **Must fix** list, fix the strings in the notebook, approve and export again. Reloading the page clears an imported file, so import it again after a reload. Checks about `source` or `locale` ("The file does not say where the translation came from…", "The 'locale' should be one of…") mean the file was edited by hand: use the file the studio exported.

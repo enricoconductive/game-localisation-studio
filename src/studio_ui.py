@@ -2239,7 +2239,9 @@ class Studio:
             f'<a class="studio-play" href="{esc(url)}" target="_blank" rel="noopener" '
             f'style="display:inline-block;background:#1e8449;color:#ffffff;font-size:17px;'
             f'font-weight:bold;padding:10px 22px;border-radius:6px;text-decoration:none">'
-            f'{esc(PLAY_TEXT)}</a>')
+            f'{esc(PLAY_TEXT)}</a>'
+            + _note_html("Compare: in the game, switch <b>Dialogue language</b> to "
+                         "<b>Warm-up draft</b> and back."))
 
     # .................................................................. stuck box
     def _build_stuck(self) -> None:
