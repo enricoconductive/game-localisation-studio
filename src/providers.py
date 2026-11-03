@@ -658,7 +658,7 @@ class ReplayProvider(Provider):
     verified = True
 
     STAGES = {"baseline": "baseline", "translator": "translator", "reviewer": "reviewer",
-              "reviewer_round2": "reviewer_round2"}
+              "reviewer_round2": "reviewer_round2", "magic": "magic"}
 
     def __init__(self, fixtures: dict, config: dict | None = None, usage_meter=None, **_ignored):
         super().__init__("", config or {}, usage_meter=usage_meter)

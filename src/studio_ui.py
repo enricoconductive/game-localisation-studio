@@ -46,6 +46,7 @@ REPLAY_BADGE = "REPLAY MODE — simulated outputs, not live AI"
 REPLAY_LOCALE_NOTE = "Replay text is British English; live agents follow your choice."
 DOWNLOAD_REMINDER = "💾 Click “Download progress” (status bar): autosave is lost if Colab resets."
 PLAY_TEXT = "▶ Play my translation in the game"
+SUNO_URL = "https://suno.com/create"
 # One layout grid for every panel: each labelled input has the same label width, so all
 # inputs start at the same x; buttons in a row share one width and height.
 LABEL_W = "170px"
@@ -804,13 +805,13 @@ class Studio:
     def _build_all(self) -> None:
         w = self.w
         for key in ("msg_status", "msg_connect", "msg_mission", "msg_config", "msg_run",
-                    "msg_director", "msg_export", "msg_stuck", "msg_welcome", "msg_preview"):
+                    "msg_director", "msg_export", "msg_magic", "msg_stuck", "msg_welcome", "msg_preview"):
             w[key] = _html()
         w["style"] = _hidden(widgets.HTML(STUDIO_CSS))   # a <style> applies even when hidden
         # files.download needs an output context in Colab (see compat.colab_download): one
         # Output per download button, each displayed exactly once.
         for key in ("download_out", "download_out_stuck", "download_out_game_translation",
-                    "download_out_agent_settings", "download_out_workflow_report"):
+                    "download_out_agent_settings", "download_out_workflow_report", "download_out_magic"):
             w[key] = widgets.Output(layout=_layout(width="100%"))
         self._build_status()
         w["sections"] = {1: self._build_connect(), 2: self._build_mission(), 3: self._build_configure(),
@@ -2058,7 +2059,89 @@ class Studio:
             _row(w["btn_export_all"]),
             _row(w["btn_export_game"], w["btn_export_settings"], w["btn_export_report"]),
             w["msg_export"], w["download_out_game_translation"], w["download_out_agent_settings"],
-            w["download_out_workflow_report"], _row(w["btn_next_mission"])])
+            w["download_out_workflow_report"], _row(w["btn_next_mission"]),
+            self._build_magic()])
+
+    # .................................................................. magic export
+    def _build_magic(self) -> widgets.VBox:
+        """✨ Magic Export: one more agent turns the approved translation into song lyrics."""
+        w = self.w
+        w["magic_instructions"] = _textarea(agents.MAGIC_DEFAULT_INSTRUCTIONS, rows=7)
+        w["btn_magic"] = _button("✨ Make the song", "primary", width="270px", icon="magic")
+        w["btn_magic"].on_click(lambda b: self._action(b, self._make_song, "msg_magic",
+                                                       "Writing the song…"))
+        w["magic_lock"] = _html()
+        w["magic_title"] = _text("Title")
+        w["magic_style"] = _text("Style")
+        w["magic_lyrics"] = _textarea(rows=14)
+        w["btn_magic_download"] = _button("Download lyrics for Suno", "success", width="270px",
+                                          icon="download")
+        w["btn_magic_download"].on_click(lambda b: self._action(b, self._download_song, "msg_magic",
+                                                                "Saving…"))
+        w["magic_song"] = _hidden(widgets.VBox([
+            w["magic_title"], w["magic_style"], w["magic_lyrics"],
+            _note("Edit anything you like: you are still the director."),
+            _row(w["btn_magic_download"]),
+            _html(f'<a href="{esc(SUNO_URL)}" target="_blank" rel="noopener">Open Suno ↗</a> → '
+                  "<b>Custom</b> → paste the lyrics into <b>Lyrics</b> and the style into "
+                  "<b>Style of Music</b>.")], layout=_layout(width="100%")))
+        self._magic_shown = None
+        return widgets.VBox([
+            _h4("✨ Magic Export"),
+            _note("Same text, new medium: your approved English becomes a song."),
+            w["magic_lock"], _html("<b>Songwriter instructions</b> (change the genre if you like)"),
+            w["magic_instructions"], _row(w["btn_magic"]), w["msg_magic"], w["magic_song"],
+            w["download_out_magic"]], layout=_layout(width="100%"))
+
+    def _make_song(self) -> str:
+        st = self._require_project()
+        prov = self._require_provider()
+        if not st.approval.get("approved"):
+            raise StudioError("Approve your translation in Section 5 first: the song is made from it.")
+        song = agents.run_magic_export(st, _ProgressProvider(prov, 1, self._set_working),
+                                       self.challenge, self.w["magic_instructions"].value)
+        msg = "Song ready. Edit it if you like, then “Download lyrics for Suno”."
+        if not self._is_live():
+            msg += (" Replay Mode: these are prepared lyrics (simulated), so your songwriter "
+                    "instructions were not applied.")
+        return msg if song else "Done."
+
+    def _download_song(self) -> Safe:
+        st = self._require_project()
+        w = self.w
+        ps.set_magic_song(st, w["magic_title"].value, w["magic_style"].value, w["magic_lyrics"].value)
+        r = exports.export_suno_lyrics(st, self.mission_export_dir())
+        if not r.ok:
+            raise StudioError(r.message)
+        started = self._start_download(r.path, w["download_out_magic"], clear=True)
+        where = (" — download started." if started else
+                 " — " + self._files_panel_steps(r.path) if self.colab else "")
+        return Safe(f"✅ <b>{esc(Path(r.path).name)}</b> saved to <code>{esc(r.path)}</code>{where}"
+                    f"<br>Next: <a href='{esc(SUNO_URL)}' target='_blank' rel='noopener'>open Suno</a>"
+                    " → Custom → paste, generate, and play it to the room.")
+
+    def _refresh_magic(self) -> None:
+        w, st = self.w, self.state
+        approved = bool(st and st.approval.get("approved"))
+        w["btn_magic"].disabled = not approved
+        song = (st.magic if st else None) or {}
+        if not approved:
+            w["magic_lock"].value = _note_html("🔒 Approve in Section 5 first: the song is made from "
+                                               "your approved translation.")
+        elif song and song.get("version_id") != st.approval.get("version_id"):
+            w["magic_lock"].value = _note_html("⚠️ Your translation changed after this song was "
+                                               "made. Click “✨ Make the song” again.")
+        else:
+            w["magic_lock"].value = ""
+        key = (song.get("created_at"), song.get("source")) if song else None
+        if key != self._magic_shown:
+            self._magic_shown = key
+            w["magic_title"].value = song.get("title", "")
+            w["magic_style"].value = song.get("style", "")
+            w["magic_lyrics"].value = song.get("lyrics", "")
+            if song.get("instructions"):
+                w["magic_instructions"].value = song["instructions"]
+        _hidden(w["magic_song"], not song)
 
     def _save_reflection(self, silent: bool = False) -> str:
         st = self._require_project()
@@ -2171,6 +2254,7 @@ class Studio:
                 w[k].value = ""
             w["summary_table"].value = box("plain", "Start a mission first (Section 2).")
             self._refresh_play_link()
+            self._refresh_magic()
             return
         base = st.baseline_version()
         reviewed = st.version(st.findings[0].reviewed_version_id) if st.findings else None
@@ -2214,6 +2298,7 @@ class Studio:
                              + exports.prompt_diff_html(pair["initial"]["user"], pair["final"]["user"]))
         w["prompt_evolution"].value = f"<div class='gls-diff'>{_DIFF_CSS}{''.join(parts)}</div>"
         self._refresh_play_link()
+        self._refresh_magic()
 
     def play_url(self) -> str | None:
         """The game link carrying the approved translation, or None (with the reason in

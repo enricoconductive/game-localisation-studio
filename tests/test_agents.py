@@ -619,3 +619,71 @@ def test_provider_note_reaches_run_log(challenge, provider_config):
     a.run_translator(st, prov, challenge)
     notes = [e for e in st.history if e["event"] == "provider_note"]
     assert len(notes) == 1 and "thinking" in notes[0]["detail"]
+
+
+# ----------------------------------------------------------------- magic export
+
+
+def test_magic_prompt_uses_only_approved_english(reviewed_state, challenge):
+    st = reviewed_state
+    ps.approve_final(st, "director")
+    final = st.version(st.approval["version_id"])
+    system, user = a.build_magic_prompt(challenge, final.translations, "Make it a sea shanty.")
+    assert "Make it a sea shanty." in user and "songwriter" in system
+    story = [s for s in challenge["strings"] if s["type"] != "ui"]
+    for s in story:
+        assert final.translations[s["id"]] in user
+    for s in challenge["strings"]:
+        assert s["source"] not in user                      # the Chinese source is not sent
+        if s["type"] == "ui":
+            assert final.translations[s["id"]] not in user  # buttons are not song material
+    assert "(dialogue, Granny Wong)" in user and '"lyrics"' in user
+
+
+def test_magic_needs_approval_then_replay_serves_the_prepared_song(reviewed_state, replay,
+                                                                  challenge, replay_fixtures):
+    st = reviewed_state
+    with pytest.raises(ps.StudioError) as e:
+        a.run_magic_export(st, replay, challenge, "")
+    assert "Approve" in e.value.user_message and st.magic == {}
+    ps.approve_final(st, "director")
+    song = a.run_magic_export(st, replay, challenge, "  ")
+    expected = replay_fixtures["challenges"]["demo"]["magic"]
+    assert {k: song[k] for k in ("title", "style", "lyrics")} == expected
+    assert song["instructions"] == a.MAGIC_DEFAULT_INSTRUCTIONS and song["source"] == "replay"
+    assert song["version_id"] == st.approval["version_id"] and st.magic is song
+    assert st.prompt_snapshots[-1].agent == "magic" and st.history[-1]["event"] == "magic_export"
+    assert st.approval["approved"]                          # making a song changes no translation
+
+
+def test_magic_live_reply_is_parsed_and_counted(reviewed_state, challenge):
+    st = reviewed_state
+    ps.approve_final(st, "director")
+    song = {"title": "T", "style": "boom-bap, 90 bpm", "lyrics": "[Verse]\nLine\n\n[Chorus]\nHook"}
+    prov = ScriptedProvider(["not json", "```json\n" + json.dumps(song) + "\n```"])
+    before = st.usage["requests"]
+    out = a.run_magic_export(st, prov, challenge, "Hip-hop, please.")
+    assert out["lyrics"] == song["lyrics"] and out["source"] == "live"
+    assert st.usage["requests"] == before + 2               # one repair request after bad JSON
+    assert prov.calls[0]["temperature"] == a.MAGIC_TEMPERATURE
+    with pytest.raises(a.AgentOutputError):
+        a.parse_magic('{"title": "x", "lyrics": "  "}')
+
+
+def test_magic_song_edit_and_suno_export(reviewed_state, replay, challenge, tmp_path):
+    from src import exports as ex
+    st = reviewed_state
+    assert not ex.export_suno_lyrics(st, tmp_path).ok
+    with pytest.raises(ps.StudioError):
+        ps.set_magic_song(st, "t", "s", "l")
+    ps.approve_final(st, "director")
+    a.run_magic_export(st, replay, challenge, "")
+    ps.set_magic_song(st, "Our title", "lo-fi, 80 bpm", "[Verse]\nOur own line")
+    assert st.magic["edited"] and st.history[-1]["event"] == "magic_edited"
+    r = ex.export_suno_lyrics(st, tmp_path)
+    text = (tmp_path / "suno_lyrics.txt").read_text(encoding="utf-8")
+    assert r.ok and "Our title" in text and "lo-fi, 80 bpm" in text and "[Verse]\nOur own line" in text
+    with pytest.raises(ps.StudioError):
+        ps.set_magic_song(st, "t", "s", "my key sk-ant-api03-abcdefghijklmnopqrstuvwxyz0123")
+    with pytest.raises(ps.StudioError):
+        ps.set_magic_song(st, "t", "s", "   ")

@@ -4,8 +4,8 @@
   "locale": "en-GB",
   "mode": "replay",
   "schema_version": "1.0",
-  "created_at": "2026-10-28T13:42:31Z",
-  "updated_at": "2026-10-28T13:42:31Z",
+  "created_at": "2026-11-03T11:02:01Z",
+  "updated_at": "2026-11-03T11:02:01Z",
   "team_name": "Catch-up checkpoint",
   "mission": "intro",
   "strings": [
@@ -135,7 +135,7 @@
       "target_term": "cha chaan teng",
       "from_finding": "R1-02",
       "role": "director",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     }
   ],
   "versions": [
@@ -157,7 +157,7 @@
         "intro.ending.b": "The tea restaurant boss said while wiping the cup: 「Rabbit? Just sat on Ah Kit's motorcycle and left, still wearing a helmet.」 You rushed out the door, only saw a rabbit head floating farther and farther in the traffic……"
       },
       "notes": {},
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "variant": null
     },
     {
@@ -183,7 +183,7 @@
         "intro.line.kit_joke": "'Nick' gives Kit a casual British voice.",
         "intro.ending.b": "Single quotation marks, British style."
       },
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "variant": "balanced"
     },
     {
@@ -210,7 +210,7 @@
         "intro.choice.ask": "Applied the accepted change to the cha chaan teng choice (simulated).",
         "intro.ending.b": "Applied the accepted change to Ending B (simulated)."
       },
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "variant": "balanced"
     }
   ],
@@ -301,7 +301,7 @@
       "human_text": null,
       "agrees_with_reviewer": true,
       "comment": "The saying now works in English and keeps the rabbit.",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D002",
@@ -313,7 +313,7 @@
       "human_text": null,
       "agrees_with_reviewer": true,
       "comment": "Follow the glossary and match Ending B.",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D003",
@@ -325,7 +325,7 @@
       "human_text": null,
       "agrees_with_reviewer": true,
       "comment": "",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D004",
@@ -337,7 +337,7 @@
       "human_text": null,
       "agrees_with_reviewer": false,
       "comment": "Kit's slang is his voice; standard English would make him sound like Granny.",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D005",
@@ -349,7 +349,7 @@
       "human_text": "It is the eve of the Mid-Autumn Festival and Kwai Heung Street is strung with lanterns. {player_name} has only just reached the corner when the news arrives: the fair's prize treasure, the giant rabbit lantern, has flown the nest.",
       "agrees_with_reviewer": false,
       "comment": "Keep a light flying image for 不翼而飛, but as a natural English idiom.",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D006",
@@ -361,7 +361,7 @@
       "human_text": "Open case",
       "agrees_with_reviewer": true,
       "comment": "Agree a friendlier label helps, but 'Start the case' breaks the 12-character limit.",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D007",
@@ -373,7 +373,7 @@
       "human_text": "Always write 茶餐廳 as 'cha chaan teng', never 'tea restaurant'.",
       "agrees_with_reviewer": null,
       "comment": "M01 (glossary)",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "decision_id": "D008",
@@ -385,7 +385,7 @@
       "human_text": null,
       "agrees_with_reviewer": null,
       "comment": "Revision 1: 3 via agent, 2 human text(s)",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     }
   ],
   "prompt_snapshots": [
@@ -397,7 +397,7 @@
       "user": "Translate into English (en-GB). Return JSON in this shape: {\"translations\": [{\"id\": \"...\", \"text\": \"...\"}]}\n\n{\n  \"intro.ui.start\": \"開始調查\",\n  \"intro.narration.arrival\": \"中秋前夕，桂香街掛滿了燈籠。{player_name}剛到街口，就聽說燈會的鎮街之寶——巨型兔仔燈不翼而飛了。\",\n  \"intro.line.granny_greeting\": \"你就是來查案的偵探？好，好。那隻兔燈是我一篾一紙親手紮的，陪了街坊四十個中秋。偷燈的賊，我看是兔子尾巴——長不了！\",\n  \"intro.line.kit_joke\": \"婆婆，冷靜點啦！那隻兔比我的車還大，誰偷得走？除非牠自己走佬，跑回月球找嫦娥姐姐過中秋囉。\",\n  \"intro.choice.follow\": \"跟著地上的彩紙碎走\",\n  \"intro.choice.ask\": \"去茶餐廳問問老闆\",\n  \"intro.ending.a\": \"彩紙碎一路引到天台：兔燈好端端地坐在那裡，破了的耳朵補上了新紙。原來是阿杰偷偷搬來修補，想給婆婆一個驚喜。\",\n  \"intro.ending.b\": \"茶餐廳老闆邊抹杯邊說：「兔子？剛坐上阿杰的電單車走了，還戴著頭盔呢。」你衝出門，只見一個兔頭在車流中越飄越遠……\"\n}",
       "model": "replay",
       "source": "replay",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "snapshot_id": "S002",
@@ -407,7 +407,7 @@
       "user": "## Task\nTranslate from Traditional Chinese (Hong Kong Cantonese usage) into English.\n\n## Your instructions (written by the localisation team)\nTranslate each string into natural, idiomatic English for players of a story-driven mystery game.\n- Keep the meaning, tone and purpose of every string; never add plot information that is not in the source.\n- Interface text must be short and clear; choices must read as actions the player can pick.\n- Dialogue must sound like the character who speaks it.\n- Respect every constraint: character limits, placeholders and line-break rules.\n- Use the note to explain any non-obvious choice in one short sentence.\n\n## Settings chosen by the team\n- Translation strategy 3/5: balanced — keep the meaning and function exact, but rephrase freely where a literal rendering would sound unnatural.\n- Cultural adaptation 3/5: balanced — keep references that create the setting; adapt ones that would only confuse.\n- Register and tone: match the register of each source string.\n- Character voice strength 3/5: clear — each character should sound recognisably like their profile.\n- Glossary: use the glossary target term unless it clearly does not fit; if you choose something else, say why in the note.\n\n## Target English variant\nBritish English (en-GB): use British spelling (colour, realise, centre, travelling), British vocabulary and British punctuation conventions.\n\n## Glossary\n- 兔仔燈 / 兔燈 → rabbit lantern (required). Note: The missing lantern. Keep the same term in every string.\n- 桂香街 → Kwai Heung Street (required). Note: Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'.\n- 中秋 / 中秋節 → Mid-Autumn Festival (required). Note: Do not alternate with 'Moon Festival'. 'Mid-Autumn' alone is fine in dialogue.\n- 茶餐廳 → cha chaan teng (preferred). Note: Hong Kong-style diner. You may gloss or adapt it where space is tight; avoid the calque 'tea restaurant'.\n- 嫦娥 → Chang'e (preferred). Note: The moon goddess; the Jade Rabbit lives with her on the moon. A short gloss such as 'the Moon Goddess' is acceptable.\n- 街坊 → the neighbours / the neighbourhood (preferred). Note: Warm, community word; avoid 'residents'.\n\n## Project memory (approved by the human director)\nNo rules yet.\n\n## Scene context\nKwai Heung Street (桂香街), an invented old street in Kowloon with a Sham Shui Po / Yau Ma Tei feel, on the evening before the Mid-Autumn Festival. The neighbours are hanging lanterns for tomorrow's street lantern fair, but its centrepiece, a giant paper rabbit lantern made forty years ago by Granny Wong, has disappeared. The player, an amateur detective, arrives, meets Granny and the delivery rider Kit, and chooses between two leads.\n\n## Characters\n- granny_wong: 黃婆婆 (English name: Granny Wong). Profile: Seventy-eight years old. A retired 紮作 (paper-craft) master who has made lanterns on Kwai Heung Street for over fifty years. The giant rabbit lantern is her masterpiece and has hung at the street's lantern fair for forty Mid-Autumn Festivals. Voice: Measured, slightly old-fashioned written-style Chinese. Fond of 成語 (four-character idioms), 歇後語 (two-part allegorical sayings) and proverbs. Scolds as a way of showing love. Never uses slang or English words. In English she should sound like a proud, sharp-tongued grandmother: complete sentences, a little formal, proverb-flavoured, never 'cool'. Relationships: Treats Kit like a grandson who needs constant correcting, and is secretly very fond of him. Polite but testing towards the detective.\n- kit: 阿杰 (English name: Kit). Profile: Seventeen years old. A food-delivery rider who zips round the neighbourhood on an electric motorbike. Grew up on Kwai Heung Street and runs errands for Granny Wong. Voice: Light Hong Kong colloquial colouring on mostly standard written Chinese: the occasional particle (啦, 㗎, 囉), a few slang words (走佬 'do a runner', 飆車 'speed', 爆滿 'swamped') and English code-mixing ('old school', 'feel'). Exaggerates for comic effect. In English he should sound young, casual and quick: contractions, slang, short bursts. He must never sound like Granny or like the Riddle King. Relationships: Calls her 婆婆 (Granny). Teases her about being old-fashioned, but quietly looks after her.\n\n## Strings\n[intro.ui.start]\nSource: \"開始調查\"\nType: ui | Speaker: none\nContext: Start button on the title screen. It is the very first thing the player clicks.\nConstraints: Maximum 12 characters; Button label: an imperative verb or short verb phrase; No full stop\nPlaceholders: none\nMax length: 12 characters\nLine breaks: not allowed\n\n[intro.narration.arrival]\nSource: \"中秋前夕，桂香街掛滿了燈籠。{player_name}剛到街口，就聽說燈會的鎮街之寶——巨型兔仔燈不翼而飛了。\"\nType: narration | Speaker: none\nContext: Opening narration after the player presses Start. Sets the place (an old Hong Kong street), the time (the night before the Mid-Autumn lantern fair) and the problem.\nConstraints: Keep {player_name} exactly as written; The player's name may be 'Detective' by default: avoid 'Detective {player_name}'; Narrative tense must be consistent\nPlaceholders: {player_name} — copy exactly, each once\nMax length: none\nLine breaks: not allowed\n\n[intro.line.granny_greeting]\nSource: \"你就是來查案的偵探？好，好。那隻兔燈是我一篾一紙親手紮的，陪了街坊四十個中秋。偷燈的賊，我看是兔子尾巴——長不了！\"\nType: dialogue | Speaker: granny_wong (Granny Wong)\nContext: Granny Wong, the lantern's maker, meets the detective outside her paper-craft shop. She is upset but proud and in control.\nConstraints: Granny's voice: measured, proud, proverb-flavoured, no slang; Keep the rabbit image if you can; the joke is that the lost lantern is a rabbit\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\n\n[intro.line.kit_joke]\nSource: \"婆婆，冷靜點啦！那隻兔比我的車還大，誰偷得走？除非牠自己走佬，跑回月球找嫦娥姐姐過中秋囉。\"\nType: dialogue | Speaker: kit (Kit)\nContext: Kit, the teenage delivery rider, pulls up on his motorbike and teases Granny about the missing lantern.\nConstraints: Kit's voice: young, slangy, quick; Keep the moon-rabbit joke understandable for an international player; The colloquial words (走佬, the particles 啦 / 囉) should become casual English, not standard English\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\n\n[intro.choice.follow]\nSource: \"跟著地上的彩紙碎走\"\nType: choice | Speaker: none\nContext: Choice button 1 of 2. The player notices scraps of coloured paper on the ground.\nConstraints: Maximum 40 characters; Button label: starts with a verb; Single line\nPlaceholders: none\nMax length: 40 characters\nLine breaks: not allowed\n\n[intro.choice.ask]\nSource: \"去茶餐廳問問老闆\"\nType: choice | Speaker: none\nContext: Choice button 2 of 2. The cha chaan teng on the corner is open late.\nConstraints: Maximum 40 characters; Button label: starts with a verb; Single line\nPlaceholders: none\nMax length: 40 characters\nLine breaks: not allowed\n\n[intro.ending.a]\nSource: \"彩紙碎一路引到天台：兔燈好端端地坐在那裡，破了的耳朵補上了新紙。原來是阿杰偷偷搬來修補，想給婆婆一個驚喜。\"\nType: ending | Speaker: none\nContext: Ending A, reached by following the paper scraps.\nConstraints: Warm, satisfying tone; Narration; keep the reveal at the end\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\n\n[intro.ending.b]\nSource: \"茶餐廳老闆邊抹杯邊說：「兔子？剛坐上阿杰的電單車走了，還戴著頭盔呢。」你衝出門，只見一個兔頭在車流中越飄越遠……\"\nType: ending | Speaker: none\nContext: Ending B, reached by asking at the cha chaan teng. A comic cliffhanger.\nConstraints: Comic tone; Chinese corner quotes 「」 should become English quotation marks; Single paragraph (no line breaks)\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\n\n## Output format\nReturn ONLY a JSON object, with no text before or after it, in exactly this shape:\n{\"translations\": [{\"id\": \"<string id>\", \"text\": \"<English translation>\", \"note\": \"<one short sentence, optional>\"}]}\nInclude every id listed under 'Strings' exactly once and no other ids. Keep every placeholder such as {player_name} exactly as written.",
       "model": "replay",
       "source": "replay",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "snapshot_id": "S003",
@@ -417,7 +417,7 @@
       "user": "## Task\nReview an English translation of Traditional Chinese (Hong Kong Cantonese usage) game text.\n\n## Your instructions (written by the localisation team)\nReview the English translation of each string against its source, context, constraints and the glossary.\n- Report only real problems: meaning errors or omissions, unnatural English, wrong terminology, cultural references that will confuse the audience, characters who do not sound like themselves, and technical faults (placeholders, length limits, line breaks).\n- Be specific: cite the string id, say what is wrong and explain why it matters.\n- Give a complete replacement string that fixes the problem and respects every constraint.\n- Do not invent problems. If a string is fine, say nothing about it. It is fine to report no findings at all.\n\n## Settings chosen by the team\n- Check only these categories: accuracy, fluency, terminology, cultural, character_voice, technical.\n- Strictness 3/5: standard — report problems a typical player would notice; ignore personal style preferences.\n- Report at most 6 findings, the most important first.\n\n## Target English variant\nBritish English (en-GB): use British spelling (colour, realise, centre, travelling), British vocabulary and British punctuation conventions.\n\n## Glossary\n- 兔仔燈 / 兔燈 → rabbit lantern (required). Note: The missing lantern. Keep the same term in every string.\n- 桂香街 → Kwai Heung Street (required). Note: Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'.\n- 中秋 / 中秋節 → Mid-Autumn Festival (required). Note: Do not alternate with 'Moon Festival'. 'Mid-Autumn' alone is fine in dialogue.\n- 茶餐廳 → cha chaan teng (preferred). Note: Hong Kong-style diner. You may gloss or adapt it where space is tight; avoid the calque 'tea restaurant'.\n- 嫦娥 → Chang'e (preferred). Note: The moon goddess; the Jade Rabbit lives with her on the moon. A short gloss such as 'the Moon Goddess' is acceptable.\n- 街坊 → the neighbours / the neighbourhood (preferred). Note: Warm, community word; avoid 'residents'.\n\n## Project memory (approved by the human director)\nNo rules yet.\n\n## Scene context\nKwai Heung Street (桂香街), an invented old street in Kowloon with a Sham Shui Po / Yau Ma Tei feel, on the evening before the Mid-Autumn Festival. The neighbours are hanging lanterns for tomorrow's street lantern fair, but its centrepiece, a giant paper rabbit lantern made forty years ago by Granny Wong, has disappeared. The player, an amateur detective, arrives, meets Granny and the delivery rider Kit, and chooses between two leads.\n\n## Characters\n- granny_wong: 黃婆婆 (English name: Granny Wong). Profile: Seventy-eight years old. A retired 紮作 (paper-craft) master who has made lanterns on Kwai Heung Street for over fifty years. The giant rabbit lantern is her masterpiece and has hung at the street's lantern fair for forty Mid-Autumn Festivals. Voice: Measured, slightly old-fashioned written-style Chinese. Fond of 成語 (four-character idioms), 歇後語 (two-part allegorical sayings) and proverbs. Scolds as a way of showing love. Never uses slang or English words. In English she should sound like a proud, sharp-tongued grandmother: complete sentences, a little formal, proverb-flavoured, never 'cool'. Relationships: Treats Kit like a grandson who needs constant correcting, and is secretly very fond of him. Polite but testing towards the detective.\n- kit: 阿杰 (English name: Kit). Profile: Seventeen years old. A food-delivery rider who zips round the neighbourhood on an electric motorbike. Grew up on Kwai Heung Street and runs errands for Granny Wong. Voice: Light Hong Kong colloquial colouring on mostly standard written Chinese: the occasional particle (啦, 㗎, 囉), a few slang words (走佬 'do a runner', 飆車 'speed', 爆滿 'swamped') and English code-mixing ('old school', 'feel'). Exaggerates for comic effect. In English he should sound young, casual and quick: contractions, slang, short bursts. He must never sound like Granny or like the Riddle King. Relationships: Calls her 婆婆 (Granny). Teases her about being old-fashioned, but quietly looks after her.\n\n## Strings under review\n[intro.ui.start]\nSource: \"開始調查\"\nType: ui | Speaker: none\nContext: Start button on the title screen. It is the very first thing the player clicks.\nConstraints: Maximum 12 characters; Button label: an imperative verb or short verb phrase; No full stop\nPlaceholders: none\nMax length: 12 characters\nLine breaks: not allowed\nTranslation under review: \"Investigate\"\n\n[intro.narration.arrival]\nSource: \"中秋前夕，桂香街掛滿了燈籠。{player_name}剛到街口，就聽說燈會的鎮街之寶——巨型兔仔燈不翼而飛了。\"\nType: narration | Speaker: none\nContext: Opening narration after the player presses Start. Sets the place (an old Hong Kong street), the time (the night before the Mid-Autumn lantern fair) and the problem.\nConstraints: Keep {player_name} exactly as written; The player's name may be 'Detective' by default: avoid 'Detective {player_name}'; Narrative tense must be consistent\nPlaceholders: {player_name} — copy exactly, each once\nMax length: none\nLine breaks: not allowed\nTranslation under review: \"It is the eve of the Mid-Autumn Festival and Kwai Heung Street is strung with lanterns. {player_name} has only just reached the corner when the news arrives: the fair's prize treasure, the giant rabbit lantern, has vanished without a trace.\"\n\n[intro.line.granny_greeting]\nSource: \"你就是來查案的偵探？好，好。那隻兔燈是我一篾一紙親手紮的，陪了街坊四十個中秋。偷燈的賊，我看是兔子尾巴——長不了！\"\nType: dialogue | Speaker: granny_wong (Granny Wong)\nContext: Granny Wong, the lantern's maker, meets the detective outside her paper-craft shop. She is upset but proud and in control.\nConstraints: Granny's voice: measured, proud, proverb-flavoured, no slang; Keep the rabbit image if you can; the joke is that the lost lantern is a rabbit\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\nTranslation under review: \"So you're the detective? Good, good. I made that rabbit lantern with my own hands, every bamboo strip and every scrap of paper, and it has kept the neighbours company for forty Mid-Autumns. The thief? A rabbit's tail, that one: it won't be long.\"\n\n[intro.line.kit_joke]\nSource: \"婆婆，冷靜點啦！那隻兔比我的車還大，誰偷得走？除非牠自己走佬，跑回月球找嫦娥姐姐過中秋囉。\"\nType: dialogue | Speaker: kit (Kit)\nContext: Kit, the teenage delivery rider, pulls up on his motorbike and teases Granny about the missing lantern.\nConstraints: Kit's voice: young, slangy, quick; Keep the moon-rabbit joke understandable for an international player; The colloquial words (走佬, the particles 啦 / 囉) should become casual English, not standard English\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\nTranslation under review: \"Calm down, Granny! That rabbit's bigger than my bike, who could even nick it? Unless it ran off by itself, back to the moon to spend the festival with Chang'e.\"\n\n[intro.choice.follow]\nSource: \"跟著地上的彩紙碎走\"\nType: choice | Speaker: none\nContext: Choice button 1 of 2. The player notices scraps of coloured paper on the ground.\nConstraints: Maximum 40 characters; Button label: starts with a verb; Single line\nPlaceholders: none\nMax length: 40 characters\nLine breaks: not allowed\nTranslation under review: \"Follow the scraps of coloured paper\"\n\n[intro.choice.ask]\nSource: \"去茶餐廳問問老闆\"\nType: choice | Speaker: none\nContext: Choice button 2 of 2. The cha chaan teng on the corner is open late.\nConstraints: Maximum 40 characters; Button label: starts with a verb; Single line\nPlaceholders: none\nMax length: 40 characters\nLine breaks: not allowed\nTranslation under review: \"Ask the tea restaurant owner\"\n\n[intro.ending.a]\nSource: \"彩紙碎一路引到天台：兔燈好端端地坐在那裡，破了的耳朵補上了新紙。原來是阿杰偷偷搬來修補，想給婆婆一個驚喜。\"\nType: ending | Speaker: none\nContext: Ending A, reached by following the paper scraps.\nConstraints: Warm, satisfying tone; Narration; keep the reveal at the end\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\nTranslation under review: \"The paper scraps lead all the way up to the rooftop, where the rabbit lantern sits safe and sound, a new patch of paper over its torn ear. It was Kit all along: he had carried it up here in secret to repair it as a surprise for Granny.\"\n\n[intro.ending.b]\nSource: \"茶餐廳老闆邊抹杯邊說：「兔子？剛坐上阿杰的電單車走了，還戴著頭盔呢。」你衝出門，只見一個兔頭在車流中越飄越遠……\"\nType: ending | Speaker: none\nContext: Ending B, reached by asking at the cha chaan teng. A comic cliffhanger.\nConstraints: Comic tone; Chinese corner quotes 「」 should become English quotation marks; Single paragraph (no line breaks)\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\nTranslation under review: \"The cha chaan teng owner keeps wiping a glass. 'The rabbit? It's just gone off on the back of Kit's motorbike, helmet and all.' You run out of the door and see a rabbit's head drifting away through the traffic……\"\n\n## Output format\nReturn ONLY a JSON object, with no text before or after it, in exactly this shape:\n{\"findings\": [{\"string_id\": \"<id>\", \"category\": \"accuracy|fluency|terminology|cultural|character_voice|technical\", \"severity\": \"minor|major|critical\", \"issue\": \"<what is wrong>\", \"reasoning\": \"<why it matters>\", \"suggestion\": \"<the full replacement English string>\"}], \"overall_comment\": \"<one or two sentences>\"}\nUse only string ids listed above. If there is nothing to report, return {\"findings\": [], \"overall_comment\": \"...\"}.",
       "model": "replay",
       "source": "replay",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     },
     {
       "snapshot_id": "S004",
@@ -427,7 +427,7 @@
       "user": "## Task\nTranslate from Traditional Chinese (Hong Kong Cantonese usage) into English.\n\n## Your instructions (written by the localisation team)\nTranslate each string into natural, idiomatic English for players of a story-driven mystery game.\n- Keep the meaning, tone and purpose of every string; never add plot information that is not in the source.\n- Interface text must be short and clear; choices must read as actions the player can pick.\n- Dialogue must sound like the character who speaks it.\n- Respect every constraint: character limits, placeholders and line-break rules.\n- Use the note to explain any non-obvious choice in one short sentence.\n\n## Settings chosen by the team\n- Translation strategy 3/5: balanced — keep the meaning and function exact, but rephrase freely where a literal rendering would sound unnatural.\n- Cultural adaptation 3/5: balanced — keep references that create the setting; adapt ones that would only confuse.\n- Register and tone: match the register of each source string.\n- Character voice strength 3/5: clear — each character should sound recognisably like their profile.\n- Glossary: use the glossary target term unless it clearly does not fit; if you choose something else, say why in the note.\n\n## Target English variant\nBritish English (en-GB): use British spelling (colour, realise, centre, travelling), British vocabulary and British punctuation conventions.\n\n## Glossary\n- 兔仔燈 / 兔燈 → rabbit lantern (required). Note: The missing lantern. Keep the same term in every string.\n- 桂香街 → Kwai Heung Street (required). Note: Invented street name in an old Kowloon neighbourhood. Use this romanisation in every mission; do not translate it as 'Osmanthus Street'.\n- 中秋 / 中秋節 → Mid-Autumn Festival (required). Note: Do not alternate with 'Moon Festival'. 'Mid-Autumn' alone is fine in dialogue.\n- 茶餐廳 → cha chaan teng (preferred). Note: Hong Kong-style diner. You may gloss or adapt it where space is tight; avoid the calque 'tea restaurant'.\n- 嫦娥 → Chang'e (preferred). Note: The moon goddess; the Jade Rabbit lives with her on the moon. A short gloss such as 'the Moon Goddess' is acceptable.\n- 街坊 → the neighbours / the neighbourhood (preferred). Note: Warm, community word; avoid 'residents'.\n\n## Project memory (approved by the human director)\nFollow these rules; the human director approved them for this project.\n- M01 [glossary] (茶餐廳 → cha chaan teng): Always write 茶餐廳 as 'cha chaan teng', never 'tea restaurant'.\n\n## Scene context\nKwai Heung Street (桂香街), an invented old street in Kowloon with a Sham Shui Po / Yau Ma Tei feel, on the evening before the Mid-Autumn Festival. The neighbours are hanging lanterns for tomorrow's street lantern fair, but its centrepiece, a giant paper rabbit lantern made forty years ago by Granny Wong, has disappeared. The player, an amateur detective, arrives, meets Granny and the delivery rider Kit, and chooses between two leads.\n\n## Characters\n- granny_wong: 黃婆婆 (English name: Granny Wong). Profile: Seventy-eight years old. A retired 紮作 (paper-craft) master who has made lanterns on Kwai Heung Street for over fifty years. The giant rabbit lantern is her masterpiece and has hung at the street's lantern fair for forty Mid-Autumn Festivals. Voice: Measured, slightly old-fashioned written-style Chinese. Fond of 成語 (four-character idioms), 歇後語 (two-part allegorical sayings) and proverbs. Scolds as a way of showing love. Never uses slang or English words. In English she should sound like a proud, sharp-tongued grandmother: complete sentences, a little formal, proverb-flavoured, never 'cool'. Relationships: Treats Kit like a grandson who needs constant correcting, and is secretly very fond of him. Polite but testing towards the detective.\n- kit: 阿杰 (English name: Kit). Profile: Seventeen years old. A food-delivery rider who zips round the neighbourhood on an electric motorbike. Grew up on Kwai Heung Street and runs errands for Granny Wong. Voice: Light Hong Kong colloquial colouring on mostly standard written Chinese: the occasional particle (啦, 㗎, 囉), a few slang words (走佬 'do a runner', 飆車 'speed', 爆滿 'swamped') and English code-mixing ('old school', 'feel'). Exaggerates for comic effect. In English he should sound young, casual and quick: contractions, slang, short bursts. He must never sound like Granny or like the Riddle King. Relationships: Calls her 婆婆 (Granny). Teases her about being old-fashioned, but quietly looks after her.\n\n## Strings\n[intro.line.granny_greeting]\nSource: \"你就是來查案的偵探？好，好。那隻兔燈是我一篾一紙親手紮的，陪了街坊四十個中秋。偷燈的賊，我看是兔子尾巴——長不了！\"\nType: dialogue | Speaker: granny_wong (Granny Wong)\nContext: Granny Wong, the lantern's maker, meets the detective outside her paper-craft shop. She is upset but proud and in control.\nConstraints: Granny's voice: measured, proud, proverb-flavoured, no slang; Keep the rabbit image if you can; the joke is that the lost lantern is a rabbit\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\n\n[intro.choice.ask]\nSource: \"去茶餐廳問問老闆\"\nType: choice | Speaker: none\nContext: Choice button 2 of 2. The cha chaan teng on the corner is open late.\nConstraints: Maximum 40 characters; Button label: starts with a verb; Single line\nPlaceholders: none\nMax length: 40 characters\nLine breaks: not allowed\n\n[intro.ending.b]\nSource: \"茶餐廳老闆邊抹杯邊說：「兔子？剛坐上阿杰的電單車走了，還戴著頭盔呢。」你衝出門，只見一個兔頭在車流中越飄越遠……\"\nType: ending | Speaker: none\nContext: Ending B, reached by asking at the cha chaan teng. A comic cliffhanger.\nConstraints: Comic tone; Chinese corner quotes 「」 should become English quotation marks; Single paragraph (no line breaks)\nPlaceholders: none\nMax length: none\nLine breaks: not allowed\n\n## Output format\nReturn ONLY a JSON object, with no text before or after it, in exactly this shape:\n{\"translations\": [{\"id\": \"<string id>\", \"text\": \"<English translation>\", \"note\": \"<one short sentence, optional>\"}]}\nInclude every id listed under 'Strings' exactly once and no other ids. Keep every placeholder such as {player_name} exactly as written.\n\n## Current translations of the strings to revise\n- intro.line.granny_greeting: \"So you're the detective? Good, good. I made that rabbit lantern with my own hands, every bamboo strip and every scrap of paper, and it has kept the neighbours company for forty Mid-Autumns. The thief? A rabbit's tail, that one: it won't be long.\"\n- intro.choice.ask: \"Ask the tea restaurant owner\"\n- intro.ending.b: \"The cha chaan teng owner keeps wiping a glass. 'The rabbit? It's just gone off on the back of Kit's motorbike, helmet and all.' You run out of the door and see a rabbit's head drifting away through the traffic……\"\n\n## Feedback accepted by the human director\n- [intro.line.granny_greeting] R1-01 (cultural, major): 'A rabbit's tail, that one: it won't be long' is still a half-literal 歇後語; 'it won't be long' even suggests the opposite (that something will happen soon).\n  Reviewer suggestion: \"So you're the detective? Good, good. I made that rabbit lantern with my own hands, every bamboo strip and every scrap of paper, and it has kept the neighbours company for forty Mid-Autumns. As for the thief, he won't get far. A rabbit's tail is short, and so is a thief's luck.\"\n  Director's comment: The saying now works in English and keeps the rabbit.\n- [intro.choice.ask] R1-02 (terminology, major): 'tea restaurant' is a calque of 茶餐廳; the glossary asks for 'cha chaan teng', and Ending B already uses that term.\n  Reviewer suggestion: \"Ask the cha chaan teng owner\"\n  Director's comment: Follow the glossary and match Ending B.\n- [intro.ending.b] R1-03 (technical, minor): The Chinese ellipsis '……' has been kept at the end.\n  Reviewer suggestion: \"The cha chaan teng owner keeps wiping a glass. 'The rabbit? It's just gone off on the back of Kit's motorbike, helmet and all.' You run out of the door and see a rabbit's head drifting away through the traffic...\"\n\n## Locked strings decided by the human director (context only — do not return them)\n- intro.narration.arrival: \"It is the eve of the Mid-Autumn Festival and Kwai Heung Street is strung with lanterns. {player_name} has only just reached the corner when the news arrives: the fair's prize treasure, the giant rabbit lantern, has flown the nest.\"\n- intro.ui.start: \"Open case\"\n\n## Revision rules\nRevise only the strings listed under 'Strings'. Apply the accepted feedback: you may use the reviewer's suggestion as written or improve it, but keep every constraint. Do not change any other string.",
       "model": "replay",
       "source": "replay",
-      "created_at": "2026-10-28T13:42:31Z"
+      "created_at": "2026-11-03T11:02:01Z"
     }
   ],
   "usage": {
@@ -451,85 +451,86 @@
     "approved_at": null
   },
   "reflection": "",
+  "magic": {},
   "raw_failures": [],
   "history": [
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "project_created",
       "detail": "Challenge 'intro', en-GB, replay mode"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "version",
       "detail": "v1 created (Baseline (minimal prompt))"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "replay_variant",
       "detail": "Prepared output for the ‘Balanced’ preset (Replay Mode, not generated live)."
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "version",
       "detail": "v2 created (Translator · Replay · Balanced preset)"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "checkpoint",
       "detail": "Catch-up checkpoint prepared by the course team: baseline and translator done (Replay Mode, Balanced preset)."
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "review",
       "detail": "Round 1: 6 finding(s) on 8 string(s)"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "checkpoint",
       "detail": "Catch-up checkpoint prepared by the course team: reviewer findings ready, no human decisions yet."
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "decision",
       "detail": "D001: accept R1-01 (intro.line.granny_greeting) by director"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "decision",
       "detail": "D002: accept R1-02 (intro.choice.ask) by director"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "decision",
       "detail": "D003: accept R1-03 (intro.ending.b) by director"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "decision",
       "detail": "D004: reject R1-04 (intro.line.kit_joke) by director"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "decision",
       "detail": "D005: override R1-05 (intro.narration.arrival) by director"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "decision",
       "detail": "D006: accept_edited R1-06 (intro.ui.start) by director"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "rule_added",
       "detail": "M01: Always write 茶餐廳 as 'cha chaan teng', never 'tea restaurant'."
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "version",
       "detail": "v3 created (Revision 1)"
     },
     {
-      "created_at": "2026-10-28T13:42:31Z",
+      "created_at": "2026-11-03T11:02:01Z",
       "event": "checkpoint",
       "detail": "Catch-up checkpoint prepared by the course team: sample decisions and one revision applied; not approved yet."
     }

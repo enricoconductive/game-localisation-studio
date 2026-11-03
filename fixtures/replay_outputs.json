@@ -417,6 +417,11 @@
         "intro.choice.ask": "Applied the accepted change to the cha chaan teng choice (simulated).",
         "intro.ending.a": "Applied the accepted change to Ending A (simulated).",
         "intro.ending.b": "Applied the accepted change to Ending B (simulated)."
+      },
+      "magic": {
+        "title": "Who Took the Rabbit?",
+        "style": "boom-bap hip-hop, 90 bpm, playful and funky, street-market energy, male and female vocals, record scratches",
+        "lyrics": "[Intro]\nMid-Autumn eve and the lanterns are strung\nOn Kwai Heung Street, where the old songs are sung\n\n[Verse 1]\nI hit the corner, the detective in town\nThe prize of the fair? The big rabbit's gone down\nGranny built it by hand, every strip, every sheet\nForty Mid-Autumns keeping company on the street\nShe says the thief's luck is as short as a tail\nA rabbit's tail, baby: that plan's gonna fail\n\n[Chorus]\nWho took the rabbit? Who took the light?\nFollow the paper on a Mid-Autumn night\nBigger than a bike, it can't hop on its own\nUnless it flew up to the moon, back home\n\n[Verse 2]\nKit's like \"Calm down, Granny, who could even nick it?\"\nColoured paper on the stairs, so I follow every bit\nUp on the rooftop, it's sitting there tight\nA brand-new patch on its ear, stitched up tonight\nIt was Kit all along, he was fixing it in secret\nA surprise for his Granny, so shh, keep it\n\n[Chorus]\nWho took the rabbit? Who took the light?\nFollow the paper on a Mid-Autumn night\nBigger than a bike, it can't hop on its own\nUnless it flew up to the moon, back home\n\n[Outro]\nLantern on the rooftop, moon on the rise\nRabbit's back home under Mid-Autumn skies"
       }
     },
     "voice": {
@@ -801,6 +806,11 @@
         "voice.choice.deliver": "Applied the accepted change to the choice label (simulated).",
         "voice.ending.a": "Applied the accepted change to Ending A (simulated).",
         "voice.ending.b": "Applied the accepted change to Ending B (simulated)."
+      },
+      "magic": {
+        "title": "Late Again",
+        "style": "old-school hip-hop duet, 92 bpm, warm and teasing, grandmother and grandson trading verses, vinyl crackle",
+        "lyrics": "[Intro]\nSeven o'clock, now it's half past\nGranny's at the door and she's asking me why so fast\n\n[Verse 1: Granny]\nKit, late again, and the mooncakes are cold\nA promise is a promise, that's the rule from old\nYour mouth runs faster than that bike that you ride\nPhones in your faces and no lanterns inside\n\n[Verse 2: Kit]\nGranny, I've been framed, orders through the roof\nRode so fast to the moon, I've got the proof\nNot one double-yolk got squashed on the way\nYou ought to be praising me, Granny, today\n\n[Chorus]\nTeach me, Granny, I mean it, for real\nYour lanterns are old school, but they've got that feel\nStrip by strip and ear by ear\nEvery generation, we're still here\n\n[Outro]\nTake it slow on the road, don't run like that rabbit\nGo on, go on, now. Come back. You'll have it"
       }
     },
     "pun": {
@@ -1145,6 +1155,11 @@
         "pun.choice.mooncake": "Applied the accepted change to the wrong-answer button (simulated).",
         "pun.ending.a": "Applied the accepted change to Ending A (simulated).",
         "pun.ending.b": "Applied the accepted change to Ending B (simulated)."
+      },
+      "magic": {
+        "title": "Riddle King",
+        "style": "theatrical hip-hop, 95 bpm, bouncy and cheeky, booming villain voice, call and response, brass stabs",
+        "lyrics": "[Intro]\nHa! You want the lantern? You go through me\nGuess right for a prize, guess wrong and I'm laughing moonly\n\n[Verse 1]\nListen up close, here's a riddle to play\nA little white bunny loves to hop all day\nPull off its tail and it doesn't mind a bit\nWhat word is left? Come on, figure it\n\n[Chorus]\nTake the tail off the bunny, what you got? A bun!\nRiddle King's laughing, but the riddle's been won\nWait for the moon to climb over the arch\nAnd the rabbit comes out when the lanterns march\n\n[Verse 2]\nYou said mooncake? Your brain's turned to paste\nLotus paste, double yolk, what a waste\nTwo eggs on the board, that's the score that you get\nTry it again, kid, I'm not finished yet\n\n[Chorus]\nTake the tail off the bunny, what you got? A bun!\nRiddle King's laughing, but the riddle's been won\nWait for the moon to climb over the arch\nAnd the rabbit comes out when the lanterns march"
       }
     },
     "ui": {
@@ -1501,6 +1516,11 @@
         "ui.choice.later": "Applied the accepted change to the button label (simulated).",
         "ui.ending.a": "Applied the accepted change to Ending A (simulated).",
         "ui.ending.b": "Applied the accepted change to Ending B (simulated)."
+      },
+      "magic": {
+        "title": "New Clue!",
+        "style": "lo-fi hip-hop, 85 bpm, mysterious and chill, soft vocal, video-game chime samples",
+        "lyrics": "[Intro]\nLanterns in my count, coins in my hand\nNew clue on the screen, now I understand\n\n[Verse 1]\nThe detective found rabbit fur under the arch\nAdded to my bag, now it's time to march\nHold up the clue and aim it at the wall\nA giant rabbit shadow, standing ten feet tall\n\n[Chorus]\nNew clue! New clue! Use it or wait\nThe lantern's close by, don't be late\nShut the bag, take a seat, have a mooncake bite\nThen Kit's calling out: \"It's over here tonight!\"\n\n[Outro]\nUse it, not yet, the choice is mine\nRabbit on the street and the moon's gonna shine"
       }
     }
   }

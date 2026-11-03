@@ -469,3 +469,21 @@ def export_all(state: ProjectState, challenge: dict, manifest: dict | None,
                                           render_workflow_report(state, challenge, manifest),
                                           "Workflow report"),
     }
+
+
+# --------------------------------------------------------------------------- magic export
+
+SUNO_FILE = "suno_lyrics.txt"
+
+
+def build_suno_text(song: dict) -> str:
+    """Plain text to paste into Suno's Custom mode: title, style box, lyrics box."""
+    return (f"TITLE\n{song.get('title') or 'Untitled'}\n\n"
+            f"STYLE (paste into “Style of Music”)\n{song.get('style') or ''}\n\n"
+            f"LYRICS (paste into “Lyrics”)\n{song.get('lyrics') or ''}\n")
+
+
+def export_suno_lyrics(state: ProjectState, out_dir) -> ExportResult:
+    if not state.magic.get("lyrics"):
+        return _blocked("Make the song first (✨ Make the song).")
+    return _write_checked(Path(out_dir) / SUNO_FILE, build_suno_text(state.magic), "Lyrics")

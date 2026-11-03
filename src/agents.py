@@ -10,7 +10,7 @@ import inspect
 import json
 import re
 
-from .project_state import ProjectState, StudioError, Finding, Version
+from .project_state import ProjectState, StudioError, Finding, Version, now_iso
 from .providers import DEFAULT_MAX_TOKENS, ProviderError, find_secrets
 from .providers import _error as _provider_error
 
@@ -1198,6 +1198,87 @@ def run_revision(state: ProjectState, provider, challenge: dict, role: str = "di
     if state.stage not in ("APPROVED", "EXPORTED"):
         state.stage = "REVISED"
     return v
+
+
+# --------------------------------------------------------------------------- magic export
+
+MAGIC_TEMPERATURE = 0.9
+MAGIC_LYRICS_LIMIT = 3000   # Suno's lyrics box
+MAGIC_STYLE_LIMIT = 200     # Suno's style box
+MAGIC_SKIP_TYPES = ("ui",)  # buttons and menu labels are not song material
+MAGIC_DEFAULT_INSTRUCTIONS = """Turn our approved English game text into a short hip-hop song.
+- Keep the story, the characters and the jokes: change the form, not the meaning.
+- Structure: [Intro], [Verse 1], [Chorus], [Verse 2], [Chorus], [Outro].
+- Lines of 8–12 syllables that rhyme in pairs. The chorus is 4 lines.
+- Replace any {placeholder} with natural words (for example "the detective").
+- Style: one line for a music generator (genre, tempo, mood, voices). Never name a real artist."""
+
+
+def magic_json_schema() -> dict:
+    return _strict_object({"title": {"type": "string"}, "style": {"type": "string"},
+                           "lyrics": {"type": "string"}})
+
+
+def magic_lines(challenge: dict, translations: dict) -> list[str]:
+    """The approved English the song is made from: no buttons, no source text."""
+    names = _char_names(challenge)
+    out = []
+    for s in challenge.get("strings", []):
+        text = (translations.get(s["id"]) or "").strip()
+        if not text or s.get("type") in MAGIC_SKIP_TYPES:
+            continue
+        who = names.get(s.get("speaker") or "", "")
+        out.append(f"- ({s.get('type') or 'text'}{', ' + who if who else ''}) {text}")
+    return out
+
+
+def build_magic_prompt(challenge: dict, translations: dict, instructions: str) -> tuple[str, str]:
+    system = ("You are a songwriter. You adapt approved game text into song lyrics for a "
+              "music generator.")
+    parts = [
+        _section("Task", "Adapt the approved English text below into song lyrics."),
+        _section("Your instructions (written by the localisation team)", instructions),
+        _section("Approved English text (from our game translation)",
+                 "\n".join(magic_lines(challenge, translations))),
+        _section("Output format",
+                 'Return ONLY a JSON object: {"title": "...", "style": "...", "lyrics": "..."}. '
+                 "Put section tags such as [Verse 1] and [Chorus] on their own lines in the "
+                 f"lyrics. Lyrics under {MAGIC_LYRICS_LIMIT} characters; style under "
+                 f"{MAGIC_STYLE_LIMIT} characters."),
+    ]
+    return system, "\n\n".join(parts)
+
+
+def parse_magic(text: str) -> dict:
+    try:
+        obj = extract_json_object(text)
+    except ValueError:
+        raise _bad_output("song") from None
+    out = {k: str(obj.get(k) or "").strip() for k in ("title", "style", "lyrics")}
+    if not out["lyrics"]:
+        raise _bad_output("song")
+    return out
+
+
+def run_magic_export(state: ProjectState, provider, challenge: dict, instructions: str) -> dict:
+    """One request: the approved translation becomes song lyrics (CONTRACTS §16)."""
+    ap = state.approval
+    final = state.version(ap.get("version_id")) if ap.get("approved") else None
+    if final is None:
+        raise StudioError("Approve your translation in Section 5 first: the song is made from it.")
+    instructions = (instructions or "").strip() or MAGIC_DEFAULT_INSTRUCTIONS
+    if not magic_lines(challenge, final.translations):
+        raise StudioError("This mission has no story text to turn into a song.")
+    system, user = build_magic_prompt(challenge, final.translations, instructions)
+    key = {"challenge": state.challenge_id, "stage": "magic", "round": 0}
+    song = _ask(state, provider, agent="magic", rnd=0, system=system, user=user,
+                model=_model_for(state, "translator"), temperature=MAGIC_TEMPERATURE,
+                replay_key=key, parse=parse_magic, json_schema=magic_json_schema())
+    song.update({"instructions": instructions, "version_id": final.version_id,
+                 "source": _source(provider), "created_at": now_iso(), "edited": False})
+    state.magic = song
+    state.log("magic_export", f"Song lyrics made from {final.version_id} ({song['source']})")
+    return song
 
 
 def preview(state: ProjectState, challenge: dict, step: str,

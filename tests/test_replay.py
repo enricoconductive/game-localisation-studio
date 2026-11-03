@@ -163,7 +163,11 @@ def test_fixture_top_level(fixtures):
     assert "teaching_notes" not in fixtures, "the answer key belongs in the private instructor pack"
     for m, entry in fixtures["challenges"].items():
         assert set(entry) == {"baseline", "translator_variants", "reviewer", "reviewer_round2",
-                              "revision_notes"}, m
+                              "revision_notes", "magic"}, m
+        song = entry["magic"]
+        assert song["lyrics"].strip() and "[Chorus]" in song["lyrics"], m
+        assert len(song["lyrics"]) <= a.MAGIC_LYRICS_LIMIT, m
+        assert len(song["style"]) <= a.MAGIC_STYLE_LIMIT and "{" not in song["lyrics"], m
         for stage in ("translator_variants", "reviewer", "reviewer_round2"):
             assert set(entry[stage]) == set(VARIANTS), (m, stage)
 

@@ -1019,3 +1019,45 @@ def test_labelled_inputs_share_one_label_width(tmp_path):
         if x is s.w["director_tabs"]._bar or x is s.w["run_tabs"]._bar:
             continue
         assert x.style.description_width == studio_ui.LABEL_W, x.description
+
+
+# =========================================================================== magic export
+
+
+@needs_real
+def test_magic_export_after_approval_replay(tmp_path):
+    s = make_studio(tmp_path)
+    w = s.w
+    s.connect_replay()
+    w["btn_start"].click()
+    w["btn_baseline"].click()
+    w["btn_translator"].click()
+    s.refresh()
+    assert w["btn_magic"].disabled and "Approve in Section 5 first" in text_of(w["magic_lock"])
+    assert w["magic_song"].layout.display == "none"
+    fix_critical_via_grid(s)
+    w["btn_approve"].click()
+    assert s.state.approval["approved"], w["msg_director"].value
+    assert not w["btn_magic"].disabled and w["magic_lock"].value == ""
+    w["btn_magic"].click()
+    assert "Song ready" in text_of(w["msg_magic"]) and "prepared lyrics" in text_of(w["msg_magic"])
+    assert w["magic_song"].layout.display != "none"
+    assert "[Chorus]" in w["magic_lyrics"].value and w["magic_title"].value == "Who Took the Rabbit?"
+    assert s.state.approval["approved"]          # the song changes no translation
+    w["magic_lyrics"].value = "[Verse]\nOur own line"
+    w["btn_magic_download"].click()
+    out = s.mission_export_dir() / "suno_lyrics.txt"
+    assert out.is_file() and "Our own line" in out.read_text(encoding="utf-8"), w["msg_magic"].value
+    assert "open Suno" in text_of(w["msg_magic"]) and studio_ui.SUNO_URL in w["msg_magic"].value
+    # an edit after the song revokes approval: the song is marked stale and locked again
+    sid = s.state.string_ids()[1]
+    s._grid[sid].value = s._grid[sid].value + " Indeed."
+    w["edit_comment"].value = "One more word"
+    w["btn_save_edits"].click()
+    assert w["btn_magic"].disabled and w["magic_lyrics"].value == "[Verse]\nOur own line"
+    # a resumed project shows the saved song
+    s2 = make_studio(tmp_path, state_path=tmp_path / "studio_state.json")
+    s2.connect_replay()
+    s2._resume_saved()
+    s2.refresh()
+    assert s2.w["magic_lyrics"].value == "[Verse]\nOur own line"

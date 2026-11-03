@@ -50,7 +50,7 @@ The status bar shows **Live requests this session: n / 40**. This counts every l
 | **3 · Configure your agents** | Set up the translator (preset, sliders, instructions) and the reviewer (what it checks, how strict it is). | **Show full prompt** |
 | **4 · Run the agents** | Run the baseline, the translator and the reviewer. Change the prompt, run again and compare. | **2 · Run translator** |
 | **5 · Human Director** | Decide on every reviewer suggestion, add project rules, send feedback, edit, approve. | **Approve final translation** |
-| **6 · Test and export** | Write your reflection, play your translation, export the three files to hand in. | **▶ Play my translation in the game**, **Export all three files** |
+| **6 · Test and export** | Write your reflection, play your translation, export the three files to hand in. | **▶ Play my translation in the game**, **Export all three files**, **✨ Make the song** |
 
 ## 4. Two roles, and when to swap
 
@@ -151,6 +151,17 @@ Section 5 has five tabs, worked from left to right: **a · Decide** → **b · R
 5. **Interface** switches the menus between **English** and **繁體中文**. **Reset to 中文** clears your imported file.
 
 If the game says **This file was not applied**, read the **Must fix** list, fix the strings in the notebook, approve and export again. Reloading the page clears an imported file, so import it again after a reload. Checks about `source` or `locale` ("The file does not say where the translation came from…", "The 'locale' should be one of…") mean the file was edited by hand: use the file the studio exported.
+
+### ✨ Magic Export: from game text to song
+
+The last box in Section 6 turns your approved English into song lyrics: same story, new medium.
+
+1. Approve your translation first (the box says 🔒 until you do).
+2. Read the **Songwriter instructions**. Hip-hop is the default; change the genre if you like.
+3. Click **✨ Make the song** (one request). Edit the title, style and lyrics: you are still the director.
+4. Click **Download lyrics for Suno**, then **Open Suno ↗** → **Custom**: paste the lyrics into **Lyrics** and the style into **Style of Music**. Generate, listen, play it to the room.
+
+Buttons and menu labels are left out of the song; only story text is used. In Replay Mode the lyrics are prepared in advance, so your instructions are not applied. If you edit the translation after making the song, approve again and make the song again.
 
 ## 10. If the live AI fails
 

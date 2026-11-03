@@ -142,6 +142,7 @@ class ProjectState:
     approval: dict = field(default_factory=lambda: {"approved": False, "version_id": None,
                                                     "role": None, "approved_at": None})
     reflection: str = ""
+    magic: dict = field(default_factory=dict)            # Magic Export song (title, style, lyrics…)
     raw_failures: list = field(default_factory=list)
     history: list = field(default_factory=list)
 
@@ -429,6 +430,21 @@ def revoke_approval(state: ProjectState, role: str) -> None:
     state.stage = state.working_stage()
     state.add_decision("revoke_approval", role)
     state.log("approval_revoked", f"Approval revoked by {role}")
+
+
+def set_magic_song(state: ProjectState, title: str, style: str, lyrics: str) -> dict:
+    """The team's own edit of the Magic Export song (it must not contain a key)."""
+    if not state.magic:
+        raise StudioError("Click “✨ Make the song” first.")
+    song = {"title": _clean_text(title, 200, "song title").strip(),
+            "style": _clean_text(style, 1000, "song style").strip(),
+            "lyrics": _clean_text(lyrics, 5000, "lyrics").strip()}
+    if not song["lyrics"]:
+        raise StudioError("The lyrics are empty.")
+    if any(state.magic.get(k) != v for k, v in song.items()):
+        state.magic.update(song, edited=True)
+        state.log("magic_edited", "Song lyrics edited by the team")
+    return state.magic
 
 
 def set_reflection(state: ProjectState, text: str) -> None:

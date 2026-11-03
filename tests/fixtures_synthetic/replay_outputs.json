@@ -152,6 +152,11 @@
       },
       "revision_notes": {
         "demo.line.granny_greeting": "Warmer, more affectionate greeting (simulated)."
+      },
+      "magic": {
+        "title": "Demo Song",
+        "style": "hip-hop, 90 bpm",
+        "lyrics": "[Verse]\nDemo line one\nDemo line two\n\n[Chorus]\nDemo chorus"
       }
     }
   }
