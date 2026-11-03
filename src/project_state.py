@@ -353,6 +353,19 @@ def add_rule(state: ProjectState, kind: str, text: str, role: str, source_term: 
     return r
 
 
+def carry_over_rules(state: ProjectState, rules, from_mission: str) -> list:
+    """Copy approved rules into a new mission: they are the project memory, not mission work."""
+    carried = []
+    for old in rules or []:
+        r = Rule(f"M{len(state.memory_rules) + 1:02d}", old.kind, old.text, old.source_term,
+                 old.target_term, None, old.role, old.created_at)
+        state.memory_rules.append(r)
+        carried.append(r)
+    if carried:
+        state.log("rules_carried", f"{len(carried)} rule(s) from {from_mission}")
+    return carried
+
+
 def direct_edit(state: ProjectState, edits: dict, role: str, comment: str = "") -> Version:
     cur = state.current_version()
     if cur is None:

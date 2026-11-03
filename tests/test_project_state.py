@@ -108,6 +108,23 @@ def test_save_load_round_trip(reviewed_state, tmp_path):
     assert loaded.memory_rules[0].rule_id == "M01"
 
 
+def test_carry_over_rules_copies_into_a_new_mission(reviewed_state):
+    old = reviewed_state
+    ps.add_rule(old, "glossary", "Use lantern-maker", "director", "紮作", "lantern-maker", "R1-03")
+    ps.add_rule(old, "style", "Kit says 'Granny'", "evaluator")
+    new = ps.new_project({"id": "voice", "mission": "voice", "strings": []}, "en-GB", "replay",
+                         "replay", "m")
+    ps.add_rule(new, "style", "Already here", "director")
+    carried = ps.carry_over_rules(new, old.memory_rules, old.mission)
+    assert [r.rule_id for r in new.memory_rules] == ["M01", "M02", "M03"]
+    assert [r.text for r in carried] == ["Use lantern-maker", "Kit says 'Granny'"]
+    assert carried[0].target_term == "lantern-maker" and carried[0].from_finding is None
+    assert carried[1].role == "evaluator"
+    assert carried[0] is not old.memory_rules[0]             # copies, not shared objects
+    assert new.history[-1]["event"] == "rules_carried"
+    assert ps.carry_over_rules(new, [], "x") == [] and new.history[-1]["event"] == "rules_carried"
+
+
 def test_save_refuses_secrets(reviewed_state, tmp_path):
     reviewed_state.reflection = "my key is sk-ant-api03-abcdefghijklmnopqrstuvwxyz0123"
     with pytest.raises(ps.StudioError) as e:

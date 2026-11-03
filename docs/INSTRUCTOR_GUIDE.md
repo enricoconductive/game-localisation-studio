@@ -299,7 +299,7 @@ The section times printed in the notebook add up to about 83 minutes for Mission
 | 2:28 | 25 min | Debrief and reflection: each pair writes the reflection and exports again; compare decisions across pairs; collect `workflow_report.html`. | — |
 | 2:53 | 7 min | Buffer for overruns, technical problems and catch-up. | — |
 
-**Assigning advanced missions.** Either give every pair the same one (easier to debrief), or split the class into three groups, about 6 pairs each on A, B and C, and have each group report back. **Next mission** in Section 6 always moves to the next mission in the order intro → voice → pun → ui. For B or C, students pick the mission in Section 2 instead.
+**Assigning advanced missions.** Either give every pair the same one (easier to debrief), or split the class into three groups, about 6 pairs each on A, B and C, and have each group report back. **Next mission** in Section 6 always moves to the next mission in the order intro → voice → pun → ui. For B or C, students pick the mission in Section 2 instead. Either way, the pair's project rules (**b · Rules**) carry over to the new mission as project memory; restarting the same mission starts with no rules.
 
 ### 8.1 Role-swap points
 

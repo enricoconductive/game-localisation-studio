@@ -265,6 +265,14 @@ def test_intro_end_to_end_replay(tmp_path):
     w["btn_next_mission"].click()
     assert s.state.challenge_id == "voice"
     assert list(exp.glob("finished_intro_*.json"))
+    # the approved rules are project memory: they travel to the next mission
+    assert [r.text for r in s.state.memory_rules] == ["Kit always calls Granny Wong 'Granny'."]
+    assert s.state.memory_rules[0].from_finding is None
+    assert "1 rule(s) carried over" in text_of(w["msg_export"])
+    assert any(h["event"] == "rules_carried" for h in s.state.history)
+    # restarting the same mission starts clean
+    s._reset_mission(confirmed=True)
+    assert s.state.challenge_id == "voice" and s.state.memory_rules == []
 
 
 def test_synthetic_end_to_end_with_plain_fixture(synthetic_root, tmp_path):

@@ -1153,14 +1153,19 @@ class Studio:
                         "A saved session exists (“Resume my saved session”).")
                 return Warn(f"⚠️ {what} Starting replaces it (backup kept). Are you sure?")
         _hidden(self.w["start_confirm"])
-        if self.state is not None:
-            self._save_copy(f"backup_{self.state.challenge_id}")
+        prev = self.state
+        if prev is not None:
+            self._save_copy(f"backup_{prev.challenge_id}")
         team = self.w["team"].value.strip()
         state = ps.new_project(challenge, self.w["locale"].value,
                                "live" if self._is_live() else "replay", self.provider_name,
                                self.translator_model, self.reviewer_model or None, max_cycles=1,
                                team_name=team, request_cap=self.request_cap)
         state.agents["translator"] = compat.apply_preset(state.agents["translator"], "balanced")
+        # a new mission keeps the approved rules; restarting the same mission starts clean
+        carried = []
+        if prev is not None and prev.challenge_id != state.challenge_id:
+            carried = ps.carry_over_rules(state, prev.memory_rules, prev.mission)
         extras = self._fresh_extras()
         extras["role"] = self.role
         if challenge.get("id") == "custom":
@@ -1168,6 +1173,8 @@ class Studio:
         self._set_project(state, challenge, extras)
         msg = (f"Mission started: {challenge.get('title')} ({len(state.strings)} strings, "
                f"{state.locale}). Next: Section 3.")
+        if carried:
+            msg += f" {len(carried)} rule(s) carried over from the last mission (see 5 · b · Rules)."
         return msg + (" " + REPLAY_LOCALE_NOTE if self._replay_locale_note() else "")
 
     # .................................................................. 3 configure

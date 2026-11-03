@@ -128,7 +128,7 @@ The **Technical checks** tab (automatic checks) is separate from the reviewer: *
 
 Section 5 has five tabs, worked from left to right: **a · Decide** → **b · Rules** → **c · Revise** → **d · Final edits** → **e · Approve**. The result of every button appears just below the tabs. Under them, the collapsible **History and decision log** panel holds the version history and the decision log. In Sections 4–6, long tables scroll inside their own box, so the buttons stay where they are.
 
-- **Add rule** (in **b · Rules**) for anything the agents should always follow, for example "Kit always calls Granny Wong 'Granny'." This is **project memory**: the rule is added to your agents' future prompts. The AI model itself is not retrained.
+- **Add rule** (in **b · Rules**) for anything the agents should always follow, for example "Kit always calls Granny Wong 'Granny'." This is **project memory**: the rule is added to your agents' future prompts, and **Next mission** takes your rules with it. The AI model itself is not retrained. (Restarting the same mission starts with no rules.)
 - **Send accepted feedback** (in **c · Revise**). Only strings with **accepted** findings are re-sent. Your own wording (**Use my wording**) is applied directly, with no AI request, and rejected suggestions are never applied. You can then click **Review again (optional)**.
 - **Edit the final translation yourself** in **d · Final edits**, then click **Save edits as new version**. Save your edits before running other steps.
 - **Version history** (in **History and decision log**): use **Compare with current** or **Restore version** if a change made things worse.
