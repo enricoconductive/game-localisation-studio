@@ -553,6 +553,7 @@ def test_key_box_fallback_when_no_secret(tmp_path):
 
 def test_hkbu_key_help_follows_the_verified_flag(tmp_path):
     s = make_studio(tmp_path)
+    s.provider_config["hkbu"]["verified"] = False
     s.w["provider"].value = "hkbu"
     assert "set up by your instructor, unverified" in text_of(s.w["key_help"])
     s.provider_config["hkbu"]["verified"] = True
@@ -607,7 +608,9 @@ def test_hkbu_configured_lists_models(tmp_path):
     s = make_studio(tmp_path)
     s.w["provider"].value = "hkbu"
     assert s.w["model"].value == s.catalog["hkbu"]["default"]
-    assert all("unverified" in lab for lab, _ in s.w["model"].options)
+    labels = dict((v, lab) for lab, v in s.w["model"].options)
+    assert "unverified" not in labels.pop(s.catalog["hkbu"]["default"])
+    assert labels and all("unverified" in lab for lab in labels.values())
     assert "Load my key" in text_of(s.w["msg_connect"])
 
 

@@ -32,7 +32,7 @@ Game Localisation Studio is a teaching environment for postgraduate translation 
 | Replay Mode | none | Prepared outputs; offline; the default |
 | Claude (Anthropic): Claude Haiku 5.5 (default), Claude Sonnet 5.5 | `ANTHROPIC_API_KEY` | Verified |
 | Hugging Face Inference Providers | `HF_TOKEN` | Not yet verified |
-| HKBU GenAI | `HKBU_API_KEY` | **HKBU provider: configurable, not yet verified** (placeholders in `config/providers.json`; see the instructor guide, section 4) |
+| HKBU GenAI | `HKBU_API_KEY` | **Verified live** (1 Nov 2026) with `deepseek-v4-flash-0731` via `https://genai.hkbu.edu.hk/api/v1`; the other listed models are unverified (instructor guide, section 4) |
 
 ## Repository structure
 

@@ -91,7 +91,7 @@ Step 0 of the notebook clones the `main` branch at the moment a student runs it.
 | **Replay Mode for everyone** | Guaranteed to work; free; no keys to distribute. | Outputs do not respond to prompt edits (only to presets). Good enough for every learning outcome except "see a live model react to *your* wording". |
 | **One Claude key per pair** (19 keys) | Each pair has its own rate limit; you can revoke one key without affecting others; usage per pair is visible in the Console. | 19 keys to create and hand out securely; more admin. |
 | **One shared Claude key** | Simplest to distribute. | All 19 pairs share one rate limit, so expect "service is busy" messages when everyone clicks at once. One leaked key affects the whole class. |
-| **HKBU GenAI** | University-provided; no external billing. | **Untested until confirmed** by the colleague who configures it (section 4). |
+| **HKBU GenAI** | University-provided; no external billing. | **Verified live** with `deepseek-v4-flash-0731` (section 4). |
 
 A practical compromise: one key per pair, or a shared key plus Replay as the default for half the class.
 
@@ -116,7 +116,7 @@ Send each pair's key through a private channel (for example an LMS private messa
 
 ## 4. HKBU GenAI setup (for the colleague configuring it)
 
-> **Status: configurable, not yet verified.** No public specification of the HKBU GenAI API was available when the studio was built. The values below are **placeholders**. The studio has been tested only against simulated HKBU replies (OpenAI-style and Anthropic-style) in `tests/test_providers.py`, never against the real service. Treat the HKBU connection as **untested until you confirm it** with the steps below.
+> **Status: verified live on 1 November 2026.** A colleague ran Mission 1 from translator to export with their own HKBU GenAI key, using `deepseek-v4-flash-0731` (4 requests). `base_url` is `https://genai.hkbu.edu.hk/api/v1` (OpenAI-style, `Authorization: Bearer`). The other models in `config/models.json` (`qwen3.7-plus`, `gpt-6-luna`, `gemini-3.8-flash`) come from a third-party gateway README and are still unverified: mark each one verified only after a live run. The table below explains every field, in case HKBU changes its API.
 
 ### 4.1 What you need from the HKBU GenAI documentation
 
@@ -133,7 +133,7 @@ Send each pair's key through a private channel (for example an LMS private messa
 | Field | What it means | Current value |
 |---|---|---|
 | `display_name` | Name shown in messages. | `"HKBU GenAI"` |
-| `base_url` | Start of the endpoint URL, without a trailing slash. **While this is empty, students see "HKBU GenAI is not set up for this course yet."** | `""` |
+| `base_url` | Start of the endpoint URL, without a trailing slash. **While this is empty, students see "HKBU GenAI is not set up for this course yet."** | `"https://genai.hkbu.edu.hk/api/v1"` |
 | `path_template` | Full request URL. May contain `{base_url}`, `{model}` and `{api_version}`. | `"{base_url}/chat/completions"` |
 | `api_version` | Value substituted for `{api_version}`, if the service needs one. | `""` |
 | `auth_header_name` | The header that carries the key. | `"Authorization"` |

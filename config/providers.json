@@ -50,8 +50,8 @@
     "supports_json_schema": false,
     "secret_name": "HKBU_API_KEY",
     "models": [],
-    "verified": false,
-    "notes": "REST v1 gateway, OpenAI-compatible: POST {base_url}/chat/completions with 'Authorization: Bearer <key>'. Checked 2026-10-31 without a key: /api/v1/models and /api/v1/chat/completions answer 401 'Authorization must use Bearer authentication with a valid API key' (unknown routes answer 404). Model ids come from a third-party gateway README (github.com/AndyZHENG0715/HKBU-GenAI-Gateway), not official docs; set verified true after a live run. Temperature is not sent because some models on the gateway reject it. path_template may use {base_url}, {model} and {api_version}. request_style is 'openai_chat' (choices.0.message.content) or 'anthropic_messages' (content.0.text). supports_json_schema: set true only if the gateway accepts strict JSON Schema replies.",
+    "verified": true,
+    "notes": "REST v1 gateway, OpenAI-compatible: POST {base_url}/chat/completions with 'Authorization: Bearer <key>'. Checked 2026-10-31 without a key: /api/v1/models and /api/v1/chat/completions answer 401 'Authorization must use Bearer authentication with a valid API key' (unknown routes answer 404). Verified live on 2026-11-01 by a colleague using their own HKBU GenAI account. Model deepseek-v4-flash-0731 ran Mission 1 from translator to export (4 requests). The other model ids come from a third-party gateway README (github.com/AndyZHENG0715/HKBU-GenAI-Gateway) and are still unverified. Temperature is not sent because some models on the gateway reject it. path_template may use {base_url}, {model} and {api_version}. request_style is 'openai_chat' (choices.0.message.content) or 'anthropic_messages' (content.0.text). supports_json_schema: set true only if the gateway accepts strict JSON Schema replies.",
     "docs_checked_on": "2026-10-31"
   },
   "replay": {

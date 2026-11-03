@@ -311,12 +311,13 @@ def test_catalog_default_is_cheapest():
     assert {m["id"] for m in models} == {"claude-haiku-5-5", "claude-sonnet-5-5"}
     assert all(m["verified"] is False for m in cat["huggingface"]["models"])
     assert cat["hkbu"]["default"] in {m["id"] for m in cat["hkbu"]["models"]}
-    assert all(m["verified"] is False for m in cat["hkbu"]["models"])
+    hk = {m["id"]: m["verified"] for m in cat["hkbu"]["models"]}
+    assert hk.pop(cat["hkbu"]["default"]) is True and not any(hk.values())
 
 
 def test_provider_config_hkbu_gateway(provider_config):
     h = provider_config["hkbu"]
-    assert h["base_url"] == "https://genai.hkbu.edu.hk/api/v1" and h["verified"] is False
+    assert h["base_url"] == "https://genai.hkbu.edu.hk/api/v1" and h["verified"] is True
     assert h["auth_prefix"] == "Bearer " and h["request_style"] == "openai_chat"
     for k in ("path_template", "auth_header_name", "auth_prefix", "extra_headers", "query_params",
               "request_style", "response_text_path", "notes"):

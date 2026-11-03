@@ -61,12 +61,12 @@
   },
   "hkbu": {
     "default": "deepseek-v4-flash-0731",
-    "note": "Ids from a third-party gateway README, not official HKBU docs. Mark verified true after a live run.",
+    "note": "deepseek-v4-flash-0731 verified live on 2026-11-01. The other ids come from a third-party gateway README; mark verified after a live run.",
     "models": [
       {
         "id": "deepseek-v4-flash-0731",
         "label": "deepseek-v4-flash-0731",
-        "verified": false
+        "verified": true
       },
       {
         "id": "qwen3.7-plus",
