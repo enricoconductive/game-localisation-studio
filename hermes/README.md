@@ -1,6 +1,8 @@
 # Hermes mini version: `/game-localiser`
 
-A very small version of the studio workflow for the [Hermes Desktop](https://hermes-agent.nousresearch.com/desktop) app: translator agent → reviewer agent → **you decide** → one revision → optional song for Suno.
+A very small version of the studio workflow for the [Hermes Desktop](https://hermes-agent.nousresearch.com/desktop) app. Hermes acts as the producer and spawns **three separate subagents** with `delegate_task`, each in its own isolated context:
+
+translator agent → reviewer agent (sees only the source and the English, not the translator's notes) → **you decide** → reviser agent → optional song for Suno.
 
 ## 1. Connect a model (Hermes Desktop → Settings → Providers)
 
@@ -28,6 +30,6 @@ In a new chat, type:
 /game-localiser demo
 ```
 
-Reply to the reviewer's findings, for example `F1 accept, F2 reject, F3: "That thief won't get far."`. When the final table appears, type `song` for Suno lyrics.
+You will see each subagent being spawned (`🔀 delegate`). Reply to the reviewer's findings, for example `F1 accept, F2 reject, F3: "That thief won't get far."`. When the final table appears, type `song` for Suno lyrics.
 
 Use your own lines instead of `demo`: `/game-localiser` followed by the source text, one line each.
